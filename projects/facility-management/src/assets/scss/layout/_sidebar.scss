@@ -1,0 +1,271 @@
+// Primary-nav
+#primary-nav {
+  flex: 1 0 $sidebar-expanded-width;
+  max-width: $sidebar-expanded-width;
+  width: $sidebar-expanded-width;
+  height: 100%;
+  background-color: $secondary;
+  z-index: 1;
+  @include transition($transition-base);
+
+  @media screen and (max-width: 991px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: $sidebar-expanded-width;
+    z-index: 999;
+    transform: translateX(-$sidebar-expanded-width);
+  }
+
+  .nav {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      white-space: nowrap;
+      font-weight: $font-weight-light;
+      font-size: $font-size-base;
+      color: $white;
+      cursor: pointer;
+
+      @include media-breakpoint-up('xxl') {
+        padding: 15px;
+      }
+      @include media-breakpoint-up('xl') {
+        padding: 12px 10px;
+      }
+
+      .client-logo-small {
+        max-width: 50px;
+        margin: auto;
+      }
+      .client-logo-large {
+        max-width: 220px;
+        margin: auto;
+      }
+
+      .menu-icon {
+        font-size: $font-size-base * 1.3;
+        line-height: 1.5;
+        color: $gray;
+
+        @include media-breakpoint-between('lg', 'xl') {
+          flex: 1 0 30px;
+        }
+        @include media-breakpoint-down('xl') {
+          font-size: $font-size-base * 1.1;
+          flex: 1 0 20px;
+        }
+
+        &.client-logo {
+          font-size: $font-size-base * 1.75;
+          line-height: 1;
+        }
+      }
+
+      .menu-dropdown {
+        color: $gray;
+        transition: $transition-base;
+      }
+
+      &:hover,
+      &.active {
+        background-color: rgba($black, 0.3);
+        .menu-icon,
+        .menu-dropdown {
+          color: $white;
+        }
+      }
+
+      &.open-submenu {
+        .menu-dropdown {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .menu-label {
+      display: flex;
+      font-size: $font-size-base * 0.875;
+      margin-left: 20px;
+      @include transition($transition-base);
+    }
+
+    .sub-menu {
+      padding-left: 30px;
+
+      .nav-link {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+
+      .menu-label {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+.sub-menu {
+  .nav-link {
+    font-size: $font-size-base * 0.75;
+    color: $white;
+    margin-bottom: 0;
+    font-weight: $font-weight-light;
+    @include border-left-radius($border-radius);
+
+    &:hover,
+    &.active {
+      background-color: rgba($black, 0.3);
+    }
+  }
+}
+
+@include media-breakpoint-between("lg", "xl") {
+  #primary-nav {
+    max-width: $sidebar-collapsed-width;
+    flex: 1 0 $sidebar-collapsed-width;
+
+    .large-logo {
+      display: none;
+    }
+
+    .small-logo {
+      display: block;
+      padding-left: 0;
+    }
+    .nav {
+      .nav-link {
+        flex-direction: column;
+        margin-bottom: 0;
+        .menu-label {
+          margin: 0;
+          transform: none;
+          font-size: $font-size-base * 0.7;
+        }
+      }
+    }
+  }
+}
+
+// Dashboard logo style
+.logo {
+  flex: 0 0 auto;
+  justify-content: space-between;
+  height: $dashboard-topbar-height-sm;
+  border-bottom: 1px solid lighten($secondary, 7%);
+  overflow: hidden;
+  @include media-breakpoint-between("lg", "xl") {
+    justify-content: center;
+  }
+
+  @include media-breakpoint-up("xxl") {
+    height: $dashboard-topbar-height;
+  }
+
+  .small-logo {
+    display: none;
+  }
+
+  .toggle-menu-icon {
+    display: flex;
+    color: $gray-600;
+    font-size: $font-size-base * 1.1;
+    cursor: pointer;
+    padding-right: 10px;
+    padding-left: 10px;
+
+    @include media-breakpoint-between("lg", "xl") {
+      display: none;
+    }
+  }
+}
+
+// This class has to be added dynamically in <li> when it has a submenu
+.has-sub-menu-active {
+  .active {
+    background-color: $gray-light;
+    color: $primary-dark;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .sub-menu {
+    .active {
+      font-weight: $font-weight-bold;
+      background-color: rgba($gray-light, 0.6);
+    }
+  }
+}
+
+// Sub-menu
+.cdk-overlay-container {
+  .sub-menu {
+    padding-left: 0;
+    background-color: $secondary;
+    box-shadow: $box-shadow;
+    z-index: 9;
+    min-width: 130px;
+    transition: $transition-base;
+    margin: 0;
+    border-radius: $border-radius;
+
+    .nav-link {
+      color: color-yiq($secondary);
+      font-size: $font-size-base * 0.75;
+      padding-left: 5px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .menu-label {
+      display: flex;
+      margin-right: 25px;
+    }
+
+    &::before {
+      content: "\e91c";
+      position: absolute;
+      left: -1px;
+      font-family: "app-icons";
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: $secondary;
+      transform: rotate(90deg);
+    }
+  }
+  .top-right {
+    padding-left: 10px;
+    .sub-menu {
+      top: 0;
+      &::before {
+        top: 8px;
+      }
+    }
+  }
+  .bottom-right {
+    padding-left: 10px;
+    .sub-menu {
+      bottom: 0;
+      &::before {
+        bottom: 8px;
+      }
+    }
+  }
+}
+
+// icons in sidebar
+.menu-icon {
+  max-width: 40px;
+  flex: 1 0 40px;
+  text-align: center;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+}

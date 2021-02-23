@@ -1,0 +1,11 @@
+<div class="px-3">
+  <app-mail-configurations-ui [isSlotsDeleted]="isSlotsDeleted" [baseResponseSlots]="slotss$ | async"
+    (getSlotsEmitter) = "getSlotss($event)"
+    (deleteSlotsEmitter)="deleteSlots($event)" [isReasonsDeleted]="isReasonsDeleted"
+    (deleteReasonsNotDeliveredEmitter)="deleteReasons($event)" (deleteReasonsNotPickedEmitter)="deleteReasons($event)"
+    (addSlotsEmitter)="addSlots($event)" (updateSlotsEmitter)="updateSlots($event)"
+    (addReasonsNotDeliveredEmitter)="addReasons($event)" (updateReasonsNotDeliveredEmitter)="updateReasons($event)"
+    (addReasonsNotPickedEmitter)="addReasons($event)" (updateReasonsNotPickedEmitter)="updateReasons($event)"
+    (setSlotStatus)= "setSlotStatus($event)"
+    [masterData]="masterData$ | async" [reasonsList]="reasonsList$ | async"></app-mail-configurations-ui>
+</div>

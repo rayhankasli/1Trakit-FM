@@ -1,0 +1,9 @@
+<div class="px-3 h-100 overflow-hidden">
+  <app-copyit-list-ui 
+    [clients]="clientList$ | async" 
+    [requestorsAssignedToStatusesBasedOnClientId]="getRequestorsAssignedToStatusesBasedOnClientId$ | async" 
+    [baseResponse]="copyItLists$ | async"
+    (getCopyItList)="getCopyItLists($event)" 
+    (deleteCopyItList)="deleteCopyItList($event)">
+  </app-copyit-list-ui>
+</div>

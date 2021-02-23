@@ -1,0 +1,145 @@
+<ng-container *ngIf="isAddPackage">
+  <div class="card mb-3 mx-3">
+    <div class="card-body px-2 py-3">
+      <app-packages-form-ui [scanNew]="scanNew" [userList]="userList" [userDetails]="userDetails"
+        [deliveryServiceList]="deliveryServiceList" [slots]="slots" (add)="addPackage($event)"
+        (saveAndScanNew)="addPackage($event,true)" (loadSlots)="loadSlotList($event)" (user)="getUser($event)"
+        (closeForm)="onCancel()">
+      </app-packages-form-ui>
+    </div>
+  </div>
+</ng-container>
+
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3 mx-3">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 10px;">
+      <col style="width: 50px;">
+      <col style="width: 100px;">
+      <col style="width: 50px;">
+      <col style="width: 40px;">
+      <col style="width: 200px;">
+      <col style="width: 40px;">
+      <col style="width: 60px;">
+      <col style="width: 150px;">
+      <col style="width: 140px;">
+      <col style="width: 60px;">
+      <col style="width: 40px;">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th></th>
+        <th>
+          <span>Barcode</span>
+        </th>
+        <th>
+          <span>UPI Number</span>
+        </th>
+        <th>
+          <span>TO</span>
+        </th>
+        <th>
+          <span>From</span>
+        </th>
+        <th appSortingOrder [column]="'deliveryServiceFrom'" (orderType)="onSortOrder('deliveryServiceFrom',$event)"
+          scope="col" class="column-sort">
+          <span>Delivery Service Company</span>
+        </th>
+        <th appSortingOrder [column]="'building'" (orderType)="onSortOrder('building',$event)" scope="col"
+          class="column-sort">
+          <span>Building</span>
+        </th>
+        <th appSortingOrder [column]="'floor'" (orderType)="onSortOrder('floor',$event)" scope="col"
+          class="column-sort">
+          <span>Floor</span>
+        </th>
+        <th>
+          <span>Desktop Location</span>
+        </th>
+        <th>
+          <span>Slot</span>
+        </th>
+        <th appSortingOrder [column]="'status'" (orderType)="onSortOrder('status',$event)" scope="col"
+          class="column-sort">
+          <span>Status</span>
+        </th>
+        <th class="text-center" *ngIf="!(isArchived$ | async)">
+          <span>Action</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let packages of packagess;trackBy: trackBy.bind(this,'packageId');let i= index">
+        <ng-container *ngIf="!packages.isEdit">
+          <tr>
+            <td>
+              <div *ngIf="packages.priority > 0" class="priority-number">{{packages.priority}}</div>
+            </td>
+            <td>
+              <span class="text-break">{{packages.barcode ? packages.barcode : '-'  }}</span>
+            </td>
+            <td>
+              <span class="text-break">
+                {{packages.upiNumber ? packages.upiNumber : '-'}}
+              </span>
+            </td>
+            <td>
+              {{packages.toUserName}}</td>
+            <td>
+              {{packages.packageFrom}}</td>
+            <td>
+              {{packages.deliveryServiceFrom}}</td>
+            <td>
+              {{packages.building}}</td>
+            <td>
+              {{packages.floor}}</td>
+            <td>
+              {{packages.deskLocation}}</td>
+            <td>
+              <span class="text-break">
+                {{packages.deliveryDate | slotDateFormatPipe:packages.slotTime }}
+              </span>
+            </td>
+            <td>
+              {{packages.status}}</td>
+            <td *ngIf="!(isArchived$ | async)">
+              <div ngbDropdown container="body" class="data-tbl-dropdown text-center">
+                <button [disabled]='isSuperUser || packages.isDelivered' type="button"
+                  class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+                  <span class="icon icon-more"></span>
+                </button>
+                <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                  <button *hasPermission="packagesEnum.update" class="dropdown-item" ngbDropdownItem
+                    (click)="onEdit(packages)">
+                    <span class="icon icon-edit mr-2"></span>
+                    <span>Edit</span>
+                  </button>
+                  <button *hasPermission="packagesEnum.delete" class="dropdown-item" ngbDropdownItem
+                    (click)="openModal(packages)">
+                    <span class="icon icon-delete mr-2"></span>
+                    <span>Delete</span>
+                  </button>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="packages.isEdit">
+          <tr>
+            <td colspan="12">
+              <app-packages-form-ui [packages]="packages" [userList]="userList" [userDetails]="userDetails"
+                [deliveryServiceList]="deliveryServiceList" [slots]="slots" (loadSlots)="loadSlotList($event)"
+                (user)="getUser($event)" class="table-inline-form" style="display: contents;"
+                (update)="updatePackage($event)" (closeForm)="onCancel(packages)">
+              </app-packages-form-ui>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+      <!-- colspan base on total column -->
+      <tr *ngIf="!packagess || packagess.length === 0">
+        <td colspan="12" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

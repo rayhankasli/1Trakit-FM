@@ -1,0 +1,48 @@
+<div class="modal d-block" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div cdkTrapFocus class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header p-3 bg-light d-flex align-items-center justify-content-between">
+        <h5 class="modal-title mb-0" id="exampleModalLabel">Pictures</h5>
+        <button type="button" class="btn btn-transparent p-0" (click)="dismiss()">
+          <span class="icon icon-times"></span>
+        </button>
+      </div>
+      <div class="modal-body p-3 gallery-content">
+        <div id="printableImage" class="d-flex justify-content-center gallery-images">
+
+          <!-- show loader until image loaded -->
+          <div *ngIf="isLoading" class="spinner-wrapper d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-secondary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+          <img class="align-items-center justify-content-center" [src]="picturePath" alt="Gallery image"
+            (load)="hideLoader()" (error)="hideLoader()">
+
+        </div>
+        <div class="gallery-navigation">
+          <button type="button" class="btn btn-icon btn-secondary text-decoration-none prev-btn"
+            [disabled]="pictureIndex === 0" (click)="previousImage($event)">
+            <span class="icon icon-arrow-prev icon-1x"></span>
+          </button>
+          <button type="button" class="btn btn-icon btn-secondary text-decoration-none next-btn"
+            [disabled]="pictureIndex === pictures.length - 1" (click)="nextImage($event)">
+            <span class="icon icon-arrow-next icon-1x"></span>
+          </button>
+        </div>
+      </div>
+      <ng-container *ngIf="enableDetail||enablePrint">
+        <div class="px-3 py-2 border-top d-flex align-items-center justify-content-between">
+          <h6 *ngIf="enableDetail" class="m-0" id="exampleModalLabel">Type: {{description}}</h6>
+          <button *ngIf="enablePrint" [disabled]="isLoading" class="btn btn-outline-light d-flex align-items-center 
+          justify-content-center btn-icon my-0 mr-0 ml-auto" title="Print" type="button" ngxPrint
+            [useExistingCss]="true" [printTitle]="description" printSectionId="printableImage">
+            <span class="icon icon-print icon-1x text-gray-dark"></span>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

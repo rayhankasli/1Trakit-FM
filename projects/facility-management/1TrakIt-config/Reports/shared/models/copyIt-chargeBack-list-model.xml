@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<models>
+    <model name="ChargeBackResponse" group="ChargeBackResponse">
+		    <properties> 
+			<property name="Job" jsonProperty="job" type="number"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Job"  >
+			</property>			
+			<property name="Date" jsonProperty="date" type="string"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Date"  >
+			</property>			
+			<property name="AccountNumber" jsonProperty="accountNumber" type="string"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="AccountNumber"  >
+			</property>			
+			<property name="Requestor" jsonProperty="requestor" type="string"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Requestor"  >
+			</property>			
+			<property name="Description" jsonProperty="description" type="string"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Description"  >
+			</property>			
+			<property name="Cost" jsonProperty="cost" type="string"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Cost"  >
+			</property>			
+			<property name="Total" jsonProperty="total" type="string"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Total"  >
+			</property>			
+		    </properties>
+    </model>		
+</models>

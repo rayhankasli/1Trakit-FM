@@ -1,0 +1,5 @@
+<div class="flex-grow-1 overflow-hidden">
+  <app-copyit-default-values-form-ui [baseResponse]="baseResponse$ | async" [userDetail]="userDetails$ | async"
+    (save)="saveDefaultConfigurations($event)" (getUserDetail)="getUserDetailByUserId($event)">
+  </app-copyit-default-values-form-ui>
+</div>

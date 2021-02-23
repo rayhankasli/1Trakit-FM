@@ -1,0 +1,13 @@
+<nav aria-label="breadcrumb">
+  <ol *ngIf="crumbs.length" class="breadcrumb bg-transparent m-0 p-0">
+    <li *ngFor="let crumb of crumbs; let last = last; let first = first;trackBy:trackBy.bind(this,'text')" [ngClass]="{ 'active': last }"
+      class="breadcrumb-item">
+      <a *ngIf="!last" [title]="crumb.text" [routerLink]="crumb.path">
+        {{ crumb.text }}
+      </a>
+      <span *ngIf="last">
+        {{ crumb.text }}
+      </span>
+    </li>
+  </ol>
+</nav>

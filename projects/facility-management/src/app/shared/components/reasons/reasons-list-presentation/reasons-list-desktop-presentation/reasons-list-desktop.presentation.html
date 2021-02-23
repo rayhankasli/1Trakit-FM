@@ -1,0 +1,62 @@
+<div class="overflow-y-auto overflow-x-hidden border rounded table-max-height">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 180px">
+      <col style="width: auto">
+      <col style="width: 40px">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th>
+          <span>{{ 'REASON'  }}</span>
+        </th>
+        <th>
+          <span>{{ 'REASON DESCRIPTION'  }}</span>
+        </th>
+        <th>
+          <span>{{ 'Actions'  }}</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr app-reasons-form-ui class="table-inline-form" *ngIf="addNewReasonsForm" style="display: contents;"
+        [lastReasonTaskNotCompleted]="lastReasonTaskNotCompleted" [lastReasonNotDelivered]="lastReasonNotDelivered"
+        [lastReasonNotPicked]="lastReasonNotPicked" (add)="saveReasons($event)"
+        (closeReasonForm)="closeReasonForm($event)">
+      </tr>
+
+      <ng-container *ngFor="let reason of reasons;trackBy: trackBy.bind(this,'reasonId');let i= index">
+        <tr *ngIf="!reason.isEditable">
+          <td>{{reason.reason}}</td>
+          <td>{{reason.description}}</td>
+          <td class="text-center">
+            <div ngbDropdown container="body" class="data-tbl-dropdown">
+              <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+                <span class="icon icon-more"></span>
+              </button>
+              <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                <button *hasPermission="permissions.update" type="button" class="dropdown-item" ngbDropdownItem
+                  (click)="editReasons(reason)">
+                  <span class="icon icon-edit mr-2"></span>
+                  <span>{{'Edit'}}</span>
+                </button>
+                <button *hasPermission="permissions.delete" type="button" class="dropdown-item" ngbDropdownItem (click)="openModal(reason)">
+                  <span class="icon icon-delete mr-2"></span>
+                  <span>{{'Delete'}}</span>
+                </button>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr app-reasons-form-ui *ngIf="reason.isEditable" class="table-inline-form" style="display: contents;"
+          [reasons]="reason" (update)="updateReasons($event)" (closeReasonForm)="closeReasonForm($event)">
+        </tr>
+      </ng-container>
+      <!-- colspan base on total column -->
+      <tr *ngIf="(!reasons || reasons.length === 0) && !addNewReasonsForm">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

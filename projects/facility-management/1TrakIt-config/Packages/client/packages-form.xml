@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="Packages" module="Packages" breadcrumbKey="Packages"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrakIt-config/Packages/shared/models/packages-model.xml" />
+    <xi:include href="./1TrakIt-config/Packages/shared/controllers/packages-controller.xml" />
+	<form requestModel="Packages" responseModel="" controller="Packages">
+		<input type="text" bind="upiNumber"></input>
+		<input type="dropdown" bind="toUserId"></input>
+		<input type="text" bind="packageFrom"></input>
+		<input type="dropdown" bind="deliveryServiceId"></input>
+		<input type="text" bind="building"></input>
+		<input type="text" bind="floor"></input>
+		<input type="text" bind="desktopLocation"></input>
+		<input type="dropdown" bind="slotId"></input>
+    </form>
+</component>

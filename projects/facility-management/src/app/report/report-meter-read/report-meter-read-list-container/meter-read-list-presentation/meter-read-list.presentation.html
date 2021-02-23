@@ -1,0 +1,181 @@
+  <trackit-page-actions>
+    <trackit-search (searchText)="onSearch($event)"></trackit-search>
+  </trackit-page-actions>
+  <div
+    class="floating-form d-flex flex-shrink-0 align-items-start justify-content-end px-3 mb-2"
+    [formGroup]="filterFormGroup"
+  >
+    <div class="form-group d-flex align-items-center mb-1 mr-n2 px-2">
+      <ng-select
+        appendTo="body"
+        [items]="years"
+        formControlName="year"
+        bindLabel="year"
+        bindValue="year"
+        (change)="changeYear()"
+        [clearable]="false"
+        selectFloatingLabel
+        class="form-control ng-select-sm float-outline p-0"
+        [searchable]="false"
+      >
+      </ng-select>
+      <label for="year" class="floating-form-label"> Year </label>
+    </div>
+    <div class="form-group d-flex align-items-center mb-1 mr-n2 px-2">
+      <ng-select
+        appendTo="body"
+        selectFloatingLabel
+        [items]="monthList"
+        bindLabel="name"
+        bindValue="id"
+        [clearable]="false"
+        [multiple]="true"
+        class="form-control ng-select-lg float-outline p-0 ng-select-panel-w-auto"
+        formControlName="months"
+        (change)="changeMonth()"
+        [searchable]="false"
+        [closeOnSelect]="false"
+      >
+        <ng-template
+          ng-option-tmp
+          let-item="item"
+          let-item$="item$"
+          let-index="index"
+        >
+          <div class="custom-control flex-shrink-0 custom-checkbox">
+            <input
+              type="checkbox"
+              [checked]="item$.selected"
+              id="item-{{index}}"
+              class="custom-control-input"
+            />
+            <label class="form-check-label ml-2 custom-control-label text-wrap"
+              >{{item.name}}</label
+            >
+          </div>
+        </ng-template>
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <div
+            class="ng-value"
+            *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'')"
+          >
+            <span class="ng-value-label">{{item.name}}</span>
+          </div>
+          <div class="ng-value" *ngIf="items.length > 1">
+            <span class="ng-value-label">+{{items.length - 1}}</span>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="months" class="floating-form-label"> Months </label>
+    </div>
+    <div class="form-group d-flex align-items-center mb-1 px-2">
+      <ng-select
+        #jobListSelect
+        id="job"
+        [items]="fleetDetailList"
+        groupBy="fleetDetail"
+        appendTo="body"
+        bindLabel="manufacturer"
+        bindValue="assetId"
+        [multiple]="true"
+        formControlName="fleets"
+        (change)="changeFleet()"
+        [selectableGroup]="false"
+        [selectableGroupAsModel]="false"
+        [closeOnSelect]="false"
+        [clearable]="false"
+        class="form-control ng-select-lg float-outline p-0 ng-select-panel-w-auto"
+        selectFloatingLabel
+        [searchable]="false"
+      >
+        <ng-template ng-header-tmp>
+          <div
+            class="input-group input-group-sm rounded-pill border ng-custom-search"
+          >
+            <input
+              type="text"
+              autofocus
+              class="form-control border-0 pr-0"
+              (input)="jobListSelect.filter($event.target.value)"
+              placeholder="Search"
+              aria-label="Search"
+              aria-describedby="button-addon"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn bg-transparent text-gray"
+                type="button"
+                id="button-addon"
+              >
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template
+          ng-optgroup-tmp
+          let-item="item"
+          let-item$="item$"
+          let-index="index"
+        >
+          <span class="font-weight-semibold">{{item.companyName}}</span>
+        </ng-template>
+
+        <ng-template
+          ng-option-tmp
+          let-item="item"
+          let-item$="item$"
+          let-index="index"
+        >
+          <div class="custom-control custom-checkbox">
+            <input
+              type="checkbox"
+              [checked]="item$.selected"
+              id="item-{{index}}"
+              class="custom-control-input"
+            />
+            <label class="form-check-label ml-2 custom-control-label text-wrap"
+              >{{ item.manufacturer }} | {{item.assetNo}} |
+              {{item.modelNo}}</label
+            >
+          </div>
+        </ng-template>
+
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <div
+            class="ng-value"
+            *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'')"
+          >
+            <span class="ng-value-label">{{item.manufacturer}}</span>
+          </div>
+          <div class="ng-value" *ngIf="items.length > 1">
+            <span class="ng-value-label">+{{items.length - 1}}</span>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="fleets" class="floating-form-label"> Fleets </label>
+    </div>
+    <button
+      type="button"
+      class="btn btn-outline-secondary d-flex align-items-center my-1 mr-2"
+      (click)="searchData()"
+      title="Search"
+    >
+      <span>Search</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary d-flex align-items-center my-1"
+      (click)="exportExcel()"
+      title="Export as Excel" *hasPermission="reportsMeterReadEnum.reportMeterReadsExportExcel"
+      [disabled]="!baseResponse?.length"
+    >
+      <span>Export as Excel</span>
+    </button>
+  </div>
+
+  <!-- Data-table mobile view or desktop view -->
+  <app-meter-read-list-desktop-presentation [meterReads]="baseResponse">
+  </app-meter-read-list-desktop-presentation>
+

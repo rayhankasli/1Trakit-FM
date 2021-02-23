@@ -1,0 +1,16 @@
+<div class="w-100 h-100 d-flex flex-column overflow-hidden">
+  <div class="tab-container mb-3 flex-shrink-0">
+    <ul class="nav nav-tabs px-3">
+      <li class="nav-item" *hasPermission="copyItConfigurationOptionsEnum.view">
+        <a class="nav-link" routerLinkActive="active" routerLink="copyit-options">Configure Copy It Options</a>
+      </li>
+      <li class="nav-item" *hasPermission="copyItDefaultConfigurationEnum.view">
+        <a class="nav-link" routerLinkActive="active" routerLink="default-values">Copy It Default Values</a>
+      </li>
+      <li class="nav-item" *hasPermission="copyItManageAccount.view">
+        <a class="nav-link" routerLinkActive="active" routerLink="copyit-manage-account-list">Manage Account Number</a>
+      </li>
+    </ul>
+  </div>
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,14 @@
+<button (keydown.backspace)="clearValue()" [disabled]="disabled" type="button" class="form-control text-left" [popover]="popTemplate" #ptime="bs-popover"
+    [popoverContext]="{ctrl:control}" [outsideClick]="true">
+    {{!meridian ? control.value : (control.value | ngbTimePicker)}}
+    <ng-content select="[ctrlLabel]"> </ng-content>
+</button>
+<input preventText floatingLabel tabindex="-1" type="text" class="form-control time-picker" [id]="formControlName"
+    [formControl]="control" />
+<ng-content> </ng-content>
+
+<ng-template #popTemplate let-ctrl="ctrl">
+    <ngb-timepicker #timePicker [formControl]="ctrl" [meridian]="meridian" [spinners]="spinners" [hourStep]="hourStep"
+        [minuteStep]="minuteStep">
+    </ngb-timepicker>
+</ng-template>

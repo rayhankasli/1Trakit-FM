@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<controller name="MeterRead">
+    <actions>
+        <action verb="Get" name="getMeterReadsReports" route="meterRead">
+            <response type="List" typeOf="MeterRead" />
+        </action>
+    </actions>
+</controller>

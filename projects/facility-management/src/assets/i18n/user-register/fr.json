@@ -1,0 +1,82 @@
+{
+    "FULL_NAME": {
+        "LABEL": "Full Name FR",
+        "PLACEHOLDER": "Full Name FR",
+        "REQUIRED": "Full Name is required. FR",
+        "MINLENGTH": "min 2 required FR",
+        "MAXLENGTH": "max 50 only FR",
+        "REGEX": "character only"
+    },
+    "USER_NAME": {
+        "LABEL": "User Name FR",
+        "PLACEHOLDER": "User Name FR",
+        "REQUIRED": "User Name is required. FR",
+        "MINLENGTH": "min 2 required FR",
+        "MAXLENGTH": "max 50 only FR",
+        "REGEX": "character only in User name"
+    },
+    "EMAIL": {
+        "LABEL": "Email FR",
+        "PLACEHOLDER": "Email FR",
+        "REQUIRED": "Email is required FR",
+        "REGEX": "enter valid email"
+    },
+    "PASSWORD_HASH": {
+        "LABEL": "Password FR",
+        "PLACEHOLDER": "Password FR",
+        "REQUIRED": "Password is required. FR",
+        "MINLENGTH": " FR",
+        "MAXLENGTH": " FR",
+        "REGEX": "enter strong password"
+    },
+    
+    "CONFIRM_PASSWORD": {
+        "LABEL": "Confirm Password FR",
+        "PLACEHOLDER": "Confirm Password FR",
+        "REQUIRED": "Confirm Password is required. FR",
+        "REGEX": "enter same password "
+    },
+    "PHONE_NUMBER": {
+        "LABEL": "Phone Number FR",
+        "PLACEHOLDER": "Phone number FR",
+        "REQUIRED": "Phone Number is required. FR",
+        "REGEX": "Enter valid phone number."
+    },
+    
+    "TERM_CONDITION":{
+        "CHECKED":"Please accept terms & conditions"
+    },
+    "CAPTCHA":{
+        "CHECKED":"Clear captch first"
+    },
+    "LANGUAGE":{
+        "LABEL": "Language FR",
+        "PLACEHOLDER": "Select Language FR",
+        "REQUIRED": "LANGUAGE is required."
+    },
+    "InvalidClient": "Invalid client id: FR",
+
+    "PassConfNotSame": "Password and confirm password do not match. FR",
+
+    "DuplicateUsername": "Username is already taken. FR",
+
+    "DuplicateEmail": "Email is already taken. FR",
+
+    "DuplicatePhone": "Mobile number already exist. FR",
+
+    "PasswordLength": "Minimum Password Length Required is {0} FR",
+
+    "PasswordLowercase": "Password must have atleast one lowercase character. FR",
+
+    "PasswordUppercase": "Password must have atleast one uppercase character. FR",
+
+    "PasswordDigit": "Password must have atleast one number character. FR",
+
+    "PasswordSymbol": "Password must have atleast one special character. FR",
+
+    "PasswordSameChar": "Passwords cannot be all the same character. FR",
+
+    "PasswordOldSame": "Can not reuse old password. FR",
+
+    "UnableLoadUser": "Unable to load user"
+}

@@ -1,0 +1,94 @@
+<div #content class="position-relative bg-white {{isFullScreenChart ? 'p-3 d-flex flex-column full-screen' : ''}}">
+  <div *ngIf="isEmpty" class="empty-data-container d-flex align-items-center justify-content-center">
+    No Data
+  </div>
+  <div [hidden]="isEmpty" #barChartContainer class="{{isFullScreenChart ? 'flex-grow-1' : 'h-100'}}"></div>
+
+  <!-- Next Previous Button -->
+  <div class="d-flex align-items-center justify-content-between pt-2">
+    <ng-container *ngIf="!isFullScreenChart">
+      <div class="d-flex align-items-center">
+        <button type="button" #chartPrevBtn
+          class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center mr-2"
+          (click)="clickPrevButton()">
+          <span class="icon icon-arrow-prev"></span>
+        </button>
+        <button type="button" #chartNextBtn
+          class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center"
+          (click)="clickNextButton()">
+          <span class="icon icon-arrow-next"></span>
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- Fullscreen Button -->
+    <ng-container *ngIf="!isFullScreenChart && !isEmpty">
+      <button type="button"
+        class="btn btn-outline-secondary btn-sm btn-fullscreen d-flex align-items-center justify-content-center"
+        (click)="openFullscreen()">
+        <span class="icon icon-fullscreen"></span>
+      </button>
+    </ng-container>
+
+    <!-- Fullscreen Close Button -->
+    <ng-container *ngIf="isFullScreenChart">
+      <button type="button"
+        class="btn btn-outline-secondary btn-sm btn-fullscreen d-flex align-items-center justify-content-center ml-auto"
+        (click)="closeFullscreen();">
+        <span class="icon icon-collapse"></span>
+      </button>
+    </ng-container>
+  </div>
+
+  <!-- Chart-legend -->
+  <div class="chart-legend flex-shrink-0 d-flex justify-content-center flex-wrap mt-3">
+    <div *ngIf="!isAnnotation" class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-new flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-3 flex-grow-1">New</span>
+      </label>
+    </div>
+    <div class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-assigned flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-3 flex-grow-1">Assigned</span>
+      </label>
+    </div>
+    <div class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-in-progress flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-3 flex-grow-1">In Progress</span>
+      </label>
+    </div>
+    <div class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-completed flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-3 flex-grow-1">Completed</span>
+      </label>
+    </div>
+    <div *ngIf="!isAnnotation" class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-re-open flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-3 flex-grow-1">Re Open</span>
+      </label>
+    </div>
+    <div class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-on-hold flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-3 flex-grow-1">On-Hold</span>
+      </label>
+    </div>
+    <div class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-request-for-information flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-3 flex-grow-1">Request For Information</span>
+      </label>
+    </div>
+    <div class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-close flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-3 flex-grow-1">Close</span>
+      </label>
+    </div>
+  </div>
+</div>

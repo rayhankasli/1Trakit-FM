@@ -1,0 +1,155 @@
+<ng-container *ngIf="isAddVisitorLog">
+  <div class="card mb-3 overflow-hidden w-100">
+    <div class="card-body px-2 py-3">
+      <trakit-visitor-log-form-ui style="display: contents;" [masterData]="masterData" (add)="addVisitorLog($event)"
+        (update)="updateVisitorLog($event)" (cancel)="onCancel()">
+      </trakit-visitor-log-form-ui>
+    </div>
+  </div>
+</ng-container>
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 120px;">
+      <col style="width: 90px;">
+      <col style="width: 140px;">
+      <col style="width: 160px;">
+      <col style="width: 160px;">
+      <col style="width: 100px;">
+      <col *ngIf="!isHistory" style="width: 110px;">
+      <col style="width: 220px;">
+      <col style="width: 40px;">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th appSortingOrder [column]="'visitorName'" (orderType)="onSortOrder('visitorName',$event)" scope="col"
+          class="column-sort">
+          <span>Visitor Name</span>
+        </th>
+        <th appSortingOrder [column]="'identificationProofType'"
+          (orderType)="onSortOrder('identificationProofType',$event)" scope="col" class="column-sort">
+          <span>ID Type</span>
+        </th>
+        <th appSortingOrder [column]="'employeeName'" (orderType)="onSortOrder('employeeName',$event)" scope="col"
+          class="column-sort">
+          <span>Employee Name</span>
+        </th>
+        <th appSortingOrder [column]="'checkInDateTime'" (orderType)="onSortOrder('checkInDateTime',$event)" scope="col"
+          class="column-sort">
+          <span>Checked In At</span>
+        </th>
+        <th appSortingOrder [column]="'checkOutDateTime'" (orderType)="onSortOrder('checkOutDateTime',$event)"
+          scope="col" class="column-sort">
+          <span>Checked Out At</span>
+        </th>
+        <th appSortingOrder [column]="'badgeNo'" (orderType)="onSortOrder('badgeNo',$event)" scope="col"
+          class="column-sort">
+          <span>Badge No</span>
+        </th>
+        <th *ngIf="!isHistory" appSortingOrder [column]="'status'" (orderType)="onSortOrder('status',$event)"
+          scope="col" class="column-sort">
+          <span>Status</span>
+        </th>
+        <th appSortingOrder [column]="'purposeOfVisit'" (orderType)="onSortOrder('purposeOfVisit',$event)" scope="col"
+          class="column-sort">
+          <span>Purpose</span>
+        </th>
+        <th>
+          <span>actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let visitorLog of visitorLogList;trackBy: trackBy.bind(this,'visitorId');let i= index">
+        <ng-container *ngIf="!visitorLog.isEdit">
+          <tr>
+            <td>
+              <span class="text-truncate visitor-name" container="body" ngbTooltip="{{visitorLog.visitorName}}">
+                {{visitorLog.visitorName}}
+              </span>
+            </td>
+            <td>{{visitorLog.identificationProofType}}</td>
+            <td>
+              <span class="text-truncate employee-name" ngbTooltip="{{visitorLog.employeeName}}">
+                {{visitorLog.employeeName}}
+              </span>
+            </td>
+            <td>{{visitorLog.checkInDate | date : dateFormat}}</td>
+            <td>{{visitorLog.checkOutDate ? (visitorLog.checkOutDate | date : dateFormat) : '-'}}</td>
+            <td>{{visitorLog.badgeNo ? visitorLog.badgeNo : '-' }}</td>
+            <td *ngIf="!isHistory">{{visitorLog.status}}</td>
+            <td>
+              <span class="text-truncate data-desc" ngbTooltip="{{visitorLog.purposeOfVisit}}">
+                {{visitorLog.purposeOfVisit}}
+              </span>
+            </td>
+            <td>
+              <div ngbDropdown container="body" class="data-tbl-dropdown">
+                <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+                  <span class="icon icon-more"></span>
+                </button>
+                <ul *ngIf="!(isArchived$ | async)" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                  <button type="button" class="dropdown-item" ngbDropdownItem (click)="onEdit(visitorLog)"
+                    *hasPermission="visitorLogEnum.updateVisitor">
+                    <span class="icon icon-edit mr-2"></span>
+                    <span>Edit</span>
+                  </button>
+                  <button type="button" class="dropdown-item" ngbDropdownItem (click)="openModal(visitorLog)"
+                    *hasPermission="visitorLogEnum.deleteVisitor">
+                    <span class="icon icon-delete mr-2"></span>
+                    <span>Delete</span>
+                  </button>
+                  <button type="button" class="dropdown-item" ngbDropdownItem (click)="uploadPictures(visitorLog)">
+                    <span class="icon icon-cloud-upload icon-1x mr-2"></span>
+                    <span>Upload Picture</span>
+                  </button>
+                  <div hidden [formGroup]="uploadPictureForm">
+                    <input id="uploadPicture" accept=".jpg, .jpeg, .png" type="file" (change)="onFileChange($event)"
+                      hidden>
+                    <label for="uploadPicture" class="dropdown-item d-flex align-items-center mb-0">
+                      <span class="icon icon-cloud-upload icon-1x mr-2"></span>
+                      <span>Upload Picture</span>
+                    </label>
+                  </div>
+                  <ng-container *ngIf="visitorLog.actualImageName">
+                    <button (click)="previewPicture(visitorLog)" type="button" class="dropdown-item" ngbDropdownItem>
+                      <span class="icon icon-preview icon-1x mr-2"></span>
+                      <span>Preview Picture</span>
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="visitorLog.actualImageName">
+                    <button (click)="downloadVisitorPicture(visitorLog)" type="button" class="dropdown-item"
+                      ngbDropdownItem>
+                      <span class="icon icon-download-document icon-1x mr-2"></span>
+                      <span>Download Picture</span>
+                    </button>
+                  </ng-container>
+                </ul>
+                <ul *ngIf="(isArchived$ | async)" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                  <button type="button" class="dropdown-item" ngbDropdownItem (click)="onEdit(visitorLog)">
+                    <span class="icon icon-preview mr-2"></span>
+                    <span>{{'View'}}</span>
+                  </button>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="visitorLog.isEdit">
+          <tr>
+            <td colspan="9">
+              <trakit-visitor-log-form-ui [masterData]="masterData" [visitorLog]="visitorLog"
+                (add)="addVisitorLog($event)" (update)="updateVisitorLog($event)" (cancel)="onCancel(visitorLog)">
+              </trakit-visitor-log-form-ui>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="!visitorLogList || visitorLogList.length === 0 && !isAddVisitorLog">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

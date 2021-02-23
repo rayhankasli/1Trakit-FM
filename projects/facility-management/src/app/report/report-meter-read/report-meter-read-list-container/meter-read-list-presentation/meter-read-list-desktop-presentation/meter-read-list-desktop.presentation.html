@@ -1,0 +1,179 @@
+<div class="d-flex flex-column h-100 overflow-hidden" *ngIf="meterReads?.length; else default">
+  <div class="flex-grow-1 px-3 h-100 overflow-auto">
+    <!-- Table loop start from below div -->
+    <div class="border meter-read-report-table rounded mb-4"
+      *ngFor="let meter of meterReadsData;trackBy: trackBy.bind(this,'assetId');let i= index">
+      <div class="text-center text-uppercase font-weight-medium py-2 border-bottom text-dark top-caption">
+        {{ meter.manufacturer }} {{ meter.modelNo }}
+      </div>
+      <div class="table-body flex-grow-1" [style.height.px]="meter?.meterReadDetail.length === 0 ? 92 : 150">
+        <cdk-virtual-scroll-viewport #ref *ngIf="meter.meterReadDetail" class="h-100" [ngClass]="{'overflow-y-scroll' : meter?.meterReadDetail.length < 3}" [itemSize]="10"
+          (scrolledIndexChange)="onMeterReadScroll(meter, ref)">
+          <table class="table data-tbl w-100 position-relative mb-0 border-0">
+            <thead>
+              <tr>
+                <th appSortingOrder [column]="'location'" (orderType)="onSortOrder('location',$event, meter)"
+                  scope="col" class="column-sort">
+                  <span>Department</span>
+                </th>
+                <th>
+                  <span>Model</span>
+                </th>
+                <th>
+                  <span>S/N</span>
+                </th>
+                <th>
+                  <span>ID</span>
+                </th>
+                <th>
+                  <span>Meter</span>
+                </th>
+                <th class="text-right">
+                  <span>Begin</span>
+                </th>
+                <th class="text-right">
+                  <span>End</span>
+                </th>
+                <th class="text-right total-column-width">
+                  <span>Copies</span>
+                </th>
+                <th appSortingOrder [column]="'cost'" (orderType)="onSortOrder('cost',$event, meter)" scope="col"
+                  class="column-sort text-right total-column-width">
+                  <span>Cost</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *cdkVirtualFor="let reads of meter.meterReadDetail;  templateCacheSize:0;trackBy: trackBy.bind(this,'location');let i= index; let first=first">
+                <td>{{reads.location}}</td>
+                <td>
+                  <div class="text-break">
+                    {{reads.model}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-break">
+                    {{reads.serialNo}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-break">
+                    {{reads.assetTagNo}}
+                  </div>
+                </td>
+                <td>{{reads.meter}}</td>
+                <td class="text-right">{{reads.begin}}</td>
+                <td class="text-right">{{reads.end}}</td>
+                <td class="total-column-width">
+                  <div class="text-right">{{reads.copies}}</div>
+                </td>
+                <td class="total-column-width">
+                  <div class="text-right">{{ '$' + (reads.cost | number:decimal) }}</div>
+                </td>
+              </tr>
+              <tr *ngIf="!meter.meterReadDetail || meter.meterReadDetail.length === 0">
+                <td colspan="9" class="text-muted text-center">
+                  No record found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </cdk-virtual-scroll-viewport>
+      </div>
+      <div class="table-footer">
+        <table class="table data-tbl w-100 position-relative mb-0 border-0">
+          <tfoot class="bg-light">
+            <tr>
+              <td colspan="6">
+                <div class="text-right">Total B&W Volumes ({{ meter.modelNo }}):</div>
+              </td>
+              <td class="total-column-width">
+                <div class="text-right">{{ meter.totalBwCopies }}</div>
+              </td>
+              <td class="total-column-width">
+                <div class="text-right">{{ '$' + ((meter?.totalBwCost || 0) | number:decimal) }}</div>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colspan="6">
+                <div class="text-right">Total Color Volumes ({{ meter.modelNo }}):</div>
+              </td>
+              <td class="total-column-width">
+                <div class="text-right">{{ meter.totalColorCopies }}</div>
+              </td>
+              <td class="total-column-width">
+                <div class="text-right">{{ '$' + ((meter?.totalColorCost || 0) | number:decimal) }}</div>
+              </td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Footer Area -->
+  <div class="flex-shrink-0 px-3">
+    <div class="total-content-area border-top border-dark py-3 col-12">
+      <div class="row">
+        <div class="col-4 col-xl-3 offset-xl-3">
+          <div class="row">
+            <div class="col-5 pr-0">
+              <div class="total-value-label text-uppercase bg-light rounded-left">
+                Total B&W:
+              </div>
+            </div>
+            <div class="col-7 pl-0">
+              <div class="total-values rounded-right d-flex align-items-center justify-content-between">
+                <div class="mr-2">{{ totalBwCopies }}</div>
+                <div class="total-cost text-success">{{ '$' + ((totalBwCost || 0) | number:decimal) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 col-xl-3">
+          <div class="row">
+            <div class="col-5 pr-0">
+              <div class="total-value-label text-uppercase bg-light rounded-left">
+                Total Color:
+              </div>
+            </div>
+            <div class="col-7 pl-0">
+              <div class="total-values rounded-right d-flex align-items-center justify-content-between">
+                <div class="mr-2">{{ totalColorCopies }}</div>
+                <div class="total-cost text-success">{{ '$' + ((totalColorCost || 0) | number:decimal) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 col-xl-3">
+          <div class="row">
+            <div class="col-5 pr-0">
+              <div class="total-value-label text-uppercase bg-light rounded-left">
+                Total:
+              </div>
+            </div>
+            <div class="col-7 pl-0">
+              <div class="total-values rounded-right d-flex align-items-center justify-content-between">
+                <div class="mr-2">{{ totalBwCopies + totalColorCopies }}</div>
+                <div class="total-cost text-success">{{ '$' + ((totalBwCost + totalColorCost || 0)  | number:decimal) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #default>
+  <div class="flex-grow-1 px-3 pb-3 h-100 overflow-hidden">
+    <div class="card h-100">
+      <div class="card-body p-3 d-flex align-items-center justify-content-center">
+        <h3 class="text-gray">No record found</h3>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,182 @@
+.cuppa-dropdown {
+  min-width: $multiselect-dropdown-width-sm;
+  @include media-breakpoint-up("xxl") {
+    min-width: $multiselect-dropdown-width;
+  }
+  .selected-list {
+    .c-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+      line-height: $line-height-base;
+      min-height: auto;
+      font-size: $dropdown-font-size;
+
+      @include media-breakpoint-down("xl") {
+        padding: $dropdown-item-padding-y-sm $dropdown-item-padding-x-sm;
+        font-size: $dropdown-item-font-size-sm;
+      }
+
+      c-icon {
+        display: none;
+      }
+
+      .countplaceholder {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        flex-shrink: 0;
+        margin-right: 15px;
+      }
+    }
+
+    .c-angle-down,
+    .c-angle-up {
+      position: relative;
+      top: auto;
+      right: auto;
+      transform: none;
+      width: 10px;
+      height: auto;
+      color: $gray-dark;
+    }
+    .c-angle-down {
+      @include caret-down();
+    }
+    .c-angle-up {
+      @include caret-right();
+    }
+
+    .c-list {
+      .c-token {
+        padding: 0;
+        margin-top: 0;
+        .c-label {
+          display: flex;
+          align-items: center;
+        }
+        label {
+          margin-bottom: 0;
+          max-width: $multiselect-selected-label-width;
+          @include text-truncate();
+        }
+      }
+    }
+  }
+
+  // Use !important to override the ng-multiselect library style. 
+  .dropdown-list {
+    padding: 0;
+    position: absolute !important; 
+    top: 0 !important;
+    left: 100% !important;
+    box-shadow: $box-shadow-sm;
+    border-radius: $border-radius;
+    min-width: $multiselect-dropdown-width;
+    width: auto !important;
+    margin-left: 1px;
+    .arrow-down,
+    .arrow-up {
+      display: none;
+    }
+
+    .list-area {
+      border: 0;
+      border-radius: $border-radius;
+    }
+
+    .select-all {
+      border-color: $border-color;
+      padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+      font-size: $dropdown-font-size;
+      cursor: pointer;
+      @include media-breakpoint-down("xl") {
+        padding: $dropdown-item-padding-y-sm $dropdown-item-padding-x-sm;
+        font-size: $dropdown-item-font-size-sm;
+      }
+      label {
+        font-weight: $font-weight-normal;
+      }
+    }
+
+    .lazyContainer {
+      overflow-x: hidden;
+      overflow-y: auto;
+      li {
+        padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+        font-size: $dropdown-font-size;
+        @include media-breakpoint-down("xl") {
+          padding: $dropdown-item-padding-y-sm $dropdown-item-padding-x-sm;
+          font-size: $dropdown-item-font-size-sm;
+        }
+        &:not(:last-child) {
+          border-bottom: 1px solid $border-color;
+        }
+        label {
+          font-weight: $font-weight-normal;
+          margin-bottom: 0;
+        }
+      }
+    }
+
+  }
+
+  // Multiselect Checkbox
+  .pure-checkbox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: $font-size-base * $line-height-base;
+    input[type="checkbox"] {
+      + label {
+        position: relative;
+        &::before {
+          box-sizing: border-box;
+          top: 50%;
+          left: 0;
+          width: $custom-control-indicator-size;
+          height: $custom-control-indicator-size;
+          background-color: $custom-control-indicator-bg;
+          border: $custom-control-indicator-border-color solid $custom-control-indicator-border-width;
+          @include box-shadow($custom-control-indicator-box-shadow);
+          margin: 0;
+          transform: translateY(-50%);
+        }
+        &::after {
+          top: 50%;
+          left: 0;
+          display: block;
+          width: $custom-control-indicator-size;
+          height: $custom-control-indicator-size;
+          background: no-repeat 50% / #{$custom-control-indicator-bg-size};
+          transform: translateY(-50%);
+          border: 0;
+          margin: 0;
+        }
+      }
+
+      &:checked {
+        + label {
+          &::before {
+            border-color: $custom-control-indicator-checked-border-color;
+            background-color: $custom-control-indicator-checked-bg;
+          }
+          &::after {
+            transform: translateY(-50%);
+            background-image: escape-svg($custom-checkbox-indicator-icon-checked);
+          }
+        }
+      }
+    }
+  }
+
+  .list-message {
+    padding: 9px 0;
+    font-size: $font-size-base * 0.8;
+    font-weight: $font-weight-normal;
+    color: $gray-600;
+  }
+}

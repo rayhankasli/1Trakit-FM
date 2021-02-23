@@ -1,0 +1,185 @@
+<div class="floating-form d-flex flex-wrap align-items-start justify-content-end flex-shrink-0 px-3 mb-2"
+  [formGroup]="filterFormGroup">
+  <div class="d-flex align-items-center form-group mb-1 mr-n2 px-2">
+    <ng-select #accountNumberSelect selectFloatingLabel formControlName="accountNo" id="accountNumber"
+      [items]="accountNumberList" groupBy="accountDetail" bindLabel="accountNo" bindValue="accountNo" [multiple]="true"
+      appendTo="body" [selectableGroup]="false" [selectableGroupAsModel]="false" [closeOnSelect]="false"
+      [clearable]="false" class="form-control ng-select-lg float-outline p-0 ng-select-panel-w-auto"
+      placeholder="Select Account Number" [searchable]="false" (change)="onChangeAccount()">
+      <ng-template ng-header-tmp>
+        <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+          <input type="text" autoFocus class="form-control border-0 pr-0"
+            (input)="accountNumberSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+            aria-describedby="button-addon">
+          <div class="input-group-append">
+            <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+              <span class="icon icon-search"></span>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- Start Group Section -->
+      <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+        <span class="font-weight-semibold">{{item.companyName}}</span>
+      </ng-template>
+      <!-- End Group Section -->
+
+      <!-- Start Item Section -->
+      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+          <label class="form-check-label ml-2 custom-control-label text-wrap">{{ item.accountNo }}</label>
+        </div>
+      </ng-template>
+      <!-- End Item Section -->
+
+      <!-- Start Showing textbox after one item + 1 Section -->
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'')">
+          <span class="ng-value-label">{{item.accountNo}}</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 1">
+          <span class="ng-value-label">+{{items.length - 1}}</span>
+        </div>
+      </ng-template>
+      <!-- End Section-->
+
+    </ng-select>
+    <label for="accountNumber" class="floating-form-label">
+      Account Number
+    </label>
+  </div>
+
+  <div class="d-flex align-items-center form-group mb-1 mr-n2 px-2">
+    <ng-select #jobListSelect selectFloatingLabel formControlName="job" id="job" [items]="jobList" groupBy="jobDetail"
+      bindLabel="jobName" bindValue="copyItId" [multiple]="true" appendTo="body" [selectableGroup]="false"
+      [selectableGroupAsModel]="false" [closeOnSelect]="false" [clearable]="false"
+      class="form-control ng-select-lg float-outline p-0 ng-select-panel-w-auto" placeholder="Select Job"
+      [searchable]="false" (change)="onChangeJobs()">
+      <ng-template ng-header-tmp>
+        <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+          <input type="text" autoFocus class="form-control border-0 pr-0"
+            (input)="jobListSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+            aria-describedby="button-addon">
+          <div class="input-group-append">
+            <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+              <span class="icon icon-search"></span>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- Start Group Section -->
+      <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+        <span class="font-weight-semibold">{{item.companyName}}</span>
+      </ng-template>
+      <!-- End Group Section -->
+
+      <!-- Start Item Section -->
+      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+          <label class="form-check-label ml-2 custom-control-label text-wrap">{{ item.jobName }}</label>
+        </div>
+      </ng-template>
+      <!-- End Item Section -->
+
+      <!-- Start Showing textbox after one item + 1 Section -->
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'')">
+          <span class="ng-value-label">{{item.jobName}}</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 1">
+          <span class="ng-value-label">+{{items.length - 1}}</span>
+        </div>
+      </ng-template>
+      <!-- End Section-->
+
+    </ng-select>
+    <label for="job" class="floating-form-label">
+      Jobs
+    </label>
+  </div>
+
+  <div class="d-flex flex-column mr-n2">
+    <div class="d-flex align-items-center form-group mb-1 px-2">
+      <input type="text" calendarFlotingLabel preventText bsDatepicker #dp="bsDatepicker" class="form-control datepicker-sm" 
+        id="startDate" placement="bottom" formControlName="startDate" autocomplete="off">
+      <label for="startDate" class="floating-form-label">
+        Start Date
+        <span class="asterisk">*</span>
+      </label>
+      <label class="icon icon-calendar date-picker-label text-gray mb-0" for="startDate"></label>
+    </div>
+    <div class="px-2" ngxErrors="startDate" [isFormSubmitted]="isFormSubmitted">
+      <div class="mt-0" ngxError="required" [when]="['touched','dirty']">
+        Start Date is required
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column">
+    <div class="d-flex align-items-center form-group mb-1 px-2">
+      <input type="text" calendarFlotingLabel preventText bsDatepicker #dp="bsDatepicker" class="form-control datepicker-sm" 
+        id="endDate" placement="bottom" formControlName="endDate" [minDate]="minDate" autocomplete="off">
+      <label for="endDate" class="floating-form-label">
+        End Date
+        <span class="asterisk">*</span>
+      </label>
+      <label class="icon icon-calendar date-picker-label text-gray mb-0" for="endDate"></label>
+    </div>
+    <div class="px-2" ngxErrors="endDate" [isFormSubmitted]="isFormSubmitted">
+      <div class="mt-0" ngxError="required" [when]="['touched','dirty']">
+        End Date is required
+      </div>
+    </div>
+  </div>
+
+  <button type="button" (click)="chargebackFilter()"
+    class="btn btn-outline-secondary d-flex align-items-center my-1 mr-2" title="Search">
+    <span>Search</span>
+  </button>
+
+  <button type="button" (click)="exportAsExcel()" class="btn btn-primary d-flex align-items-center my-1"
+    title="Export as Excel" *hasPermission="chargebackEnum.chargebackExportExcel"
+    [disabled]="baseResponse?.chargeBackData?.length <= 0">
+    <span>Export as Excel</span>
+  </button>
+</div>
+
+<div class="px-3 d-flex flex-column h-100 overflow-hidden">
+  <!-- Data-table mobile view or desktop view -->
+  <app-chargeback-list-desktop-presentation-ui [chargeBackLists]="baseResponse" [tablePropertyObj]="tablePropertyObj">
+  </app-chargeback-list-desktop-presentation-ui>
+
+  <!-- Data-table footer area -->
+  <div *ngIf="baseResponse?.chargeBackData?.length > 0 || tableProperty.pageNumber >= 1"
+    class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+    <!-- Data-table total entry status -->
+    <div class="data-tbl-status text-muted">
+      {{'Showing'}} {{tableProperty?.start}} {{'to'}} {{tableProperty?.end}} of {{baseResponse?.totalCount}} entries
+    </div>
+    <!-- Data-table pagination -->
+    <div class="data-tbl-pagination ml-auto d-flex">
+      <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon"
+        [disabled]="tableProperty.pageNumber === 0" type="button" (click)="onPageChange(tableProperty.pageNumber - 1)">
+        <span class="icon icon-arrow-prev"></span>
+      </button>
+      <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon ml-2"
+        [disabled]="tableProperty?.end >= baseResponse?.totalCount" type="button"
+        (click)="onPageChange(tableProperty.pageNumber + 1)">
+        <span class="icon icon-arrow-next"></span>
+      </button>
+      <!-- Data-table total entry display length -->
+      <select name="tbl-length" id="tbl-length" class="ml-2 form-control"
+        (change)="onPageSizeChange($event.target.value)">
+        <ng-container *ngFor="let item of pageSize;trackBy:trackBy.bind(this,'')">
+          <option [selected]='(tableProperty?.pageLimit===item)' value="{{item}}">
+            {{item}}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+</div>

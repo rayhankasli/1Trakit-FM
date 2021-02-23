@@ -1,0 +1,74 @@
+<trackit-page-actions>
+  <div class="d-flex align-items-center">
+    <trackit-user-filter class="d-flex" [clients]="clients" [globalClientId]="globalClientId"
+      (filterData)="onFilterChange($event)">
+    </trackit-user-filter>
+
+    <trackit-search (searchText)="onSearch($event)"></trackit-search>
+    <button type="button" class="btn btn-outline-light d-flex align-items-center justify-content-center btn-icon mr-2"
+      title="Download sample file" (click)="downloadFile()">
+      <span class="icon icon-download-document text-gray-dark"></span>
+    </button>
+    <div class="btn-group" ngbDropdown container="body">
+      <button type="button" title="Add New User" class="btn btn-primary d-flex align-items-center"
+        (click)="addUserForm()" *hasPermission="userEnum.add">
+        <span class="icon icon-add mr-2"></span>
+        <span>New User</span>
+      </button>
+      <!-- Enable bulk upload only if single client is selected -->
+      <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split pl-1 m-0"
+        id="dropdownMenuReference" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        data-reference="parent" ngbDropdownToggle *hasPermission="userEnum.bulkUpload"
+        [disabled]="!tableProperty.filter?.clientId">
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <div [formGroup]="bulkUploadForm" class="dropdown-menu dropdown-menu-right" ngbDropdownMenu autoClose="outside"
+        aria-labelledby="dropdownMenuReference">
+        <!-- Bulk upload file control hidden -->
+        <input [accept]="bulkUploadAcceptFiles" id="userImportFile" type="file" #file hidden
+          (change)="onFileChange($event)">
+        <label for="userImportFile" class="dropdown-item d-flex align-items-center mb-0" ngbDropdownItem>
+          <span class="icon icon-cloud-upload text-gray mr-2"></span>
+          <span>Bulk Upload</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</trackit-page-actions>
+
+<!-- Data-table mobile view or desktop view -->
+<trackit-user-list-desktop-ui [userList]="baseResponse?.userList" [isAddUser]="isAddUser" [userMasterData]="userMasterData"
+  [clients]="clients" [offices]="offices" [floors]="floors" [globalClientId]="globalClientId" (add)="addUser($event)"
+  (update)="updateUser($event)" (edit)="editUserForm($event)" (changeStatus)="onChangeStatus($event)"
+  (getOffices)="onClientChange($event)" (getFloors)="onOfficeChange($event)">
+</trackit-user-list-desktop-ui>
+
+<!-- Data-table footer area -->
+<div *ngIf="baseResponse?.userList?.length > 0 || tableProperty.pageNumber >= 1"
+  class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <!-- Data-table total entry status -->
+  <div class="data-tbl-status text-muted" *ngIf="baseResponse?.userList?.length > 0">
+    Showing {{tableProperty?.start}} to {{tableProperty?.end}} of {{baseResponse?.total}} entries
+  </div>
+  <!-- Data-table pagination -->
+  <div class="data-tbl-pagination ml-auto d-flex">
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon"
+      [disabled]="tableProperty.pageNumber === 0" type="button" (click)="onPageChange(tableProperty.pageNumber - 1)">
+      <span class="icon icon-arrow-prev"></span>
+    </button>
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon ml-2"
+      [disabled]="tableProperty?.end >= baseResponse?.total" type="button"
+      (click)="onPageChange(tableProperty.pageNumber + 1)">
+      <span class="icon icon-arrow-next"></span>
+    </button>
+    <!-- Data-table total entry display length -->
+    <select name="tbl-length" id="tbl-length" class="ml-2 form-control"
+      (change)="onPageSizeChange($event.target.value)">
+      <ng-container *ngFor="let item of pageSize;trackBy:trackBy.bind(this,'')">
+        <option [selected]='(tableProperty?.pageLimit===item)' value="{{item}}">
+          {{item}}
+        </option>
+      </ng-container>
+    </select>
+  </div>
+</div>

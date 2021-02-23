@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<controller name="WorkflowReport">
+    <actions>
+        <action verb="Get" name="getWorkflowReports" route="workflow">
+                <response type="List" typeOf="WorkflowReport" />
+        </action>
+    </actions>
+</controller>

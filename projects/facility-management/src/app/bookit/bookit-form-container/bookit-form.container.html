@@ -1,0 +1,20 @@
+<div class="card w-100">
+  <div class="card-body h-100 p-0 overflow-hidden">
+    <app-bookit-form-ui [bookit]="bookit$ | async" [clients]="clients$ | async" [clientMaster]="clientMaster$ | async"
+      [userList]="users$ | async" [weekDays]="weekDays$ | async" [userInfo]="userInfo$ | async"
+      [userList]="users$ | async" [rooms]="rooms$ | async" [conversationResponse]="conversationResponse$"
+      [roomLayouts]="roomLayouts$ | async" [bookitMasterData]="bookitMasterData$ | async"
+      [accountNumbers]="accountNumbers$ | async" [addSuccess]="addSuccess$ | async"
+      [updateAssignTo]="updateAssignTo$ | async" [successDownloadFile]="successDownloadFile$ | async"
+      [chatMessageSend]="chatMessageSend$ | async" [updatedStatus]="updatedStatus$ | async"
+      [updateSuccess]="updateSuccess$ | async" [successExportToPdf]="successExportToPdf$ | async"
+      [assignToAndStatusList]="assignToAndStatusList$ | async" (add)="addBookit($event)" (update)="updateBookit($event)"
+      (getUsersByClientId)="getUsersByClientId($event)" (getRooms)="getRooms($event)"
+      (setAssignTo)="setAssignTo($event)" (loadConversation)="loadConversation($event)"
+      (sendMessage)="sendMessage($event)" (getRoomLayouts)="getRoomLayouts($event)"
+      (getAccountNumber)="getAccountNumbers($event)" (setStatus)="setStatus($event)" [bookItId]="bookItId"
+      (printBookItPDF)="printBookItPDF($event)" (downloadFile)="downloadAttachedFile($event)"
+      (navigateBack)="navigateBack($event)" (exportToPDF)="exportToPDF()">
+    </app-bookit-form-ui>
+  </div>
+</div>

@@ -1,0 +1,374 @@
+<div class="d-flex flex-wrap align-items-start justify-content-end mb-2 flex-shrink-0 px-3">
+  <form [formGroup]="filterFormGroup" class="floating-form d-flex flex-wrap align-items-start">
+    <div class="d-flex flex-column mr-n2">
+      <div class="d-flex align-items-center form-group mb-1 px-2">
+        <input type="text" calendarFlotingLabel preventText bsDatepicker #dp="bsDatepicker"
+          class="form-control datepicker-sm" id="startDate" formControlName="startDate" autocomplete="off">
+        <label for="startDate" class="floating-form-label">
+          Start Date
+          <span class="asterisk">*</span>
+        </label>
+        <label class="icon icon-calendar date-picker-label text-gray mb-0" for="startDate"></label>
+      </div>
+      <div class="px-2" ngxErrors="startDate" [isFormSubmitted]="isFormSubmitted">
+        <div class="mt-0" ngxError="required" [when]="['touched','dirty']">
+          Start Date is required
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column">
+      <div class="d-flex align-items-center form-group mb-1 px-2">
+        <input type="text" calendarFlotingLabel preventText bsDatepicker #dp="bsDatepicker"
+          class="form-control datepicker-sm" id="endDate" formControlName="endDate" [minDate]="minDate"
+          autocomplete="off">
+        <label for="endDate" class="floating-form-label">
+          End Date
+          <span class="asterisk">*</span>
+        </label>
+        <label class="icon icon-calendar date-picker-label text-gray mb-0" for="endDate"></label>
+      </div>
+      <div class="px-2" ngxErrors="endDate" [isFormSubmitted]="isFormSubmitted">
+        <div class="mt-0" ngxError="required" [when]="['touched','dirty']">
+          End Date is required
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <button type="button" (click)="costRecoveryFilter()"
+    class="btn btn-outline-secondary d-flex align-items-center my-1 mr-2" title="Search">
+    <span>Search</span>
+  </button>
+
+  <button type="button" (click)="exportAsExcel()" class="btn btn-primary d-flex align-items-center my-1"
+    title="Export as Excel" *hasPermission="costRecoveryEnum.costRecoveryExportExcel"
+    [disabled]="costRecoveryList?.length <= 0">
+    <span>Export as Excel</span>
+  </button>
+
+</div>
+
+<div class="flex-grow-1 h-100 px-3 overflow-auto">
+
+  <!-- Start Card for Cost Recovery Details -->
+  <div *ngFor="let costRecovery of costRecoveryList; trackBy:trackBy.bind(this,'copyItId');let i= index"
+    class="card cost-recovery overflow-hidden mb-3">
+    <div class="cost-recovery-header d-flex align-items-center flex-shrink-0 border-bottom px-3 py-2">
+      <div class="d-flex align-items-center">
+        <label class="mb-0 mr-2 data-title">Requestor Name:</label>
+        <span class="data-value">{{costRecovery?.requestorName}}</span>
+      </div>
+      <div class="d-flex align-items-center ml-auto">
+        <div class="d-flex align-items-center mr-2 pr-2 border-right">
+          <label class="mb-0 mr-2 data-title">Date:</label>
+          <span class="data-value">{{costRecovery?.date | date:dateFormat}}</span>
+        </div>
+        <div class="d-flex align-items-center">
+          <label class="mb-0 mr-2 data-title">Month:</label>
+          <span class="data-value">{{startDate | date:monthYearFormat}}</span>
+          <span class="data-value mx-1" *ngIf="isMonthSame">To</span>
+          <span class="data-value" *ngIf="isMonthSame">{{endDate | date:monthYearFormat}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="cost-recovery-body flex-grow-1 overflow-auto px-3 py-2">
+      <div class="row">
+        <div class="col-12">
+          <label class="mb-2 mr-2 text-dark font-weight-semibold small">Job Request Details:</label>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">Description:</label>
+          <span class="data-value">{{costRecovery?.description}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">Account/Billing #:</label>
+          <span class="data-value">{{costRecovery?.accountBilling}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">Job Ticket #:</label>
+          <span class="data-value">{{costRecovery?.jobTicket}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">Printer:</label>
+          <span class="data-value">{{costRecovery?.printer}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">Date Due:</label>
+          <span class="data-value">{{costRecovery?.dateDue | date:dateFormat}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">Date Finished:</label>
+          <span class="data-value">{{costRecovery?.dateFinished | date:dateFormat}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">On Time Y/N:</label>
+          <span class="data-value">{{costRecovery?.onTime}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">Production Type:</label>
+          <span class="data-value">{{costRecovery?.productionType}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title"># Of Original Pages:</label>
+          <span class="data-value">{{costRecovery?.noPages}}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title"># Of Copies/Sets:</label>
+          <span class="data-value">{{costRecovery?.noCopies }}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title">Total Copies:</label>
+          <span class="data-value">{{costRecovery?.totalCopies }}</span>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap">
+          <label class="mb-0 mr-2 data-title text-success">Total Printing Charges:</label>
+          <span class="data-value text-success">{{'$' + (costRecovery?.totalCharges | number:decimal)}}</span>
+        </div>
+      </div>
+
+      <!-- Paper Size Section -->
+      <div class="row" *ngFor="let paperSize of costRecovery.paperSizeDetail;trackBy:trackBy.bind(this,'assetMeterId')">
+        <div class="col-12 border-top mt-3 pt-2">
+          <label class="mb-2 mr-2 text-dark font-weight-semibold small">{{paperSize?.paperSize}}:</label>
+        </div>
+        <div class="col-12">
+          <!-- Label row -->
+          <div class="row">
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Manufacturer:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Asset No:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Model No:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Starting Meter Reads:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Ending Meter Reads:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title"># No Pages:</label>
+            </div>
+          </div>
+
+          <!-- Data row -->
+          <div class="row" *ngFor="let meterRead of paperSize?.meterReads;trackBy:trackBy.bind(this,'')">
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{meterRead?.manufacturer}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{meterRead?.assetNo}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{meterRead?.modelNo}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{meterRead?.prevRead}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{meterRead?.currentRead}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{meterRead?.noOfPages }}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Start Scanning -->
+      <div class="row" *ngIf="costRecovery?.scanMeterReads?.length > 0">
+        <div class="col-12 border-top mt-3 pt-2">
+          <label class="mb-2 mr-2 text-dark font-weight-semibold small">Scanning:</label>
+        </div>
+        <div class="col-12">
+          <!-- Label row -->
+          <div class="row">
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Manufacturer:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Asset No:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Model No:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Starting Meter Reads:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title">Ending Meter Reads:</label>
+            </div>
+            <div class="col mb-xxl-1">
+              <label class="mb-0 data-title"># No Pages:</label>
+            </div>
+          </div>
+
+          <!-- Data row -->
+          <div class="row" *ngFor="let scanMeterRead of costRecovery?.scanMeterReads;trackBy:trackBy.bind(this,'id')">
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{scanMeterRead?.manufacturer}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{scanMeterRead?.assetNo}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{scanMeterRead?.modelNo}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{scanMeterRead?.scanPrevRead}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{scanMeterRead?.scanCurrentRead}}</span>
+            </div>
+            <div class="col mb-xxl-1">
+              <span class="data-value">{{scanMeterRead?.noOfPages}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" *ngIf="costRecovery?.finishingDetail?.length > 0">
+        <div class="col-12 border-top mt-3 pt-2">
+          <label class="mb-2 mr-2 text-dark font-weight-semibold small">Finishings:</label>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap"
+          *ngFor="let finishing of costRecovery?.finishingDetail;trackBy:trackBy.bind(this,'id')">
+          <label class="mb-0 mr-2 data-title">{{finishing?.title}}:</label>
+          <div class="d-flex justify-content-center data-value">
+            <span title="Quantity">{{finishing?.quantity | number:decimal}}</span>&nbsp;*&nbsp;
+            <span title="Rate">{{'$' + (finishing?.rate | number:decimal)}}</span>&nbsp;=&nbsp;
+            <span title="Charge" class="text-success">{{'$' + (finishing?.charges | number:decimal)}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="costRecovery?.paperStockDetail?.length > 0">
+        <div class="col-12 border-top mt-3 pt-2">
+          <label class="mb-2 mr-2 text-dark font-weight-semibold small">PaperStocks:</label>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap"
+          *ngFor="let paperStock of costRecovery?.paperStockDetail;trackBy:trackBy.bind(this,'id')">
+          <label class="mb-0 mr-2 data-title">{{paperStock?.title}}:</label>
+          <div class="d-flex justify-content-center data-value">
+            <span title="Quantity">{{paperStock?.quantity | number:decimal}}</span>&nbsp;*&nbsp;
+            <span title="Rate">{{'$' + (paperStock?.rate | number:decimal)}}</span>&nbsp;=&nbsp;
+            <span title="Charge" class="text-success">{{'$' + (paperStock?.charges | number:decimal)}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="costRecovery?.tabsDetail?.length > 0">
+        <div class="col-12 border-top mt-3 pt-2">
+          <label class="mb-2 mr-2 text-dark font-weight-semibold small">Tabs:</label>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap"
+          *ngFor="let tab of costRecovery?.tabsDetail;trackBy:trackBy.bind(this,'id')">
+          <label class="mb-0 mr-2 data-title">{{tab?.title}}:</label>
+          <div class="d-flex justify-content-center data-value">
+            <span title="Quantity">{{tab?.quantity | number:decimal}}</span>&nbsp;*&nbsp;
+            <span title="Rate">{{'$' + (tab?.rate | number:decimal)}}</span>&nbsp;=&nbsp;
+            <span title="Charge" class="text-success">{{'$' + (tab?.charges | number:decimal)}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="costRecovery?.envelopeDetail?.length > 0">
+        <div class="col-12 border-top mt-3 pt-2">
+          <label class="mb-2 mr-2 text-dark font-weight-semibold small">Envelopes:</label>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap"
+          *ngFor="let envelope of costRecovery?.envelopeDetail;trackBy:trackBy.bind(this,'id')">
+          <label class="mb-0 mr-2 data-title">{{envelope?.title}}:</label>
+          <div class="d-flex justify-content-center data-value">
+            <span title="Quantity">{{envelope?.quantity | number:decimal}}</span>&nbsp;*&nbsp;
+            <span title="Rate">{{'$' + (envelope?.rate | number:decimal)}}</span>&nbsp;=&nbsp;
+            <span title="Charge" class="text-success">{{'$' + (envelope?.charges | number:decimal)}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="costRecovery?.overSizeDetail?.length > 0">
+        <div class="col-12 border-top mt-3 pt-2">
+          <label class="mb-2 mr-2 text-dark font-weight-semibold small">OverSizes:</label>
+        </div>
+        <div class="col-xl-3 col-4 mb-1 d-flex flex-wrap"
+          *ngFor="let overSize of costRecovery?.overSizeDetail;trackBy:trackBy.bind(this,'id')">
+          <label class="mb-0 mr-2 data-title">{{overSize?.title}}:</label>
+          <div class="d-flex justify-content-center data-value">
+            <span title="Quantity">{{overSize?.quantity | number:decimal}}</span>&nbsp;*&nbsp;
+            <span title="Rate">{{'$' + (overSize?.rate | number:decimal)}}</span>&nbsp;=&nbsp;
+            <span title="Charge" class="text-success">{{'$' + (overSize?.charges | number:decimal)}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cost-recovery-footer flex-shrink-0 border-top px-3 py-2">
+      <div class="row">
+        <div class="col-10 border-right d-flex">
+          <span class="sub-title flex-shrink-0">(Quantity * Rate = Charges)</span>
+          <div class="d-flex flex-grow-1 justify-content-end">
+            <label class="mb-0 mr-2 text-dark font-weight-semibold small">Total Attribute Charges:</label>
+          </div>
+        </div>
+        <div class="col-2 text-center">
+          <label class="mb-0 mr-2 font-weight-medium small text-center text-success">{{'$' +
+            (costRecovery?.totalAttributeCharges | number:decimal)}}</label>
+        </div>
+        <div class="col-10 border-right">
+          <div class="d-flex justify-content-end">
+            <label class="mb-0 mr-2 text-dark font-weight-semibold small">Total Copies & Attribute Charges:</label>
+          </div>
+        </div>
+        <div class="col-2 text-center">
+          <label class="mb-0 mr-2 font-weight-semibold small text-center text-success">{{'$' +
+            (costRecovery?.totalCopiesAndAttrCharges | number:decimal)}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Card for Cost Recovery Details -->
+
+  <ng-container *ngIf="!costRecoveryList || costRecoveryList.length === 0">
+    <div class="pb-3 h-100">
+      <div class="d-flex align-items-center justify-content-center card h-100">
+        <span class="text-muted">No record found</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Data-table footer area -->
+  <div *ngIf="costRecoveryList?.length > 0 || tableProperty.pageNumber >= 1"
+    class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+    <!-- Data-table total entry status -->
+    <div class="data-tbl-status text-muted">
+      Showing {{tableProperty?.start}} to {{tableProperty?.end}} of {{costRecoverys?.totalCount}} entries
+    </div>
+
+    <!-- Data-table pagination -->
+    <div class="data-tbl-pagination ml-auto d-flex">
+      <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon"
+        [disabled]="tableProperty.pageNumber === 0" type="button" (click)="onPageChange(tableProperty.pageNumber - 1)">
+        <span class="icon icon-arrow-prev"></span>
+      </button>
+      <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon ml-2"
+        [disabled]="costRecoveryList?.length < tableProperty.pageLimit" type="button"
+        (click)="onPageChange(tableProperty.pageNumber + 1)">
+        <span class="icon icon-arrow-next"></span>
+      </button>
+      <!-- Data-table total entry display length -->
+      <select name="tbl-length" id="tbl-length" class="ml-2 form-control"
+        (change)="onPageSizeChange($event.target.value)">
+        <ng-container *ngFor="let item of pageSize;trackBy:trackBy.bind(this,'')">
+          <option [selected]='(tableProperty?.pageLimit===item)' value="{{item}}">
+            {{item}}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+
+</div>

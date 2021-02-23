@@ -1,0 +1,6 @@
+<div class="d-flex flex-column h-100">
+    <app-report-meter-read-presentation [clients]="clients$ | async" [baseResponse]="meterReads$ | async"
+        [years]="yearList$ | async" [fleetDetailList]="fleetDetailList$ | async" (getMeterRead)="getMeterReads($event)"
+        (getFleetDetailById)="getFleetDetail($event)" (exportExcelData)="exportExcel($event)">
+    </app-report-meter-read-presentation>
+</div>

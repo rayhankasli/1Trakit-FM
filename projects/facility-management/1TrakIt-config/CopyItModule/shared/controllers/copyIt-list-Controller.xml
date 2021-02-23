@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<controller name="CopyItList">
+	<actions>
+		<action verb="Get" name="GetCopyItList" route="CopyIt">
+			<response type="List" typeOf="CopyItResponseModel" />
+		</action>
+		<action verb="Delete" name="DeleteCopyIt" route="CopyIt/{id}">
+			<request>
+				<param name="id" type="int" bindFrom="Query" />
+			</request>
+			<response type="Address" />
+		</action>
+	</actions>
+</controller>

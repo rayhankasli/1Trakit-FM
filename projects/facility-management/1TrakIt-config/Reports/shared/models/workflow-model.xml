@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<models>
+    <model name="WorkflowReport" group="WorkflowReport">
+        <properties>
+            <property name="TaskName" jsonProperty="taskName" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="AssignedTo" jsonProperty="assignedTo" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="Location" jsonProperty="location" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="DateTimeOfCompletion" jsonProperty="dateTimeOfCompletion" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="Status" jsonProperty="status" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="Pictures" jsonProperty="pictures" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="ReasonNotCompleted" jsonProperty="reasonNotCompleted" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="Comments" jsonProperty="comments" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+        </properties>
+    </model>
+</models>

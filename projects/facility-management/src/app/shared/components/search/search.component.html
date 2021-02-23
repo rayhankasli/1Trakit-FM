@@ -1,0 +1,23 @@
+<div class="search-area input-group w-auto mr-2">
+  <ng-container [ngTemplateOutlet]="isExpanded?expanded:collapsed"
+    [ngTemplateOutletContext]="{searchField:searchField,searchIcon:searchIcon,placeholder:placeholder}">
+  </ng-container>
+</div>
+
+<ng-template #expanded let-searchField="searchField" let-searchIcon="searchIcon" let-placeholder="placeholder">
+  <input type="text" class="form-control" [formControl]="searchField" name="search-area" id="search-area"
+    [placeholder]="placeholder" aria-label="Search" aria-describedby="button-addon2">
+</ng-template>
+
+<ng-template #collapsed let-searchField="searchField" let-searchIcon="searchIcon" let-placeholder="placeholder">
+  <ng-container *ngIf="!searchIcon">
+    <input type="text" autoFocus class="form-control" [formControl]="searchField" name="search-area" id="search-area"
+      [placeholder]="placeholder" aria-label="Search" aria-describedby="button-addon2">
+  </ng-container>
+  <div class="{{searchIcon ? '' : 'input-group-append'}}">
+    <button class="btn btn-outline-light d-flex align-items-center justify-content-center btn-icon" title="Search"
+      type="button" [disabled]="isDisabled" (click)="onSearch()">
+      <span class="icon {{searchIcon ? 'icon-search' : 'icon-times'}} text-gray-dark font-weight-semibold"></span>
+    </button>
+  </div>
+</ng-template>

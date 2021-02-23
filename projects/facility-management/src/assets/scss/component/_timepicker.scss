@@ -1,0 +1,24 @@
+// Time picker 
+.popover-content {
+  .ngb-tp-input-container {
+    width: 3em;
+  }
+  .ngb-tp-chevron {
+    &::before {
+      content: '\e914';
+      font-family: "app-icons";
+      transform: rotate(90deg);
+      border: 0;
+      height: auto;
+      width: auto;
+      top: auto;
+      left: auto;
+    }
+    &.bottom {
+      &::before {
+        top: auto;
+        transform: rotate(-90deg);
+      }
+    }
+  }
+}

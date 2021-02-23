@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<controller name="CostRecovery">
+    <actions>
+        <action verb="Get" name="getCostRecovery" route="costRecovery">
+                <response type="List" typeOf="CostRecoveryResponse" />
+        </action>
+    </actions>
+</controller>

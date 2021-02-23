@@ -1,0 +1,394 @@
+<form class="floating-form col-12" [formGroup]="userFormGroup">
+  <div class="row">
+    <!-- First Name -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="firstName" floatingLabel autoFocus trackitOnlyString
+        trakcitTrim />
+      <label class="floating-form-label">
+        First Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="firstName" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          First Name is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          First name can not be more than 30 characters
+        </div>
+      </div>
+    </div>
+    <!-- Last Name -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="lastName" floatingLabel trackitOnlyString trakcitTrim />
+      <label class="floating-form-label">
+        Last Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="lastName" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Last Name is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Last name can not be more than 30 characters
+        </div>
+      </div>
+    </div>
+    <!-- Email -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="email" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Email
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="email" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Email is required
+        </div>
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Email is not valid
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Email should not be greater than 50 characters
+        </div>
+      </div>
+    </div>
+    <!-- Primary Contact Number -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="primaryContactNumber" floatingLabel maxlength="28"
+        [textMask]="{mask: mask}" />
+      <label class="floating-form-label">
+        Primary Contact Number
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="primaryContactNumber" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Primary Contact Number is required
+        </div>
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Primary Contact Number is invalid
+        </div>
+      </div>
+    </div>
+    <!-- Desk Contact Number -->
+    <div class="col-md-6 col-12 col-lg-4 col-xl-3">
+      <div class="row">
+        <!-- Code -->
+        <div class="form-group col-xxl-3 col-4 mb-0">
+          <input type="text" class="form-control" formControlName="deskExtensionNumber" maxlength="6" minlength="3"
+            floatingLabel trakitOnlyNumber trakcitTrim />
+          <label class="floating-form-label">
+            EXT
+          </label>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="form-group col-xxl-9 col-8 mb-0">
+          <input type="text" class="form-control" formControlName="deskContactNumber" floatingLabel maxlength="28"
+            [textMask]="{mask: mask}" />
+          <label class="floating-form-label">
+            Desk Contact Number
+          </label>
+        </div>
+
+        <div class="col-12">
+          <div ngxErrors="deskExtensionNumber" class="mb-1" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="isRequired" [when]="['touched','dirty']">
+              Extension Number is required
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Extension Number should not be greater than 6 digit
+            </div>
+            <div ngxError="minlength" [when]="['touched','dirty']">
+              Extension Number should not be less than 3 digit
+            </div>
+            <div ngxError="pattern" [when]="['touched','dirty']">
+              Extension Number should be a digit
+            </div>
+          </div>
+          <div ngxErrors="deskContactNumber" class="mb-1" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="isRequired" [when]="['touched','dirty']">
+              Desk Contact Number is required
+            </div>
+            <div ngxError="pattern" [when]="['touched','dirty']">
+              Desk Contact Number is invalid
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Client Name -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <ng-select #client appendTo="body" selectFloatingLabel [items]="clients" bindLabel="client" bindValue="clientId"
+        formControlName="clientId" class="form-control float-outline p-0" (change)="clientChange()" [searchable]="false"
+        [clearable]="false">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0" (input)="client.filter($event.target.value)"
+              placeholder="Search" aria-label="Search" aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="" class="floating-form-label">
+        Client Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="clientId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Client Name is required
+        </div>
+      </div>
+    </div>
+    <!-- Building -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <ng-select #office [items]="offices" appendTo="body" selectFloatingLabel bindLabel="office" bindValue="officeId"
+        [clearable]="false" formControlName="officeId" class="form-control float-outline p-0" (change)="officeChange()"
+        [searchable]="false">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0" (input)="office.filter($event.target.value)"
+              placeholder="Search" aria-label="Search" aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="" class="floating-form-label">
+        Office
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="officeId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Office is required
+        </div>
+      </div>
+    </div>
+    <!-- Floor -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <ng-select #floor appendTo="body" selectFloatingLabel [items]="floors" bindLabel="floor" bindValue="floorId"
+        [clearable]="false" formControlName="floorId" class="form-control float-outline p-0" [searchable]="false">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0" (input)="floor.filter($event.target.value)"
+              placeholder="Search" aria-label="Search" aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="" class="floating-form-label">
+        Floor
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="floorId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Floor is required
+        </div>
+      </div>
+    </div>
+    <!-- Desk Location -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="deskLocation" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Desk Location
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="deskLocation" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Desk Location is required
+        </div>
+      </div>
+    </div>
+    <!-- Mail Stop/Location -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="mailStop" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Mail Stop
+      </label>
+    </div>
+    <!-- Department/Tenant Name -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="departmentName" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Department/Tenant Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="departmentName" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Department/Tenant Name is required
+        </div>
+      </div>
+    </div>
+    <!-- User Type -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <ng-select #userType appendTo="body" selectFloatingLabel [items]="userMasterData?.roles" bindLabel="role"
+        bindValue="roleId" formControlName="roleId" class="form-control float-outline p-0" (change)="roleChange()"
+        [searchable]="false" [clearable]="false">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="userType.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="" class="floating-form-label">
+        User Type
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="roleId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          User Type is required
+        </div>
+      </div>
+    </div>
+    <!-- Priority -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="priority" floatingLabel trakitOnlyNumber trakcitTrim />
+      <label class="floating-form-label">
+        Priority
+      </label>
+      <div ngxErrors="priority" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="min" [when]="['touched','dirty']">
+          Priority should be greater than 0
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Priority should not be greater than 5 digit.
+        </div>
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Priority should be a digit
+        </div>
+      </div>
+    </div>
+    <!-- Timezone -->
+    <div class="form-group mb-0 col-md-6 col-12 col-lg-4 col-xl-3">
+      <ng-select #timezone appendTo="body" [items]="userMasterData?.timezones" bindLabel="timezone"
+        bindValue="timezoneId" formControlName="timezoneId" selectFloatingLabel class="form-control float-outline p-0"
+        [searchable]="false" [clearable]="false">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="timezone.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="" class="floating-form-label">
+        Timezone
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="timezoneId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Timezone is required
+        </div>
+      </div>
+    </div>
+    <!-- Username -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3" *ngIf="isShowUserNamePassword">
+      <input type="text" class="form-control" formControlName="userName" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Username
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="userName" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Username is required
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Username should not be greater than 50 characters
+        </div>
+      </div>
+    </div>
+    <!-- password -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3" *ngIf="isShowUserNamePassword && allowPasswordChang">
+      <input type="password" autocomplete="off" class="form-control" formControlName="password" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Password
+      </label>
+      <div ngxErrors="password" [isFormSubmitted]="isFormSubmitted">
+        <div [ngxError]="['minlength','maxlength','pattern']" [when]="['touched','dirty']">
+          Password should needs to:
+          <ul class="pl-4 mb-0">
+            <li> include both upper and lower case characters </li>
+            <li> include at least one number or symbol </li>
+            <li> be at least 8 to 20 characters long </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- confirm-password -->
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3" *ngIf="isShowUserNamePassword && allowPasswordChang">
+      <input type="password" autocomplete="off" class="form-control" formControlName="confirmPassword" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Confirm Password
+      </label>
+      <div ngxErrors="confirmPassword" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="mustMatch" [when]="['touched','dirty']">
+          Password and Confirm Password does not match
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-group mb-0 col-md-6 col-12 col-lg-4 col-xl-3 ml-auto">
+      <div class="row">
+        <div class="col-6">
+          <button type="button" title="Cancel"
+            class="btn d-flex w-100 align-items-center justify-content-center btn-secondary" (click)="onCancel()">
+            <span class="icon icon-times mr-2"></span>
+            <span>Cancel</span>
+          </button>
+        </div>
+        <div class="col-6">
+          <button disableOnAjax type="button" title="Save"
+            class="btn d-flex w-100 align-items-center justify-content-center btn-primary" (click)="saveUser()">
+            <span class="icon icon-save mr-2"></span>
+            <span>Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="userFormValue.roleId === userRoleEnum.SUPER_USER">
+      <div class="col-12"><label class="small font-weight-semibold pr-2 mb-0">Note: </label>
+        <span class="small text-gray">Super user have access to all the clients.</span>
+      </div>
+    </ng-container>
+  </div>
+</form>
+
+<ng-template #optionTemplateRef ng-option-tmp let-item="item" let-index="index" let-item$="item$">
+  <div class="custom-control custom-checkbox">
+    <input type="checkbox" [checked]="item$.selected" class="custom-control-input" />
+    <label class="form-check-label ml-2 custom-control-label">{{item.client}}</label>
+  </div>
+</ng-template>
+<ng-template #multiLabelTemplateRef ng-multi-label-tmp let-items="items" let-clear="clear">
+  <div class="ng-value" *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'')">
+    <span class="ng-value-label">{{item.client}}</span>
+    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+  </div>
+  <div class="ng-value" *ngIf="items.length > 1">
+    <span class="ng-value-label">+{{items.length - 1}}</span>
+  </div>
+</ng-template>

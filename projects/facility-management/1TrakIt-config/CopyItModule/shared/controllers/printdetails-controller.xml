@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<controller name="PrintDetails">
+	<resources>
+		<!-- "resource" element will generate default rest api methods for defined name of resource -->		
+		<resource type="PrintDetailsRequest" name="PrintDetails" route="PrintDetails" cachedEnable="true" />
+	</resources>	
+	
+</controller>
+
+

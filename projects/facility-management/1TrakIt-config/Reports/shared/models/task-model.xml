@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<models>
+    <model name="TaskReport" group="TaskReport">
+        <properties>
+            <property name="TaskName" jsonProperty="taskName" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Task Name"></property>
+            <property name="AssignedTo" jsonProperty="assignedTo" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Assigned To"></property>
+            <property name="CreatedBy" jsonProperty="createdBy" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Created By"></property>
+            <property name="Location" jsonProperty="location" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Location"></property>
+            <property name="DateTimeOfCompletion" jsonProperty="dateTimeOfCompletion" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Date Time Of Completion"></property>
+            <property name="Timelineness" jsonProperty="timelineness" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Timelineness"></property>
+            <property name="Pictures" jsonProperty="pictures" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Pictures"></property>
+            <property name="Status" jsonProperty="status" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Status"></property>
+            <property name="ReasonNotCompleted" jsonProperty="reasonNotCompleted" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Reason Not Completed"></property>
+            <property name="Comments" jsonProperty="comments" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Comments"></property>
+        </properties>
+    </model>
+</models>

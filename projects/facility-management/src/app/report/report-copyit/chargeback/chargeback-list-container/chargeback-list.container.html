@@ -1,0 +1,9 @@
+<app-chargeback-list-ui class="d-flex flex-column w-100 overflow-hidden" 
+  [baseResponse]="chargeBackLists$ | async" 
+  [accountNumberList]="accountNumberList$ | async"
+  [jobList]="jobList$ | async" 
+  (getChargeBackList)="getChargeBackLists($event)"
+  (accountsNumber)="getAccountNumber($event)"
+  (jobsList)="getJobList($event)"
+  (chargeBackExcel)="chargeBackExcel($event)">
+</app-chargeback-list-ui>

@@ -1,0 +1,60 @@
+<!-- Data-table Filter area  -->
+<div class="data-tbl-filter d-flex bg-white flex-column shadow overflow-hidden">
+  <div class="filter-header p-3 d-flex align-items-center border-bottom justify-content-between">
+    <h3 class="mb-0 font-weight-medium filter-title">Filter</h3>
+    <div>
+      <button type="button" class="btn btn-flat-primary mr-2" (click)="onClearFilter()" *ngIf="isFilterApply">
+        <span>Clear Filter</span>
+      </button>
+      <button type="button" class="btn btn-icon" (click)="dismiss()">
+        <span class="icon icon-times"></span>
+      </button>
+    </div>
+  </div>
+  <div class="filter-body d-flex flex-column">
+    <div class="filter-content p-3 h-100">
+      <form class="floating-form" [formGroup]="visitorLogFormGroup">
+        <div class="row">
+          <div class="form-group col-md-6 col-12 col-lg-12">
+            <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+              formControlName="fromPeriod" [bsConfig]="bsConfig" autocomplete="off" placement="bottom" container="body"
+              calendarFlotingLabel preventText
+              >
+            <label class="floating-form-label">From Period
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="fromPeriod" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                From Period is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6 col-12 col-lg-12">
+            <input type="text" class="form-control" #dp="bsDatepicker" [minDate]="minDate" bsDatepicker
+              formControlName="toPeriod" [bsConfig]="bsConfig" autocomplete="off" placement="bottom" container="body"
+              calendarFlotingLabel preventText
+              >
+            <label class="floating-form-label">To Period
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="toPeriod" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                To Period is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+  <div class="filter-footer border-top d-flex align-items-center justify-content-between p-3">
+    <button class="btn btn-outline-secondary px-3" (click)="onReset()">
+      Reset
+    </button>
+    <button class="btn btn-primary px-3" (click)="onApplyFilter()">
+      Apply
+    </button>
+  </div>
+</div>

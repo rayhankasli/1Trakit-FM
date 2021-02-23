@@ -1,0 +1,7 @@
+<div class="px-3 h-100 overflow-hidden">
+    <trakit-visitor-log-list-ui [masterData]="masterData$ | async" [baseResponse]="visitorLogs$ | async" [clients]="clients$ | async"
+        (getVisitorLog)="getVisitorLogs($event)" (add)="addVisitorLog($event)" (update)="updateVisitorLog($event)"
+        (deleteVisitorLog)="deleteVisitorLog($event)" (client)="getMasterData($event)" (uploadPicture)="uploadPicture($event)" (downloadPicture)="downloadPicture($event)"
+        (exportExcelData)="exportExcelData($event)" (preview)="previewPicture($event)">
+    </trakit-visitor-log-list-ui>
+</div>

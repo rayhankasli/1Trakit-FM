@@ -1,0 +1,169 @@
+<trackit-page-actions>
+  <div class="d-flex align-items-center ml-auto">
+    <div class="form-group mb-0 d-flex align-items-center">
+      <label for="clients" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">
+        Client:
+      </label>
+      <trakit-client-select [clients]="clients" [formControl]="clientFormControl"></trakit-client-select>
+    </div>
+  </div>
+</trackit-page-actions>
+
+<div class="d-flex flex-column overflow-hidden">
+  <div class="floating-form d-flex flex-shrink-0 align-items-center justify-content-end px-3 mb-2"
+    [formGroup]="filterFormGroup">
+    <div class="form-group d-flex align-items-center mb-1 mr-n2 px-2">
+      <ng-select appendTo="body" [items]="years" formControlName="year" bindLabel="year" bindValue="year"
+        (change)="onChangeYear()" [clearable]="false" selectFloatingLabel
+        class="form-control ng-select-sm float-outline p-0" [searchable]="false">
+      </ng-select>
+      <label for="year" class="floating-form-label">
+        Year
+      </label>
+    </div>
+    <div class="form-group d-flex align-items-center mb-1 mr-n2 px-2">
+      <ng-select appendTo="body" selectFloatingLabel [items]="monthList" bindLabel="name" bindValue="id"
+        [clearable]="false" [multiple]="true" class="form-control ng-select-lg float-outline p-0 ng-select-panel-w-auto"
+        formControlName="months" (change)="onChangeMonth()" [searchable]="false" [closeOnSelect]="false">
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          <div class="custom-control flex-shrink-0 custom-checkbox">
+            <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+            <label class="form-check-label ml-2 custom-control-label text-wrap">{{item.name}}</label>
+          </div>
+        </ng-template>
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <div class="ng-value" *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'')">
+            <span class="ng-value-label">{{item.name}}</span>
+          </div>
+          <div class="ng-value" *ngIf="items.length > 1">
+            <span class="ng-value-label">+{{items.length - 1}}</span>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="months" class="floating-form-label">
+        Months
+      </label>
+    </div>
+    <div class="form-group d-flex align-items-center mb-1 px-2">
+      <ng-select #jobListSelect id="job" [items]="fleetDetailList" groupBy="fleetDetail" appendTo="body"
+        bindLabel="manufacturer" bindValue="assetId" [multiple]="true" formControlName="fleets"
+        (change)="onChangeFleet()" [selectableGroup]="false" [selectableGroupAsModel]="false" [closeOnSelect]="false"
+        [clearable]="false" class="form-control ng-select-lg float-outline p-0 ng-select-panel-w-auto"
+        selectFloatingLabel [searchable]="false">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="jobListSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+          <span class="font-weight-semibold">{{item.companyName}}</span>
+        </ng-template>
+
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+            <label class="form-check-label ml-2 custom-control-label text-wrap">{{ item.manufacturer }} | {{item.assetNo}} | {{item.modelNo}}</label>
+          </div>
+        </ng-template>
+
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <div class="ng-value" *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'')">
+            <span class="ng-value-label">{{item.manufacturer}}</span>
+          </div>
+          <div class="ng-value" *ngIf="items.length > 1">
+            <span class="ng-value-label">+{{items.length - 1}}</span>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="fleets" class="floating-form-label">
+        Fleets
+      </label>
+    </div>
+    <button type="button" class="btn btn-outline-secondary d-flex align-items-center my-1 mr-2"
+      (click)="searchTableData()" title="Search">
+      <span>Search</span>
+    </button>
+    <button type="button" class="btn btn-primary d-flex align-items-center mr-2" (click)="exportExcel()"
+      title="Export as Excel" *hasPermission="reportFleetEnum.summaryExportExcel" [disabled]="tableArray?.length <= 0">
+      <span>Export as Excel</span>
+    </button>
+    <button type="button" class="btn btn-primary d-flex align-items-center my-1" (click)="exportPdf()"
+      title="Export as PDF" *hasPermission="reportFleetEnum.summaryExportPdf" [disabled]="tableArray?.length <= 0">
+      <span>Export as PDF</span>
+    </button>
+
+  </div>
+
+  <!-- Fleet Table -->
+  <div class="px-3 flex-grow-1 overflow-auto">
+    <div class="table-responsive fleet-report-table">
+      <table class="table data-tbl w-100">
+        <thead>
+          <tr class="table-sub-header">
+            <th class="text-center" scope="col" *ngFor="let header of mainTableHeader;trackBy:trackBy.bind(this,'')">{{header}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let tableData of tableArray;trackBy:trackBy.bind(this,'month');let i= index;let last = last;">
+            <tr class="table-header-light" [ngClass]="{'ytd-data-row': last }">
+              <td class="text-center">{{tableData.month}}</td>
+              <td class="text-center border-left">{{tableData.totalMachineCount}}</td>
+              <td class="text-center border-left">{{tableData.totalCalls}}</td>
+              <td class="text-center border-left">{{tableData.totalServiceCalls}}</td>
+              <td class="text-center border-left">{{tableData.totalFleetTimeup}}%</td>
+              <td class="text-center border-left">{{tableData.totalImpressionCount}}</td>
+            </tr>
+            <ng-container *ngIf="tableData.assets.length > 0">
+              <tr>
+                <td colspan="6">
+                  <table class="table nested-table data-tbl mb-0 w-100">
+                    <thead>
+                      <tr class="main-header-row">
+                        <th class="text-center">MANUFACTURER</th>
+                        <th class="text-center">ASSET NO | MODEL NO</th>
+                        <th class="text-center">TOTAL CALLS</th>
+                        <th class="text-center">SERVICE CALLS</th>
+                        <th class="text-center">UP-TIME %</th>
+                        <th class="text-center">TOTAL IMPRESSIONS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngIf="tableData.assets.length > 1">
+                        <tr *ngFor="let innerTable of tableData.assets;trackBy:trackBy.bind(this,'assetNo')">
+                          <ng-container *ngIf="!innerTable.isHeader">
+                            <td class="text-center">{{innerTable.manufacturer}}</td>
+                            <td class="text-center">
+                              <span>{{innerTable.assetNo}} | {{innerTable.modelNo}}</span>
+                            </td>
+                            <td class="text-center">{{innerTable.totalCalls}}</td>
+                            <td class="text-center">{{innerTable.serviceCalls}}</td>
+                            <td class="text-center">{{innerTable.fleetTimeup}}%</td>
+                            <td class="text-center">{{innerTable.impressionCount }}</td>
+                          </ng-container>
+                        </tr>
+                      </ng-container>
+                      <tr *ngIf="!tableData.assets || tableData.assets.length === 1">
+                        <td colspan="10" class="text-muted text-center">No record found</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          <tr *ngIf="!tableArray || tableArray.length === 0">
+            <td colspan="10" class="text-muted text-center">No record found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

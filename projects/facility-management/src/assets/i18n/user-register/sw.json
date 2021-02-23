@@ -1,0 +1,82 @@
+{
+    "FULL_NAME": {
+        "LABEL": "Full Name SW",
+        "PLACEHOLDER": "Full Name SW",
+        "REQUIRED": "Full Name is required. SW",
+        "MINLENGTH": "min 2 required SW",
+        "MAXLENGTH": "max 50 only SW",
+        "REGEX": "character only"
+    },
+    "USER_NAME": {
+        "LABEL": "User Name SW",
+        "PLACEHOLDER": "User Name SW",
+        "REQUIRED": "User Name is required. SW",
+        "MINLENGTH": "min 2 required SW",
+        "MAXLENGTH": "max 50 only SW",
+        "REGEX": "character only in User name"
+    },
+    "EMAIL": {
+        "LABEL": "Email SW",
+        "PLACEHOLDER": "Email SW",
+        "REQUIRED": "Email is required SW",
+        "REGEX": "enter valid email"
+    },
+    "PASSWORD_HASH": {
+        "LABEL": "Password SW",
+        "PLACEHOLDER": "Password SW",
+        "REQUIRED": "Password is required. SW",
+        "MINLENGTH": " SW",
+        "MAXLENGTH": " SW",
+        "REGEX": "enter strong password"
+    },
+    
+    "CONFIRM_PASSWORD": {
+        "LABEL": "Confirm Password SW",
+        "PLACEHOLDER": "Confirm Password SW",
+        "REQUIRED": "Confirm Password is required. SW",
+        "REGEX": "enter same password "
+    },
+    "PHONE_NUMBER": {
+        "LABEL": "Phone Number SW",
+        "PLACEHOLDER": "Phone number SW",
+        "REQUIRED": "Phone Number is required. SW",
+        "REGEX": "Enter valid phone number."
+    },
+    
+    "TERM_CONDITION":{
+        "CHECKED":"Please accept terms & conditions"
+    },
+    "CAPTCHA":{
+        "CHECKED":"Clear captch first"
+    },
+    "LANGUAGE":{
+        "LABEL": "Language SW",
+        "PLACEHOLDER": "Select Language SW",
+        "REQUIRED": "LANGUAGE is required."
+    },
+    "InvalidClient": "Invalid client id: SW",
+
+    "PassConfNotSame": "Password and confirm password do not match. SW",
+
+    "DuplicateUsername": "Username is already taken. SW",
+
+    "DuplicateEmail": "Email is already taken. SW",
+
+    "DuplicatePhone": "Mobile number already exist. SW",
+
+    "PasswordLength": "Minimum Password Length Required is {0} SW",
+
+    "PasswordLowercase": "Password must have atleast one lowercase character. SW",
+
+    "PasswordUppercase": "Password must have atleast one uppercase character. SW",
+
+    "PasswordDigit": "Password must have atleast one number character. SW",
+
+    "PasswordSymbol": "Password must have atleast one special character. SW",
+
+    "PasswordSameChar": "Passwords cannot be all the same character. SW",
+
+    "PasswordOldSame": "Can not reuse old password. SW",
+
+    "UnableLoadUser": "Unable to load user"
+}

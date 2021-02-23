@@ -1,0 +1,36 @@
+<ng-container [formGroup]="reasonsFormGroup">
+  <td>
+    <div class="form-group m-0">
+      <input type="text" class="form-control" formControlName="reason"  autoFocus trakcitTrim />
+      <div ngxErrors="reason" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Reason is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Reason can not be more than 30 characters
+        </div>
+      </div>
+    </div>
+  </td>
+  <td>
+    <div class="form-group m-0">
+      <input type="text" class="form-control" formControlName="description" trakcitTrim />
+      <div ngxErrors="description" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Description is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Description can not be more than 120 characters
+        </div>
+      </div>
+    </div>
+  </td>
+  <td class="d-flex align-items-center justify-content-center">
+    <button type="button" class="btn btn-primary btn-icon d-flex align-items-center justify-content-center mr-1" (click)="saveReasons();">
+      <span class="icon icon-save"></span>
+    </button>
+    <button *ngIf="isCancel" type="button" title="Cancel" class="btn btn-gray-dark btn-icon d-flex align-items-center justify-content-center" (click)="cancel();">
+      <span class="icon icon-times"></span>
+    </button>
+  </td>
+</ng-container>

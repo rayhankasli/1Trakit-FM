@@ -1,0 +1,8 @@
+<div class="px-3 h-100 overflow-hidden">
+  <app-copyit-manage-account-list-ui [baseResponse]="copyitManageAccounts$ | async"
+    [assignToRequestor]="assignToRequestor$ | async" [assignToAssociate]="assignToAssociate$ | async"
+    (getCopyitManageAccount)="getCopyitManageAccounts($event)"
+    (deleteCopyitManageAccount)="deleteCopyitManageAccount($event)" (add)="addCopyitManageAccount($event)"
+    (update)="updateCopyitManageAccount($event)" >
+  </app-copyit-manage-account-list-ui>
+</div>

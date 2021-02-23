@@ -1,0 +1,20 @@
+
+<models>
+<model name="SummaryRequest" group="Summary">
+			<properties>
+
+                      <property name="name" jsonProperty="name" type="string" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="NAME"  >
+                      </property>
+
+             </properties>
+						</model>
+
+              <model name="SummaryResponse" group="Summary">
+			      <properties>
+
+                      <property name="name" jsonProperty="name" type="string" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="NAME"  >
+
+</property>
+                      </properties>
+						</model>
+        </models>

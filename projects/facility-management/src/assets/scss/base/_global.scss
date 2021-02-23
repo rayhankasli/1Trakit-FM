@@ -1,0 +1,60 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  overflow: hidden;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+img{
+  max-width: 100%;
+}
+
+// Description text
+.text-desc {
+  font-size: $font-size-base * 0.9;
+}
+
+// label color
+label {
+  color: $body-color;
+}
+
+// Inherit color and background-color
+.inherit-color {
+  color: inherit;
+}
+.inherit-bg-color {
+  background-color: inherit;
+}
+
+// Width
+.w-90 {
+  width: 90px;
+}
+
+// Icon sizes
+@each $size, $value in $icon-size {
+  .icon-#{$size} {
+    font-size: $value;
+  }
+}
+
+// Overflow
+.overflow-y-auto {
+  overflow-y: auto;
+}
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+// Divider
+.divider {
+  width: 1px;
+  height: 22px;
+  background-color: $border-color;
+}

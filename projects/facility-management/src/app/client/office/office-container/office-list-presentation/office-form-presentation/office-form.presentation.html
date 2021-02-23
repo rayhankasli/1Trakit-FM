@@ -1,0 +1,110 @@
+<ng-container [formGroup]="officeFormGroup">
+  <td class="form-group mb-0">
+    <input type="text" class="form-control" formControlName="officeName" floatingLabel trakcitTrim />
+    <div ngxErrors="officeName" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        OfficeName is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0">
+    <input type="text" class="form-control" formControlName="nickName" floatingLabel trakcitTrim />
+    <div ngxErrors="nickName" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Nickname is required.
+      </div>
+      <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+        Nickname should not be greater than 30 characters
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0">
+    <input type="text" class="form-control" formControlName="address1" floatingLabel trakcitTrim />
+    <div ngxErrors="address1" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Address1 is required
+      </div>
+      <div ngxError="maxlength" [when]="['touched','dirty']">
+        Address1 should not be greater than 50 characters
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0">
+    <input type="text" class="form-control" formControlName="address2" floatingLabel trakcitTrim />
+    <div ngxErrors="address2" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Address2 is required
+      </div>
+      <div ngxError="maxlength" [when]="['touched','dirty']">
+        Address2 should not be greater than 50 characters
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0">
+    <ng-select #state [items]="states" bindLabel="state" bindValue="stateId" [clearable]="false"
+      formControlName="stateId" appendTo="body" floatingLabel class="form-control float-outline p-0 ng-select-panel-w-auto"
+      (change)="onChange($event)" [searchable]="false">
+      <ng-template ng-header-tmp>
+        <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+          <input type="text" autoFocus class="form-control border-0 pr-0" (input)="state.filter($event.target.value)"
+            placeholder="Search" aria-label="Search" aria-describedby="button-addon">
+          <div class="input-group-append">
+            <button class="btn bg-transparent text-gray" type="button">
+              <span class="icon icon-search"></span>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </ng-select>
+    <div ngxErrors="stateId" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        State is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0">
+    <ng-select #city [items]="cites" bindLabel="city" bindValue="cityId" [clearable]="false" formControlName="cityId"
+      appendTo="body" floatingLabel class="form-control float-outline p-0 ng-select-panel-w-auto" [searchable]="false">
+      <ng-template ng-header-tmp>
+        <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+          <input type="text" autoFocus class="form-control border-0 pr-0" (input)="city.filter($event.target.value)"
+            placeholder="Search" aria-label="Search" aria-describedby="button-addon">
+          <div class="input-group-append">
+            <button class="btn bg-transparent text-gray" type="button">
+              <span class="icon icon-search"></span>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </ng-select>
+    <div ngxErrors="cityId" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        City is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0">
+    <input type="text" class="form-control" formControlName="zipcode" floatingLabel trakcitTrim maxlength="6" />
+    <div ngxErrors="zipcode" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Zip code is required
+      </div>
+      <div ngxError="pattern" [when]="['touched','dirty']">
+        Enter valid zip code
+      </div>
+      <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+        Zip code Reached MaxLength
+      </div>
+    </div>
+  </td>
+  <td class="d-flex align-items-center justify-content-center">
+    <button type="button" title="Save"
+      class="btn btn-primary btn-icon d-flex align-items-center justify-content-center mr-1" (click)="saveOffice();">
+      <span class="icon icon-save"></span>
+    </button>
+    <button *ngIf="office" type="button" title="Cancel" (click)="onCancel()"
+      class="btn btn-gray-dark btn-icon d-flex align-items-center justify-content-center">
+      <span class="icon icon-times"></span>
+    </button>
+  </td>
+</ng-container>

@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<models>
+	<model name="CostRecoveryResponse" group="CostRecoveryResponse">
+		<properties>
+			<property name="ID" jsonProperty="id" type="number" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID">
+			</property>
+			<property name="Date" jsonProperty="date" type="number" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Date">
+			</property>
+			<property name="Requestor Name" jsonProperty="requestorName" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Requestor Name">
+			</property>
+			<property name="Description" jsonProperty="description" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Description">
+			</property>
+			<property name="Account/Biling" jsonProperty="accountBiling" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Account/Biling">
+			</property>
+		</properties>
+	</model>
+</models>

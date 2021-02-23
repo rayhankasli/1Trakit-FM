@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<controller name="Summary">
+	<resources>
+		<!-- "resource" element will generate default rest api methods for defined name of resource -->		
+		<resource type="SummaryRequest" name="Summary" route="Summary" cachedEnable="true" />
+	</resources>	
+	
+</controller>
+
+

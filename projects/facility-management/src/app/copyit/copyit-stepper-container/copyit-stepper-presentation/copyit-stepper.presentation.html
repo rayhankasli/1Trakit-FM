@@ -1,0 +1,42 @@
+<div class="stepper px-3 flex-shrink-0">
+  <tabset #tabSet *ngIf="tabStep">
+    <ng-container *ngFor="let tabset of tabStepsItems;trackBy:trackBy.bind(this,'id')">
+      <tab [heading]="tabset.heading" [disabled]="tabset.disabled">
+      </tab>
+    </ng-container>
+  </tabset>
+</div>
+
+<div class="d-flex h-100 px-3 mt-xxl-4 mt-3 overflow-hidden">
+  <div class="card w-100 h-100">
+    <div class="card-body h-100 p-0 overflow-hidden">
+      <ng-container #containerRef></ng-container>
+    </div>
+  </div>
+
+</div>
+<div class="d-flex justify-content-between my-3 px-3 flex-shrink-0">
+  <button type="button" class="btn btn-secondary d-flex align-items-center" routerLink="/copyit">
+    <span class="icon icon-times mr-2"></span>
+    <span>Cancel</span>
+  </button>
+  <div class="d-flex align-items-center">
+    <button type="button" class="btn btn-outline-secondary d-flex align-items-center mr-2" (click)="onBack()" [disabled]="(tabIndex === 0)">
+      <span class="icon icon-previous mr-2"></span>
+      <span>Previous</span>
+    </button>
+
+    <ng-container *ngIf="tabIndex === tabStep; else notShow">
+      <button disableOnAjax type="submit" class="btn btn-primary d-flex align-items-center" (click)="saveStepperData()">
+        <span class="icon icon-tick mr-2"></span>
+        <span>Submit</span>
+      </button>
+    </ng-container>
+    <ng-template #notShow>
+      <button type="submit" class="btn btn-primary d-flex align-items-center" (click)="onNext()">
+        <span>Next</span>
+        <span class="icon icon-next ml-2"></span>
+      </button>
+    </ng-template>
+  </div>
+</div>

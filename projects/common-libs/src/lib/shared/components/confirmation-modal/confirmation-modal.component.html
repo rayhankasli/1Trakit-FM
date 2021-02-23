@@ -1,0 +1,30 @@
+<div role="document" class="modal-dialog modal-sm" [ngClass]="{
+  'modal-sm': modalSize === 'small',
+  'modal-md': modalSize === 'medium',
+  'modal-lg': modalSize === 'large'
+  }" *ngIf="isTemplateVisible">
+  <div class="modal-content">
+    <div class="modal-body">
+      <button type="button" class="close ml-auto float-none d-flex" data-dismiss="modal" aria-label="Close" (click)="decline()">
+        <span class="icon icon-times"></span>
+      </button>
+      <div class="d-flex flex-column align-items-center justify-content-center pb-4">
+        <span class="icon h1 mb-3 icon-5x" [ngClass]="theme?.mainIconColor"></span>
+        <h3 *ngIf="confirmationTitle" class="font-weight-normal mb-3">{{ confirmationTitle }}</h3>
+        <p *ngIf="confirmationMessage" class="text-muted text-center mb-4" [innerHTML]="confirmationMessage"></p>
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn btn-gray-dark d-flex align-items-center mr-2" (click)="decline()">
+            <span class="icon icon-times mr-2"></span>
+            <span>{{ negativeAction }}</span>
+          </button>
+          <button type="button" class="btn  d-flex align-items-center" [ngClass]="theme?.confirm.color"
+            (click)="confirm()">
+            <span *ngIf="theme?.confirm.icon" class="icon mr-2" [ngClass]="theme?.confirm.icon"></span>
+            <span>{{ positiveAction }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container #viewContainerRef></ng-container>

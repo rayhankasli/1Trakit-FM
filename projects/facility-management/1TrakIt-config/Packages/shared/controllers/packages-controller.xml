@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<controller name="Packages">
+	<resources>
+		<resource type="Packages" name="Packages" route="Packages" />
+	</resources>
+</controller>

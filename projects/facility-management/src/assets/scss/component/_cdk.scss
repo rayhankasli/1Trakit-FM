@@ -1,0 +1,10 @@
+.cdk-overlay-container {
+  z-index: 1050;
+}
+
+.cdk-overlay-backdrop {
+  &.dark-backdrop {
+    background-color: $black;
+    opacity: 0.5;
+  }
+}

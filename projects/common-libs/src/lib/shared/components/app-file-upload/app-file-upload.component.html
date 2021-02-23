@@ -1,0 +1,58 @@
+<div class="custom-file">
+  <ng-template [ngIf]="!multiple" [ngIfElse]="multiFile">
+    <input type="file" [accept]="accept" class="custom-file-input" [id]="id" [disabled]="disabled">
+    <label class="custom-file-label" [for]="id">{{ fileLabel }}</label>
+  </ng-template>
+
+  <ng-template #multiFile>
+    <input type="file" [accept]="accept" class="custom-file-input" [id]="id" [disabled]="disabled" multiple>
+    <label class="custom-file-label" [for]="id">{{ fileLabel }}</label>
+  </ng-template>
+</div>
+
+<ng-template [ngIf]="!multiple" [ngIfElse]="multiLabel">
+  <div class="d-flex flex-wrap">
+    <div class="upload-file d-flex align-items-center text-dark small mb-1 mr-1">
+      <ng-container *ngIf="filePath && thumbnailType">
+        <div
+          class="file-thumbnail overflow-hidden rounded border d-flex align-items-center justify-content-center p-0 mr-1 {{thumbnailType === 'small' ? 'thumbnail-sm' : 'thumbnail-lg'}}">
+          <img [src]="filePath" alt="Thumbnail Image" class="rounded w-100">
+        </div>
+      </ng-container>
+      <ng-container *ngIf="file?.name">
+        <span class="p-1">{{ file.name }}</span>
+      </ng-container>
+      <ng-container *ngIf="!file && fileName">
+        <span class="p-1">{{ fileName }}</span>
+      </ng-container>
+      <ng-container *ngIf="!disabled && (file || filePath || fileName) && isDelete">
+        <button type="button"
+          class="btn btn-link btn-sm cancel-btn flex-shrink-0 d-flex align-items-center h-100 px-1 py-0"
+          (click)="onDeleteFile()">
+          <span class="icon icon-close icon-1x"></span>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+<ng-template #multiLabel>
+  <div class="d-flex flex-column">
+    <ng-container *ngIf="fileName?.length">
+      <label class="small text-dark my-1 font-weight-semibold" for="selected file">Selected file:</label>
+      <ol class="pl-4 mb-0">
+        <li *ngFor="let file of fileName;let index = index" class="pl-1 text-dark small">
+          <div class="d-inline-flex align-items-center w-100 upload-file">
+            <span class="pl-1">{{ file }} </span>
+            <ng-container *ngIf="!disabled && fileName && isDelete">
+              <button type="button"
+                class="btn btn-link btn-sm cancel-btn flex-shrink-0 d-flex align-items-center h-100 px-1 py-0"
+                (click)="removeSelectedFile(index)">
+                <span class="icon icon-close icon-1x"></span>
+              </button>
+            </ng-container>
+          </div>
+        </li>
+      </ol>
+    </ng-container>
+  </div>
+</ng-template>

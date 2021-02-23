@@ -1,0 +1,56 @@
+<div class="d-flex flex-column flex-grow-1 border rounded overflow-y-auto overflow-x-hidden">
+  <div class="flex-shrink-0 d-flex border-bottom sticky-header">
+    <!--  Add class 'current-date' with 'calendar-header' for current date -->
+    <div class="col p-2 calendar-header {{ isCurrentDate(days.utcDate) ? 'current-date' : '' }}" *ngFor="let days of week;trackBy:trackBy.bind(this,'dayName'); let idx = index;">
+      <h6 class="mb-0 font-weight-semibold">{{ days.weekDate }}</h6>
+      <span>{{ days.dayName }}</span>
+    </div>
+  </div>
+  <div class="flex-shrink-0 flex-grow-1 d-flex">
+    <!--  Add class 'current-date' with 'day-event-area' for current date -->
+    <div class="d-flex flex-column flex-grow-1 col p-0 day-event-area {{ isCurrentDate(days.utcDate) ? 'current-date' : '' }}" *ngFor="let days of week;trackBy:trackBy.bind(this,'dayName'); let idx = index;">
+      <ng-container *ngIf="days.events.length > 0">
+        <ul class="event-list list-unstyled mb-0">
+          <li class="event-item px-2" *ngFor="let days of days.events;trackBy:trackBy.bind(this,''); let idx = index;">
+            <a (click)="navigateToBookItRequest(days.events.bookitId)" class="event-link cursor-pointer pl-2 d-flex flex-wrap flex-column text-secondary text-decoration-none">
+              <span class="event-name font-weight-semibold">{{ days.events.eventName }}</span>
+              <span class="room-name">{{days.events.room}}</span>
+              <span class="event-room-layout">{{ days.events.roomLayout }}</span>
+              <!-- Amenities -->
+              <div class="d-flex flex-wrap align-items-center" *ngIf="days.events.amenities">
+                <ng-container *ngFor="let amenities of days.events.amenities;trackBy:trackBy.bind(this,''); let idx = index;">
+                  <!-- Chair -->
+                  <div class="d-flex align-items-center smallest" *ngIf="amenities.amenity === 'Chair' || amenities.amenity === 'chair'">
+                    <span class="icon icon-chair mr-2 text-dark" title="Chair"></span>
+                    <span class="text-gray mr-xl-4 mr-3">{{ amenities.quantity }}</span>
+                  </div>
+                  <!-- Table -->
+                  <div class="d-flex align-items-center smallest" *ngIf="amenities.amenity === 'Table' || amenities.amenity === 'table'">
+                    <span class="icon icon-table mr-2 text-dark" title="Table"></span>
+                    <span class="text-gray mr-xl-4 mr-3">{{ amenities.quantity }}</span>
+                  </div>
+                  <!-- Linen Type -->
+                  <div class="d-flex align-items-center smallest" *ngIf="amenities.amenity === 'Linen Type' || amenities.amenity === 'linen type'">
+                    <span class="icon icon-linen mr-2 text-dark" title="Linen Type"></span>
+                    <span class="text-gray">{{ amenities.quantity }}</span>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="icon icon-clock mr-2 d-xl-inline-block d-none"></span>
+                <span class="event-time">{{ days.events.timeFrom | timeFormat: days.events.timeFrom}} - {{ days.events.timeTo | timeFormat: days.events.timeTo }}</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </ng-container>
+
+      <!-- No Record Found -->
+      <ng-container *ngIf="days.events.length === 0">
+        <div class="h-100 d-flex align-items-center justify-content-center text-muted small">
+          <span>No event found</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

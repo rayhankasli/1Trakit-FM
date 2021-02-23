@@ -1,0 +1,168 @@
+<form class="floating-form add-room-form col-12" [formGroup]="roomFormGroup">
+  <div class="row">
+    <div class="form-group col-3">
+      <ng-select [items]="roomTypes" appendTo="body" bindLabel="roomType" bindValue="roomTypeId" [clearable]="false"
+        formControlName="roomTypeId" selectFloatingLabel autoFocus [searchable]="false"
+        class="form-control room-type-dropdown float-outline p-0" #ngSelect (blur)="onBlur()" (close)="onClose()"
+        (change)="onChange()">
+        <ng-template ng-footer-tmp>
+          <div #addTypeRef>
+            <button type="button" class="btn btn-primary btn-block d-flex align-items-center"
+              (click)="addType(addTypeRef,templateRef,ngSelect)">
+              <span class="icon icon-add mr-2"></span>
+              <span>New Type</span>
+              <span class="icon icon-angle-right ml-auto"></span>
+            </button>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label class="floating-form-label">
+        Room Type
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="roomTypeId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Room Type is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-3">
+      <input type="text" class="form-control" formControlName="name" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Nickname
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="name" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Nickname is required
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Nickname should not be greater than 30 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-3">
+      <input type="text" class="form-control" formControlName="email" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Email
+      </label>
+      <div ngxErrors="email" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Email is invalid
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Email should not be greater than 50 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-3">
+      <input type="text" class="form-control" formControlName="location" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Mail Stop/Location
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="location" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Mail Stop/Location is required
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Mail Stop/Location should not be greater than 30 characters
+        </div>
+      </div>
+    </div>
+    <!-- Room layout start -->
+    <div class="col-12" [ngClass]="{'border-top pt-2':enableRoomLayout}">
+      <div class="row">
+        <div *ngIf="enableRoomLayout" class="col-12">
+          <label class="small my-0 font-weight-semibold">
+            Room Layout:
+          </label>
+          <div class="d-flex flex-wrap mx-n1">
+            <ng-container *ngFor="let layoutCtrl of roomLayoutFormArray; trackBy:trackBy.bind(this,'key')" [formGroup]="layoutCtrl">
+              <div class="d-flex flex-column mt-2 px-1 flex-shrink-0 room-layout">
+                <div class="custom-control custom-checkbox p-0 border rounded">
+                  <input type="checkbox" class="custom-control-input" [id]="layoutCtrl?.value.roomLayout"
+                    formControlName="isChecked" (change)="onRoomLayoutSelectionChange(layoutCtrl)">
+                  <label class="custom-control-label w-100 d-flex flex-column align-items-center" [for]="layoutCtrl?.value.roomLayout">
+                    <div class="layout-img p-2 mx-auto">
+                      <img class="mh-100 w-100" [src]="layoutCtrl?.value.roomLayoutImagePath"
+                        alt="{{layoutCtrl?.value.roomLayoutImage}}">
+                    </div>
+                  </label>
+                  <div class="d-flex flex-column align-items-center overflow-hidden border-top {{layoutCtrl.value.isChecked ? 'p-1' : 'py-2 px-1'}}">
+                    <span class="flex-grow-1 text-center">{{layoutCtrl?.value.roomLayout}}</span>
+                    <ng-container *ngIf="layoutCtrl.value.isChecked">
+                      <div class="form-group w-100 flex-shrink-0 mt-1 mb-0">
+                        <input type="text" placeholder="Enter Person"  class="form-control" trakitOnlyNumber
+                          formControlName="noOfPerson" min="1">
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <div ngxErrors="noOfPerson" [isFormSubmitted]="isFormSubmitted">
+                  <div ngxError="required" [when]="['touched','dirty']">
+                    No. of Person is required
+                  </div>
+                  <div ngxError="min" [when]="['touched','dirty']">
+                    No. of Person should be greater than 0
+                  </div>
+                  <div ngxError="maxlength" [when]="['touched','dirty']">
+                    No. of Person can not be more than 10 digit
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="mt-2 mb-0 col-12">
+          <div class="d-flex justify-content-end">
+            <div>
+              <button *ngIf="room" type="button" title="Cancel" (click)="onCancel()"
+                class="btn btn-secondary d-flex align-items-center justify-content-center mr-2">
+                <span class="icon icon-times mr-2"></span>
+                <span>Cancel</span>
+              </button>
+            </div>
+            <div>
+              <button type="button" title="Save"
+                class="btn btn-primary d-flex align-items-center justify-content-center" (click)="saveRoom();">
+                <span class="icon icon-save mr-2"></span>
+                <span>Save</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Room layout ends -->
+  </div>
+
+</form>
+
+<ng-template #templateRef>
+  <form class="floating-form type-name-form rounded shadow p-3 bg-white ml-2" [formGroup]="roomTypeForm">
+    <div class="row">
+      <div class="form-group col-12">
+        <input type="text" class="form-control" formControlName="roomType" floatingLabel autoFocus trakcitTrim />
+        <label class="floating-form-label">
+          Type Name
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="roomType" [isFormSubmitted]="isRoomTypeFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Type Name is required
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            Type Name should not be greater than 30 character
+          </div>
+        </div>
+      </div>
+      <div class="text-center col-12">
+        <button type="button" title="Save" class="btn btn-primary btn-block" (click)="saveRoomType();">
+          <span class="icon icon-save mr-2"></span>
+          <span>Save</span>
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

@@ -1,0 +1,90 @@
+<div *ngIf="openRequests?.length > 0">
+  <div class="card mb-3 overflow-hidden">
+    <div class="card-body p-0">
+      <h4 class="text-dark mb-0 p-3 request-title">Open Request</h4>
+      <div class="open-request-content px-3 overflow-auto">
+        <div class="row">
+          <div class="col-xl-3 col-lg-4 col-12 mb-3" *ngFor="let openRequest of openRequests;trackBy:trackBy.bind(this,'id')">
+            <div
+              class="card h-100 priority {{[openRequest.priority === 'High' ?  'high' : '' || openRequest.priority === 'Medium' ?  'medium' : '' || openRequest.priority === 'Low' ?  'low' : '']}}">
+              <div class="card-body d-flex flex-column p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="d-flex align-items-center w-100">
+                    <span
+                      class="{{[openRequest.type === titleNames.Copyit ?  'icon icon-copy icon-2x mr-2' : '' || openRequest.type === titleNames.Fleet ? 'icon icon-print icon-3x mr-2' : '' || openRequest.type === titleNames.Bookit ?  'icon icon-meeting icon-3x mr-2' : '']}}"></span>
+                    <span class="font-weight-medium text-gray-dark mr-2"
+                      *ngIf="openRequest.type ==titleNames.Copyit || openRequest.type ==titleNames.Bookit || openRequest.type ==titleNames.Fleet ">
+                      {{titleLabels.get(openRequest.type)}}
+                    </span>
+                    <div
+                      class="badge priority-label ml-auto font-weight-normal {{[openRequest.priority === 'High' ?  'badge-danger' : '' || openRequest.priority === 'Medium' ?  'badge-success' : '' || openRequest.priority === 'Low' ?  'badge-warning' : '']}}">
+                      {{openRequest.priority}}
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-baseline mb-1">
+                  <label class="small font-weight-medium mr-2 mb-0">Description:</label>
+                  <div class="small text-truncate mr-2" [tooltip]="openRequest.description">
+                    {{openRequest.description}}
+                  </div>
+                  <div [ngSwitch]="openRequest.type " class="ml-auto flex-shrink-0">
+                    <ng-container *ngSwitchCase="titleNames.Copyit">
+                      <a [routerLink]="[parentRoute,'copyit',openRequest.id]" class="more-link small">View</a>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="titleNames.Bookit">
+                      <a [routerLink]="[parentRoute,'bookit',openRequest.id]" class="more-link small">View</a>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                      <a [routerLink]="[parentRoute,'asset',openRequest.id,'ticket', openRequest.ticketId]"
+                        class="more-link small">View</a>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <ng-container [ngSwitch]="openRequest.type ">
+                  <div *ngSwitchCase="titleNames.Copyit">
+                    <label class="small font-weight-medium mr-2">Copies:</label>
+                    <span class="small">{{openRequest.copies}}</span>
+                  </div>
+                  <div *ngSwitchCase="titleNames.Bookit">
+                    <label class="small font-weight-medium mr-2">No Of People:</label>
+                    <span class="small">{{openRequest.noOfPeople}}</span>
+                  </div>
+                  <div *ngSwitchDefault>
+                    <label class="small font-weight-medium mr-2">Category:</label>
+                    <span class="small">{{openRequest.category}}</span>
+                  </div>
+                </ng-container>
+                <div>
+                  <label class="small font-weight-medium mr-2">Due Date:</label>
+                  <span class="small">{{openRequest.dueDate | date: dateFormat}}</span>
+                </div>
+                <div>
+                  <span
+                    class="small {{[openRequest.dueClass == 'Red' ? 'text-danger' : '' || openRequest.dueClass == 'Yellow' ? 'text-warning': '']}}">
+                    {{openRequest.dueText}}
+                  </span>
+                </div>
+                <div class="d-flex align-items-center mt-auto">
+                  <span class="badge badge-icon flex-shrink-0 mr-2 p-0" [ngClass]="{
+                    'badge-new': openRequest.status == 'New',
+                    'badge-assigned': openRequest.status == 'Assigned',
+                    'badge-in-progress': openRequest.status == 'In Progress',
+                    'badge-completed': openRequest.status == 'Completed',
+                    'badge-re-open': openRequest.status == 'Re-Open',
+                    'badge-on-hold': openRequest.status == 'On-hold',
+                    'badge-request-for-information': openRequest.status == 'Request For Information',
+                    'badge-close': openRequest.status == 'Close',
+                    'badge-operable': openRequest.status == 'Operable',
+                    'badge-in-operable': openRequest.status == 'InOperable'}">
+                  </span>
+                  <label class="font-weight-medium mb-0 small">{{openRequest.status}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

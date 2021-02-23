@@ -1,0 +1,113 @@
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 30px;">
+      <col style="width: 90px;">
+      <col style="width: 90px;">
+      <col style="width: 80px;">
+      <col style="width: 90px;">
+      <col style="width: 40px;">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th scope="col">
+          <span>No.</span>
+        </th>
+        <th appSortingOrder [column]="'companyName'" (orderType)="onSortOrder('companyName',$event)" scope="col"
+          class="column-sort">
+          <span>Company Name</span>
+        </th>
+        <th appSortingOrder [column]="'contactPerson'" (orderType)="onSortOrder('contactPerson',$event)" scope="col"
+          class="column-sort">
+          <span>Contact Person</span>
+        </th>
+        <th scope="col">
+          <span>Contact No.</span>
+        </th>
+        <th appSortingOrder [column]="'createdDate'" (orderType)="onSortOrder('createdDate',$event)" scope="col"
+          class="column-sort">
+          <span>Created On</span>
+        </th>
+        <th class="text-center">
+          <span>actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clients;trackBy: trackBy.bind(this,'clientId');let i= index">
+        <td>{{startIndex + i}}</td>
+        <td>{{client.companyName}}</td>
+        <td>{{client.contactPerson}}</td>
+        <td>{{client.contactNumber}}</td>
+        <td>{{client.createdDate | date:dateFormat}}</td>
+        <td>
+          <div ngbDropdown container="body" autoClose="outside" #myDrop="ngbDropdown"
+            class="data-tbl-dropdown text-center">
+            <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle id="dropdownMenu">
+              <span class="icon icon-more"></span>
+            </button>
+            <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu"
+              class="dropdown-menu dropdown-menu-right">
+              <button type="button" class="dropdown-item" ngbDropdownItem [routerLink]="[client.clientId]"
+                *hasPermission="clientsEnum.update">
+                <span class="icon icon-edit mr-2"></span>
+                <span>{{'Edit'}}</span>
+              </button>
+              <button type="button" class="dropdown-item" ngbDropdownItem [disabled]="client.isActive"
+                (click)="myDrop.close();openModal(client)" *hasPermission="clientsEnum.delete">
+                <span class="icon icon-delete mr-2"></span>
+                <span>{{'Delete'}}</span>
+              </button>
+              <ng-container [ngTemplateOutlet]="client.isActive ? inactive : active"
+                [ngTemplateOutletContext]="{client:client}" *hasPermission="clientsEnum.changeStatus">
+              </ng-container>
+              <div ngbDropdown container="body" class="nested-dropdown data-tbl-dropdown"
+                *hasPermission="clientsEnum.configuration">
+                <button type="button" class=" d-flex dropdown-item justify-content-between align-items-center"
+                  id="dropdownMenu-2" ngbDropdownToggle
+                  [disabled]="!(client.bookIt || client.copyIt || client.mail || client.workflow)">
+                  <span class="dropdown-icon icon icon-settings mr-2"></span>
+                  <span class="dropdown-text">Configurations</span>
+                  <span class="icon icon-angle-right ml-2"></span>
+                </button>
+                <ul id="dropdown-basic" class="shadow list-dropdown" ngbDropdownMenu aria-labelledby="dropdownMenu-1">
+                  <ng-container *ngIf="canCopyItConfigEdit">
+                    <button type="button" *ngIf="client.copyIt" (click)="onOpenCopyItConfig(client)"
+                      class="dropdown-item" ngbDropdownItem>
+                      Copy It
+                    </button>
+                  </ng-container>
+                  <button type="button" *ngIf="client.mail" (click)="onOpenMailConfig(client)" class="dropdown-item"
+                    ngbDropdownItem>
+                    Mail
+                  </button>
+                  <button type="button" *ngIf="client.workflow" (click)="onOpenWorkflowConfig(client)"
+                    class="dropdown-item" ngbDropdownItem>
+                    Workflow
+                  </button>
+                </ul>
+              </div>
+            </ul>
+          </div>
+        </td>
+      </tr>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="!clients || clients.length === 0">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #active let-client="client">
+  <button type="button" (click)="setStatus(status[0],client)" class="dropdown-item" ngbDropdownItem>
+    <span class="icon icon-check-circle mr-2"></span>
+    Active
+  </button>
+</ng-template>
+<ng-template #inactive let-client="client">
+  <button type="button" (click)="setStatus(status[1],client)" class="dropdown-item" ngbDropdownItem>
+    <span class="icon icon-block mr-2"></span>
+    Inactive
+  </button>
+</ng-template>

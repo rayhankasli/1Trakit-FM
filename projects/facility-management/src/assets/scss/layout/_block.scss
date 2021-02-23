@@ -1,0 +1,207 @@
+// All the section Title Separator
+.title-separator {
+  width: 30px;
+}
+
+.block {
+  padding: 4rem 0 2rem 0;
+
+  .block-title {
+    font-weight: $font-weight-bold;
+    letter-spacing: 2px;
+    color: $primary;
+    text-transform: uppercase;
+  }
+
+  .block-desc {
+    padding: 1rem 0;
+    text-align: center;
+
+    color: $gray;
+  }
+}
+
+// Icon Style
+.icon {
+  font-size: $input-btn-font-size-sm;
+
+  @include media-breakpoint-up("xxl") {
+    font-size: $font-size-base * 0.875;
+  }
+
+  // Icon sizes
+  @each $size, $value in $icon-size {
+    &.icon-#{$size} {
+      font-size: $value;
+    }
+  }
+}
+
+// Chat Area 
+.chat-box {
+  position: fixed;
+  top: $chat-box-top-position-sm;
+  right: 0;
+  bottom: 0;
+  width: $chat-box-width;
+  max-width: 100%;
+  z-index: 9;
+  @include border-left-radius($border-radius);
+  @include transition($transition-base);
+
+  @include media-breakpoint-up('xxl') {
+    top: $chat-box-top-position;
+  }
+
+  .chat-area {
+    .user-initial {
+      height: $chat-user-initial-size;
+      width: $chat-user-initial-size;
+    }
+  }
+
+  .date,
+  .time,
+  .username {
+    font-size: $font-size-base * .65;
+  }
+  .username {
+    color: $gray-dark;
+  }
+  .message {
+    display: inline-block;
+    font-size: $font-size-base * 0.8;
+  }
+
+  .odd {
+    .date {
+      padding-left: $chat-user-initial-size;
+    }
+    .message-box {
+      @include border-bottom-left-radius(0);
+    }
+  }
+  .even {
+    .date {
+      padding-right: $chat-user-initial-size;
+    }
+    .message-box {
+      background-color: $gray-light;
+      @include border-bottom-right-radius(0);
+    }
+  }
+
+  .chat-footer {
+    // input height for chat
+    $input-height: 45px;
+    .form-control {
+      @include border-top-left-radius(0);
+      @include border-bottom-left-radius($border-radius);
+      height: $input-height;
+    }
+    .btn-icon {
+      height: $input-height;
+      width: $input-height;
+    }
+  }
+}
+.message-box {
+  display: inline-block;
+  @include border-radius(10px);
+
+  & + & {
+    margin-top: map-get($spacers, 1);
+  }
+}
+// Note Text
+.note {
+  .small {
+    @include media-breakpoint-down('lg') {
+      font-size: $font-size-base * 0.75;
+    }
+  }
+}
+//fleet
+.fleet-model-title{
+  font-size: $font-size-base * 1.1;
+  text-transform: uppercase;
+}
+
+// Room
+.room-layout-img {
+  img {
+    height: $room-layout-img-height;
+    width: auto;
+  }
+}
+.room-layout {
+  flex-basis: 130px;
+  flex-grow: 1;
+  max-width: 140px;
+  
+  @include media-breakpoint-up('xxl') {
+    width: 145px;
+  }
+  .custom-control-label {
+    &::after,
+    &::before {
+      left: auto;
+      right: 5px;
+    }
+  }
+
+  .layout-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    max-width: 100px;
+  }
+}
+
+// Archived Modal
+.archived-modal {
+  pointer-events: none;
+}
+
+// Report Gallery Modal
+.gallery-content {
+  position: relative;
+
+  .gallery-images {
+    height: 300px;
+  }
+
+  .gallery-navigation {
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      transition: $transition-base;
+    
+      &.prev-btn {
+        left: 20px;
+        transform: translateY(-50%) translateX(10px);
+      }
+      &.next-btn {
+        right: 20px;
+        transform: translateY(-50%) translateX(-10px);
+      }
+    }
+  }
+
+  &:hover {
+    .gallery-navigation {
+      .btn {
+        transform: translateY(-50%) translateX(0);
+      }
+    }
+  }
+}
+
+// Modal 
+.modal {
+  pointer-events: none;
+}

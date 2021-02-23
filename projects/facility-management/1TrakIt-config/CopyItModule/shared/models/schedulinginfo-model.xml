@@ -1,0 +1,59 @@
+
+<models>
+<model name="schedulingInformationRequest" group="SchedulingDetails">
+			<properties>
+
+                      <property name="dueDate" jsonProperty="dueDate" type="date" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="DATE"  >
+					<validations>
+						<validation type="Required" labelKey="DATE.REQUIRED" />
+
+					</validations>
+          </property>
+
+                     <property name="time" jsonProperty="time" type="time" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="TIME"  >
+					<validations>
+						<validation type="Required" labelKey="TIME.REQUIRED" />
+
+					</validations>
+				</property>
+
+                 <property name="noOfPages" jsonProperty="noOfPages" type="integer" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="NOOFPAGES"  >
+					<validations>
+						<validation type="Required" labelKey="NOOFPAGES.REQUIRED" />
+
+					</validations>
+				</property>
+
+                 <property name="noOfCopies" jsonProperty="noOfCopies" type="integer" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="NOOFCOPIES"  >
+					<validations>
+						<validation type="Required" labelKey="NOOFCOPIES.REQUIRED" />
+
+					</validations>
+				</property>
+
+</properties>
+						</model>
+
+
+<model name="schedulingInformationResponse" group="SchedulingDetails">
+			<properties>
+
+                      <property name="dueDate" jsonProperty="dueDate" type="date" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="DATE"  >
+					  <validations>
+						<validation type="Required" labelKey="DATE.REQUIRED" />
+
+					</validations>
+          </property>
+                     <property name="time" jsonProperty="time" type="date" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="TIME"  >
+					<validations>
+						<validation type="Required" labelKey="TIME.REQUIRED" />
+
+					</validations>
+				</property>
+
+        </properties>
+
+		</model>
+        </models>
+
+

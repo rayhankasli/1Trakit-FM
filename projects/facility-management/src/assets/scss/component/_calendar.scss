@@ -1,0 +1,154 @@
+.month-week-btn {
+  min-width: $month-week-btn-width;
+  text-align: left;
+  &.dropdown-toggle {
+    &::after {
+      margin-left: auto;
+    }
+  }
+}
+
+.calendar-area {
+  flex: 1 0 auto;
+  max-width: 100%;
+}
+
+.event-area {
+  flex: 0 0 $event-area-width;
+  max-width: $event-area-width;
+  margin-left: -1px;
+}
+
+%current-date {
+  position: relative;
+  background-color: $current-date-highlight-bg;
+  color: $current-date-color;
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    height: $current-date-border-height;
+    width: 100%;
+    background-color: $current-date-color;
+    content: "";
+  }
+}
+
+.calendar-header,
+.event-header {
+  background-color: $full-calendar-header-bg;
+  font-size: $font-size-base * 0.8;
+  border: 1px solid transparent;
+  &:not(:first-child) {
+    border-left-color: $border-color;
+  }
+}
+
+.calendar-header {
+  &.current-date {
+    @extend %current-date;
+  }
+}
+
+.calendar-date-btn {
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid transparent;
+  background-color: transparent;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-sm;
+
+  &:not(:first-child) {
+    border-left-color: $border-color;
+  }
+
+  &.current-date {
+    @extend %current-date;
+  }
+}
+
+.event-number {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  height: $event-number-size;
+  width: $event-number-size;
+  border-radius: $border-radius;
+  border: 1px solid theme-color-level('primary', -9);
+  background-color: theme-color-level('primary', -9);
+  color: theme-color-level('primary', 6);
+  font-size: $font-size-base * 0.75;
+}
+
+// Event
+.event-list {
+  .event-item {
+    position: relative;
+    padding: .5rem 0.75rem;
+    
+    &:hover {
+      background-color: $event-item-hover-bg;
+    }
+  }
+  .event-link {
+    border-left: $event-item-border-width solid $event-item-border-color;
+    border-radius: $border-radius;
+    padding-left: 10px;
+
+    .event-name,
+    .event-time {
+      font-size: $font-size-base * 0.8;
+    }
+
+    .event-name {
+      word-break: break-all;
+    }
+
+    .event-time {
+      @include media-breakpoint-down('lg') {
+        font-size: $font-size-base * 0.7;
+      }
+    }
+
+    .smallest {
+      font-size: $font-size-base * 0.725;
+    }
+
+    .room-name,
+    .event-room-layout {
+      font-size: $font-size-base * 0.75;
+      color: $gray;
+      word-break: break-all;
+    }
+  }
+}
+
+// Week View
+.day-event-area {
+  border: 1px solid transparent;
+  &:not(:first-child) {
+    border-left-color: $border-color;
+  }
+  &.current-date {
+    @extend %current-date;
+
+    &::after {
+      display: none;
+    }
+
+    .event-item {
+      &:hover {
+        background-color: $event-item-today-hover-bg;
+      }
+    }
+  }
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}

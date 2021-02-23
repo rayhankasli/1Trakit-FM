@@ -1,0 +1,20 @@
+<trackit-page-actions>
+  <div class="d-flex align-items-center order-2">
+    <div class="d-flex align-items-center form-group mb-0">
+      <label for="clients" class="text-gray-dark font-weight-medium mb-0 mr-2 flex-shrink-0">
+        Client:
+      </label>
+      <trakit-client-select [clients]="clients" [formControl]="clientId"></trakit-client-select>
+    </div>
+  </div>
+</trackit-page-actions>
+<ng-container *ngIf="clientId.value > 0; else noClient">
+    <app-meter-read-list-ui [clientId]="clientId.value" [baseResponse]="baseResponse" [years]="years"
+    [fleetDetailList]="fleetDetailList" (getMeterRead)="getMeterReads($event)"
+    (getFleetDetailById)="getFleetDetail($event)" (exportExcelData)="exportExcel($event)"></app-meter-read-list-ui>
+</ng-container>
+<ng-template #noClient>
+  <div class="px-3 d-flex flex-column h-100">
+    <trakit-no-client-selected></trakit-no-client-selected>
+  </div>
+</ng-template>

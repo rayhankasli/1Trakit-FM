@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<controller name="Bookit">
+	<resources>
+		<resource type="Bookit" name="Bookit" route="bookit" />
+	</resources>
+</controller>

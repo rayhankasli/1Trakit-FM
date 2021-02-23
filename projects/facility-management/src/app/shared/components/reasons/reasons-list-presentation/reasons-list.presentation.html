@@ -1,0 +1,16 @@
+<div class="d-flex align-items-center mb-2" *ngIf="addPermission && showAddNewBtn">
+  <div class="mt-0 ml-auto data-tbl-action">
+    <button type="button"
+      class="btn {{ !addNewReasonsForm ? 'btn-outline-primary' : 'btn-outline-secondary-dark' }} d-flex align-items-center"
+      (click)="addNewReasons()">
+      <span class="{{ !addNewReasonsForm ? 'icon icon-add' : 'icon icon-times' }} mr-2"></span>
+      <span>{{ !addNewReasonsForm ? 'New Reason' : 'Cancel'}}</span>
+    </button>
+  </div>
+</div>
+<!-- Data-table mobile view or desktop view -->
+<app-reasons-list-desktop-presentation [permissions]="permissions" [reasons]="baseResponse" [addNewReasonsForm]="addNewReasonsForm"
+  (saveReason)="saveReasons($event)" (closeForm)="closeForm($event)" (updateReason)="updateReasons($event)"
+  [lastReasonNotDelivered]="lastReasonNotDelivered" [lastReasonNotPicked]="lastReasonNotPicked">
+</app-reasons-list-desktop-presentation>
+<!-- Data-table footer area -->

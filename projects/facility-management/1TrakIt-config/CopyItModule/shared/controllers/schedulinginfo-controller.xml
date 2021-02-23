@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<controller name="SchedulingDetails">
+	<resources>
+		<!-- "resource" element will generate default rest api methods for defined name of resource -->		
+		<resource type="schedulingInformationRequest" name="SchedulingDetails" route="SchedulingDetails" cachedEnable="true" />
+	</resources>	
+	
+</controller>
+
+

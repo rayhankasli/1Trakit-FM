@@ -1,0 +1,223 @@
+<form focusInvalidInput [forceCheck]="isNext"
+  class="floating-form flex-grow-1 {{isEditForm || isCopyItConfig ? 'px-1 overflow-hidden' : 'p-3 overflow-auto'}}"
+  [formGroup]="printDetailsFormGroup">
+  <div class="row">
+    <div class="form-group col-12 col-md-4 mb-3">
+      <input type="text" class="form-control" formControlName="noOfPages" floatingLabel trakitOnlyNumber trakcitTrim />
+      <label class="floating-form-label">
+        No. of Pages
+      </label>
+      <div ngxErrors="noOfPages" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          No of Pages is Required
+        </div>
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Please enter only numeric value in No of Pages
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          No of Pages should not be greater than 9 digit
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-4 mb-3">
+      <input type="text" class="form-control" formControlName="noOfCopies" floatingLabel trakitOnlyNumber trakcitTrim />
+      <label class="floating-form-label">
+        No. of Copies/ Sets
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="noOfCopies" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          No. of Copies/ Sets is Required
+        </div>
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Please enter only numeric value in No. of Copies/Sets
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          No. of Copies/ Sets should not be greater than 9 digit
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 mb-3">
+      <div class="d-flex align-items-center justify-content-end h-100">
+        <span class="text-dark mr-2 font-weight-medium">Total Pages:</span>
+        <h4 class="mb-0 text-secondary-dark">{{(printDetailsFormGroup?.value.noOfPages * printDetailsFormGroup?.value.noOfCopies) | number }}</h4>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6 col-12 col-xl-4 mt-0 mb-2">
+      <trakit-custom-select-dropdown [items]="copyItConfiguration?.reproductionTypes"
+        bindValue="clientConfigureDefaultId" bindLabel="reproductionType" isCheckboxSelection="true"
+        bindPrimaryKeyField="copyItReproductionTypeId" isHideQuantityTextbox="true" formControlName="reproductionTypes"
+        id="reproductionTypes"></trakit-custom-select-dropdown>
+      <label for="reproductionTypes" class="floating-form-label">
+        Reproduction Type
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="reproductionTypes" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Reproduction Type is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6 col-12 col-xl-4 mt-0 mb-2">
+      <trakit-custom-select-dropdown [items]="copyItConfiguration?.tabs" bindValue="clientConfigureDefaultId"
+        bindLabel="tab" isRadioSelection="true" bindQuantity="quantity" [isHideQuantityTextbox]="hideQuantity"
+        bindPrimaryKeyField="copyItTabId" formControlName="tab" id="tab">
+      </trakit-custom-select-dropdown>
+      <label for="tab" class="floating-form-label">
+        Tabs
+      </label>
+    </div>
+
+    <div class="form-group col-md-6 col-12 col-xl-4 mt-0 mb-2">
+      <trakit-custom-select-dropdown [items]="copyItConfiguration?.finishings" bindValue="clientConfigureDefaultId"
+        bindLabel="finishing" isCheckboxSelection="true" bindQuantity="quantity" formControlName="finishings"
+        bindPrimaryKeyField="copyItFinishingId" id="finishings"
+        [isHideQuantityTextbox]="(hideQuantity && !isCopyItConfig)">
+      </trakit-custom-select-dropdown>
+      <label for="finishings" class="floating-form-label">
+        Finishing
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="finishings" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Finishing is required
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="enableEnvelop">
+      <div class="form-group col-md-6 col-12 col-xl-4 mt-0 mb-2">
+        <trakit-custom-select-dropdown [items]="copyItConfiguration?.envelopes" bindValue="clientConfigureDefaultId"
+          bindLabel="envelope" isCheckboxSelection="true" bindQuantity="quantity" formControlName="envelopes"
+          bindPrimaryKeyField="copyItEnvelopeId" id="envelopes"></trakit-custom-select-dropdown>
+        <label for="envelopes" class="floating-form-label">
+          Envelope & Quantity
+        </label>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="enableOversize">
+      <div class="form-group col-md-6 col-12 col-xl-4 mt-0 mb-2">
+        <trakit-custom-select-dropdown [items]="copyItConfiguration?.overSizedCopies"
+          bindValue="clientConfigureDefaultId" bindLabel="overSizedCopy" isCheckboxSelection="true"
+          bindQuantity="quantity" formControlName="overSizedCopies" bindPrimaryKeyField="copyItOverSizedCopyId"
+          [isHideQuantityTextbox]="hideQuantity" id="overSizedCopies">
+        </trakit-custom-select-dropdown>
+        <label for="overSizedCopies" class="floating-form-label">
+          Oversized Copy
+        </label>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="mt-4 mb-5">
+    <div class="d-flex align-items-center book-cover mb-3">
+      <label for="frontAndBackCover" class="text-uppercase small font-weight-semibold mb-0">
+        Front Cover & Back:
+      </label>
+    </div>
+    <div class="card">
+      <div class="card-body border-0 rounded p-3">
+        <div class="row">
+          <div class="form-group col-md-6 col-12 col-xl-3 mt-0 mb-2">
+            <trakit-custom-select-dropdown [items]="coverPageTypes" isRadioSelection="true" isHideQuantityTextbox="true"
+              bindValue="paperTypeId" bindLabel="paperType" isSingleValueSelection="true" [searchable]="false"
+              closeOnSelect="true" formControlName="frontCoverPageType" id="frontCoverPageType">
+            </trakit-custom-select-dropdown>
+            <label for="frontCoverPageType" class="floating-form-label">
+              Page Type
+            </label>
+          </div>
+
+          <div class="form-group col-md-6 col-12 col-xl-3 mt-0 mb-2">
+            <trakit-custom-page-size-dropdown [items]="copyItConfiguration?.paperSizes"
+              bindPrimaryKeyField="copyItPaperSizeId" bindValue="clientConfigureDefaultId" bindLabel="paperSize"
+              formControlName="frontCoverPageSize" id="frontCoverPageSize">
+            </trakit-custom-page-size-dropdown>
+            <label for="frontCoverPageSize" class="floating-form-label">
+              Size
+            </label>
+          </div>
+
+          <div class="form-group col-md-6 col-12 col-xl-3 mt-0 mb-2">
+            <trakit-custom-select-dropdown [items]="copyItConfiguration?.paperColors" isRadioSelection="true"
+              bindValue="clientConfigureDefaultId" bindLabel="color" bindQuantity="quantity"
+              bindPrimaryKeyField="copyItColorId" [isHideQuantityTextbox]="hideQuantity"
+              formControlName="frontCoverPageColor" id="frontCoverPageColor">
+            </trakit-custom-select-dropdown>
+            <label for="frontCoverPageColor" class="floating-form-label">
+              Color
+            </label>
+          </div>
+
+          <div class="form-group col-md-6 col-12 col-xl-3 mt-0 mb-2">
+            <trakit-custom-select-dropdown [items]="copyItConfiguration?.paperStocks" isCheckboxSelection="true"
+              bindValue="clientConfigureDefaultId" bindLabel="paperStock" bindQuantity="quantity"
+              [isHideQuantityTextbox]="hideQuantity" formControlName="frontCoverPageWeight"
+              bindPrimaryKeyField="copyItPaperStockId" id="frontCoverPageWeight">
+            </trakit-custom-select-dropdown>
+            <label for="frontCoverPageWeight" class="floating-form-label">
+              Stock / Weight
+            </label>
+          </div>
+
+          <div class="col-12">
+            <label class="small font-weight-semibold pr-2 mb-0">Note: </label>
+            <span class="small text-gray">Please add details of the Front Cover & Back Pages here.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <div class="d-flex align-items-center middle-pages mb-3">
+      <label for="frontAndBackCover" class="text-uppercase small font-weight-semibold mb-0">
+        Middle Pages:
+      </label>
+    </div>
+    <div class="card">
+      <div class="card-body border-0 rounded p-3">
+        <div class="row">
+          <div class="form-group col-md-6 col-12 col-xl-4 mt-0 mb-2">
+            <trakit-custom-page-size-dropdown [items]="copyItConfiguration.paperSizes"
+              bindPrimaryKeyField="copyItPaperSizeId" bindValue="clientConfigureDefaultId" bindLabel="paperSize"
+              formControlName="middlePageSize" id="middlePageSize">
+            </trakit-custom-page-size-dropdown>
+            <label for="middlePageSize" class="floating-form-label">
+              Size
+            </label>
+          </div>
+
+          <div class="form-group col-md-6 col-12 col-xl-4 mt-0 mb-2">
+            <trakit-custom-select-dropdown [items]="copyItConfiguration.paperColors" isRadioSelection="true"
+              bindValue="clientConfigureDefaultId" bindLabel="color" bindQuantity="quantity"
+              bindPrimaryKeyField="copyItColorId" [isHideQuantityTextbox]="hideQuantity"
+              formControlName="middlePageColor" id="middlePageColor">
+            </trakit-custom-select-dropdown>
+            <label for="middlePageColor" class="floating-form-label">
+              Color
+            </label>
+          </div>
+
+          <div class="form-group col-md-6 col-12 col-xl-4 mt-0 mb-2">
+            <trakit-custom-select-dropdown [items]="copyItConfiguration.paperStocks" isCheckboxSelection="true"
+              bindValue="clientConfigureDefaultId" bindLabel="paperStock" bindQuantity="quantity"
+              [isHideQuantityTextbox]="hideQuantity" formControlName="middlePageWeight"
+              bindPrimaryKeyField="copyItPaperStockId" id="middlePageWeight">
+            </trakit-custom-select-dropdown>
+            <label for="middlePageWeight" class="floating-form-label">
+              Stock / Weight
+            </label>
+          </div>
+
+          <div class="col-12">
+            <label class="small font-weight-semibold pr-2 mb-0">Note: </label>
+            <span class="small text-gray">Please add details of the Middle Pages here.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

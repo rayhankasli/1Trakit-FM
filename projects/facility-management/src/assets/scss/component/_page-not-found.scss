@@ -1,0 +1,18 @@
+.error-page {
+  background-color: $light;
+}
+
+.error-404 {
+  font-size: $font-size-base * 10;
+  line-height: 1;
+  color: darken($light, 8%);
+
+  &-text {
+    margin-top: -50px;
+    font-size: $font-size-base * 2.8;
+  }
+
+  &-msg {
+    max-width: 500px;
+  }
+}

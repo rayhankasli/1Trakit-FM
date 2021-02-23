@@ -1,0 +1,12 @@
+{
+    "panel1Heading": "Premier panneau",
+    "panel2Heading": "Deuxième panneau",
+    "panel3Heading": "Panneau désactivé",
+    "opened": "ouvert",
+    "collapsed": "s'est effondré",
+    "firstAccordionContent": "C'est le premier accordéon",
+    "secondAccordionContent": "C'est le deuxième accordéon",
+    "disabledAccordionContent": "Ce panneau est désactivé",
+    "save": "sauvegarder",
+    "cancel": "Annuler"
+}

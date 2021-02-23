@@ -1,0 +1,64 @@
+<!-- Wrapper -->
+<section id="wrapper" class="d-flex flex-row h-100">
+
+  <input type="checkbox" name="toggle-menu" id="toggle-menu">
+
+  <!-- Sidebar -->
+  <aside id="primary-nav" class="d-flex flex-column shadow">
+    <lib-sidebar-ui [clientDetail]="clientDetail" [menuData]="menus$ | async"
+      class="d-flex flex-column h-100 overflow-hidden"></lib-sidebar-ui>
+  </aside>
+  <!-- End: Sidebar -->
+
+  <!-- Main Content -->
+  <section id="content-wrapper" class="overflow-hidden d-flex flex-column">
+    <!-- Label for small media overlay close -->
+    <label for="toggle-menu" class="toggle-menu-icon content-overlay m-0"></label>
+    <!-- topbar -->
+    <lib-topbar-ui [fullName]="loggedInUserData$ | async">
+      <ng-container *ngIf="isArchived" archivedNotification>
+        <div class="alert alert-gray small mr-2 mb-0 py-2" role="alert">
+          You are accessing archive view, <a routerLink="/" class="alert-link font-weight-semibold">click here</a> to
+          back to original view.
+        </div>
+      </ng-container>
+      <ul class="d-flex align-items-center list-unstyled h-100 m-0" slot>
+        <li class="top-menu-item h-100" *hasPermission="clientsEnum.view">
+          <a [routerLink]="['/clients']" routerLinkActive="active" class="top-menu-link h-100">
+            Clients
+          </a>
+        </li>
+        <li class="top-menu-item h-100" *hasPermission="usersEnum.view">
+          <a [routerLink]="['/users']" routerLinkActive="active" class="top-menu-link h-100">
+            Users
+          </a>
+        </li>
+      </ul>
+
+      <ng-container *ngIf="!isArchived && checkAllowedRole && showArchivedMenu" userMenu>
+        <a class="dropdown-item cursor-pointer" routerLink="/archive" ngbDropdownItem>
+          <span>Archives</span>
+        </a>
+      </ng-container>
+    </lib-topbar-ui>
+    <!-- Main Working area -->
+    <main id="content" class="d-flex h-100 overflow-hidden">
+      <div class="content-body h-100 w-100 overflow-hidden d-flex flex-column">
+        <!-- breadcrumb for navigation tree -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center flex-shrink-0 px-3 pt-3">
+          <trackit-breadcrumb [showIcon]="false" class="mb-3"></trackit-breadcrumb>
+          <div id="page-actions-container" class="d-flex ml-auto mb-3">
+            <!-- content will be placed dynamically via Cdk Portal -->
+          </div>
+        </div>
+        <div class="h-100 overflow-auto">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </main>
+
+  </section>
+  <!-- End: Main Content -->
+
+</section>
+<!-- End Wrapper -->

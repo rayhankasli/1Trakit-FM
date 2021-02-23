@@ -1,0 +1,214 @@
+{
+  "generator-rpp-angular": {
+    "xmlModelDataKey": {
+      "declaration": {
+        "attributes": {
+          "version": "1.0",
+          "encoding": "UTF-8"
+        }
+      },
+      "elements": [
+        {
+          "type": "element",
+          "name": "component",
+          "attributes": {
+            "name": "ReportMeterRead",
+            "module": "ReportMeterRead",
+            "breadcrumbKey": "MeterRead",
+            "xmlns:xi": "http://www.w3.org/2001/XInclude"
+          },
+          "elements": [
+            {
+              "type": "element",
+              "name": "xi:include",
+              "attributes": {
+                "href": "./1TrakIt-config/Reports/shared/models/meter-read-model.xml"
+              }
+            },
+            {
+              "type": "element",
+              "name": "xi:include",
+              "attributes": {
+                "href": "./1TrakIt-config/Reports/shared/controllers/meter-read-controller.xml"
+              }
+            },
+            {
+              "type": "element",
+              "name": "table",
+              "attributes": {
+                "responseModel": "MeterRead",
+                "controller": "MeterRead",
+                "isCheckable": "false",
+                "isAddable": "false",
+                "hasBreadcrumb": "false",
+                "hasFilters": "false",
+                "hasSorting": "true",
+                "hasPagination": "true",
+                "hasActions": "false",
+                "hasGlobalSearch": "false"
+              },
+              "elements": [
+                {
+                  "type": "element",
+                  "name": "columns",
+                  "elements": [
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "floorLocation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "department"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "model"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "serialNumber"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "id"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "meter"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "begin"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "end"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "copies"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "element",
+                      "name": "column",
+                      "attributes": {
+                        "isFilterable": "false",
+                        "isSortable": "true",
+                        "class": "align-center"
+                      },
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "cost"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

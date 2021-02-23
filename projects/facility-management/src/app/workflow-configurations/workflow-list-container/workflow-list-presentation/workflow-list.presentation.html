@@ -1,0 +1,40 @@
+<trackit-page-actions>
+  <div class="d-flex align-items-center">
+    <div class="form-group mb-0 d-flex align-items-center mr-2">
+      <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Status:</label>
+      <ng-select appendTo="body" [items]="status" bindLabel="" bindValue="" [clearable]="false"
+        [(ngModel)]="workflowStatus" floatingLabel class="form-control ng-select-sm float-outline p-0 text-capitalize"
+        [searchable]="false" (change)="onStatusChange($event)">
+      </ng-select>
+    </div>
+    <!-- Search box -->
+    <trackit-search (searchText)="onSearch($event)"></trackit-search>
+
+    <!-- Filter button -->
+    <button type="button"
+      class="btn btn-outline-light d-flex align-items-center justify-content-center btn-icon mr-2 filter-btn"
+      title="Filter table data" (click)="openFilter()">
+      <span class="icon icon-filter text-gray-dark"></span>
+      <ng-container *ngIf="isFilterApply">
+        <span class="badge badge-icon badge-primary rounded-circle position-absolute"></span>
+      </ng-container>
+    </button>
+
+    <!-- Add new button -->
+    <button type="button"
+      class="btn {{ !addWorkFlowForm ? 'btn-primary': 'btn-outline-secondary'}} d-flex align-items-center"
+      (click)="addNewWorkFlow()" title="{{!addWorkFlowForm ? 'Add New Workflow' : 'Cancel' }}"
+      *hasPermission="workflowEnum.add">
+      <span class="{{ !addWorkFlowForm ? 'icon icon-add': 'icon icon-times'}} mr-2"></span>
+      <span>{{!addWorkFlowForm ? "New Workflow" :"Cancel" }}</span>
+    </button>
+  </div>
+</trackit-page-actions>
+
+<app-workflow-list-desktop-presentation [addWorkFlow]="addWorkFlowForm" [workflows]="baseResponse" [offices]="offices"
+  [assigner]="assigner" (closeWorkFlowForm)="closeWorkFlowForm($event)" (addWorkflow)="addWorkNewFlow($event)"
+  (updateWorkflow)="updateWorkFlow($event)" (toggleWorkflowStatus)="onToggleStatus($event)"
+  (getOffices)="getOfficeList()">
+</app-workflow-list-desktop-presentation>
+
+<!-- Data-table footer area -->

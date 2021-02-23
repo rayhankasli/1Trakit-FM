@@ -1,0 +1,5 @@
+<app-facilities-help-desk-ui class="d-flex flex-column w-100 overflow-hidden"
+    [facilitiesHelpDeskList]="facilitiesHelpDeskList$ | async" 
+    [clients]="clientMaster$ | async" 
+    (getListById)="getListById($event)">
+</app-facilities-help-desk-ui>

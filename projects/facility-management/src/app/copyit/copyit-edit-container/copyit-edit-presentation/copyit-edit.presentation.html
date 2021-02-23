@@ -1,0 +1,184 @@
+<trackit-page-actions>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="ml-auto d-flex align-items-center">
+      <div *ngIf="filteredStatus|async as statusListF" class="form-group mb-0 d-flex align-items-center mr-2">
+        <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Status:</label>
+        <div class="status-dropdown d-flex mb-0" dropdown container="body"
+          [isDisabled]="disableStatus || !statusListF.length">
+          <button id="status-drop-btn" dropdownToggle type="button"
+            class="btn status-btn pr-4 pl-2 flex-grow-1 border dropdown-toggle text-truncate">
+            <app-status-badge [statusId]="status"></app-status-badge>
+          </button>
+          <ul *dropdownMenu class="dropdown-menu status-dropdown-menu" role="menu" aria-labelledby="status-drop-btn">
+            <ng-container *ngFor="let opt of statusListF;trackBy:trackBy.bind(this,'copyItStatusId')">
+              <button type="button" role="menuitem" class="dropdown-item pl-2" (click)="validateStatusChange(opt);">
+                <app-status-badge [statusId]="opt.copyItStatusId"></app-status-badge>
+              </button>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-group mb-0 d-flex align-items-center mr-2">
+        <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Assign To:</label>
+        <ng-select #assignToUser [items]="assignToList" bindLabel="fullName" bindValue="userId" [searchable]="false"
+          [clearable]="false" [(ngModel)]="assignee" groupBy="roleName" [disabled]="disableAssignTo" selectFloatingLabel
+          (change)="onAssignToChange($event)" class="form-control float-outline p-0 ng-select-lg" appendTo="body">
+          <ng-template ng-header-tmp>
+            <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+              <input type="text" autoFocus class="form-control border-0 pr-0"
+                (input)="assignToUser.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                aria-describedby="button-addon">
+              <div class="input-group-append">
+                <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                  <span class="icon icon-search"></span>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template ng-optgroup-tmp let-item="item">
+            <strong>{{item.roleName}}</strong>
+          </ng-template>
+        </ng-select>
+      </div>
+
+      <button *hasPermission="copyItPermissions.print" type="button"
+        class="btn btn-outline-light d-flex align-items-center justify-content-center btn-icon mr-2"
+        (click)="printCopyItDetail()" title="Print">
+        <span class="icon icon-print icon-1x text-gray-dark"></span>
+      </button>
+
+      <button *hasPermission="copyItPermissions.exportPdf" type="button"
+        class="btn btn-primary d-flex align-items-center mr-2" (click)="exportCopyItDetailToPDF()"
+        title="Export as PDF">
+        <span class="icon icon-file-pdf icon-1x mr-2"></span>
+        <span>EXPORT AS PDF</span>
+      </button>
+
+      <button *ngIf="!disableChatBox" type="button"
+        class="btn d-flex align-items-center justify-content-center btn-icon"
+        [ngClass]="{'btn-secondary':isChatBoxOpen, 'btn-outline-secondary':!isChatBoxOpen}" (click)="openChatBox()"
+        title="Chat">
+        <span class="icon icon-chat-bubble icon-1x"></span>
+      </button>
+    </div>
+  </div>
+</trackit-page-actions>
+
+<div class="flex-grow-1 px-3 pb-3 overflow-auto">
+  <ngb-accordion class="mb-4" #accordion="ngbAccordion" [activeIds]="activeIds" [closeOthers]="true"
+    [destroyOnHide]="false">
+    <ngb-panel id="0">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 h5 flex-grow-1 btn text-left accordion-header mr-2">REQUEST
+            INFORMATION DETAILS</button>
+
+          <ng-container [ngTemplateOutlet]="accordionButtons" [ngTemplateOutletContext]="{opened:opened, panelId: '0'}">
+          </ng-container>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <app-request-information-details-form-ui [isNext]="isNext" [isEditForm]="true" [configurations]="configurations"
+          [clients]="clientsList" [client]="clientDetail" [copyItInfo]="requestInfo" [usersList]="usersList"
+          [userDetails]="userDetails" [requestorDetail]="requestorDetail" (clientId)="getDetailByClientId($event)"
+          (userId)="onUserChange($event)" (downloadFile)="downloadFile($event)"
+          (saveCopyItInfo)="saveRequestDetails($event)">
+        </app-request-information-details-form-ui>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="1">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 h5 flex-grow-1 btn text-left accordion-header mr-2">SCHEDULING
+            DETAILS</button>
+
+          <ng-container [ngTemplateOutlet]="accordionButtons" [ngTemplateOutletContext]="{opened:opened, panelId: '1'}">
+          </ng-container>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <app-scheduling-details-form-ui [isNext]="isNext" [isEditForm]="true"
+          (saveCopyItInfo)="saveSchedulingDetails($event)" [copyItInfo]="scheduleInfo">
+        </app-scheduling-details-form-ui>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="2">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 h5 flex-grow-1 btn text-left accordion-header mr-2">PRINT
+            DETAILS</button>
+
+          <ng-container [ngTemplateOutlet]="accordionButtons" [ngTemplateOutletContext]="{opened:opened, panelId: '2'}">
+          </ng-container>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <app-print-details-form-ui [isNext]="isNext" [isEditForm]="true" [disableCustomOptions]="isDisabled"
+          (saveCopyItInfo)="savePrintDetails($event)" [copyItInfo]="printDetailInfo"
+          [copyItConfiguration]="configurations">
+        </app-print-details-form-ui>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel *ngIf="enableShipping" id="3">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 h5 flex-grow-1 btn text-left accordion-header mr-2">SHIPPING
+            DETAILS</button>
+
+          <ng-container [ngTemplateOutlet]="accordionButtons" [ngTemplateOutletContext]="{opened:opened, panelId: '3'}">
+          </ng-container>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <trakit-shipping-details-form-ui [isEditForm]="true" [copyItInfo]="shippingDetailInfo"
+          [copyItConfigurations]="configurations" [isNext]="isNext" (saveCopyItInfo)="saveShippingDetails($event)">
+        </trakit-shipping-details-form-ui>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+
+  <div [hidden]="isRequestor" class="mb-xxl-5 mb-4">
+    <app-pick-assets-ui #pickAsset [copyItPickAssets]="copyItPickAssets" [copyItSelectedAssets]="copyItDetail.assets"
+      [copyItInfo]="copyItDetail" [assetList]="assetList" [isNext]="isNext"
+      (updateCopyItAssets)="saveCopyItPickAssets($event)">
+    </app-pick-assets-ui>
+  </div>
+
+  <div class="mb-xxl-5 mb-4">
+    <app-copy-center-ui [copyItInfo]="copyItCopyCenterInfo" [isNext]="isNext"
+      (saveCopyItInfo)="saveCopyCenterInfo($event)"></app-copy-center-ui>
+  </div>
+
+  <div class="mb-xxl-5 mb-4">
+    <app-copyit-charges-ui [isEstimates]="isEstimates" [copyItInfo]="copyItDetail"
+      [currentAssetList]="!isEstimates ? (pickAsset?.currentAssetDetail|async) : []">
+    </app-copyit-charges-ui>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-end flex-shrink-0 mt-3">
+    <button disableOnAjax (click)="saveChanges()" *ngIf="!disableForm" type="button"
+      class="btn btn-primary d-flex align-items-center ng-star-inserted">
+      <span class="icon icon-tick mr-2"></span>
+      <span>Submit</span>
+    </button>
+  </div>
+</div>
+
+<ng-template #accordionButtons let-opened="opened" let-panelId="panelId">
+  <ng-container *ngIf="!disableForm; else default">
+    <button type="button" *ngIf="opened" (click)="savePanelDetails(panelId)" class="btn btn-outline-primary"
+      title="Confirm changes">
+      <span>Confirm</span>
+    </button>
+    <button type="button" *ngIf="!opened" (click)="openAccordionPanel(panelId)"
+      class="btn bg-transparent p-0 btn-icon flex-shrink-0">
+      <span class="icon icon-add"></span>
+    </button>
+  </ng-container>
+  <ng-template #default>
+    <button type="button" (click)="closeAccordionPanel(panelId)" class="btn bg-transparent p-0 btn-icon flex-shrink-0">
+      <span class="{{opened ? 'icon icon-minus':'icon icon-add'}}"></span>
+    </button>
+  </ng-template>
+</ng-template>

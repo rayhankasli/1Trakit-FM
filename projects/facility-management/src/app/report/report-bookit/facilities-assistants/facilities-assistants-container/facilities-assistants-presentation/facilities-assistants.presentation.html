@@ -1,0 +1,59 @@
+<trackit-page-actions>
+  <button type="button" class="btn btn-primary flex-shrink-0 d-flex order-2 align-items-center ml-2"
+    (click)="exportPdf()" title="Export as PDF" *hasPermission="facilityAssistantEnum.facilityAssistantsExportPdf"
+    [disabled]="facilitiesAssistantsList?.length <= 0">
+    <span>Export as PDF</span>
+  </button>
+</trackit-page-actions>
+<div class="d-flex align-items-center mb-3 flex-shrink-0 px-3">
+  <div class="flex-grow-1 text-center">
+    <span class="text-uppercase small font-weight-medium">LABOR HOURS - WORK ORDER TICKETS
+      {{currentMonth | date:'y'}}</span>
+  </div>
+</div>
+
+<div class="flex-grow-1 h-100 px-3 overflow-hidden mb-3">
+  <div class="d-flex h-100 overflow-hidden">
+    <div class="report-data-table overflow-y-auto overflow-x-hidden border rounded mb-3 h-100">
+      <table class="table data-tbl w-100 position-relative mb-0 border-0">
+        <colgroup>
+          <col style="width: 80px;">
+          <col style="width: 120px;">
+          <col style="width: 120px;">
+        </colgroup>
+        <thead class="sticky-table-header">
+          <tr>
+            <th class="text-center" scope="col" *ngFor="let header of tableHeader;trackBy:trackBy.bind(this,'')">
+              <span>{{header}}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- current-data-row, quarter-data-row -->
+          <tr *ngFor="let data of facilitiesAssistantsList;trackBy:trackBy.bind(this,'month')" [ngClass]="{'current-data-row': data.month === (currentMonth | date:'MMM'), 
+          'ytd-data-row':  data.month === 'YTD', 
+          'average-data-row': data.month === 'Avg'}">
+            <td class="text-center">{{data.month}}</td>
+            <td class="text-center"> {{data?.workOrderTickets !== null ? data?.workOrderTickets : '-'}}</td>
+            <td class="text-center"> {{data?.labourbHourPerMonth !== null ? data?.labourbHourPerMonth : '-'}}</td>
+          </tr>
+          <!-- colspan base on total column -->
+          <tr *ngIf="!facilitiesAssistantsList || facilitiesAssistantsList.length === 0">
+            <td colspan="3" class="h-100">
+              <div class="text-muted  d-flex align-items-center justify-content-center h-100">
+                No record found
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col pr-0 overflow-hidden">
+      <div class="card h-100 overflow-hidden">
+        <!-- to add the chart (Google Chart) -->
+        <div class="h-100 w-100" #facilitiesAssistants></div>
+      </div>
+    </div>
+  </div>
+</div>

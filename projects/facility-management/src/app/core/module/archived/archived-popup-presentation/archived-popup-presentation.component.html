@@ -1,0 +1,20 @@
+<!-- Modal -->
+<div class="modal d-block archived-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title" id="exampleModalLabel">Module Deactivated</h5>
+      </div>
+      <div class="modal-body">
+        <p class="small">Your {{clientName}} - {{ moduleListString }} module has been deactivated. No worries, you can still access your existing data from archives.</p>
+        <div class="archive-img d-flex justify-content-center">
+          <img src="assets/img/archives.png" alt="archive-img">
+        </div>
+        <div class="d-flex justify-content-end mt-3">
+          <button type="button" class="btn btn-primary" (click)="gotIt()">Got It</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

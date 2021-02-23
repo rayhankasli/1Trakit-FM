@@ -1,0 +1,6 @@
+<div class="px-3">
+    <app-asset-form-ui [asset]="asset$ | async" [clients]="clients$ | async" [fleetTickets]="fleetTickets$ |async"
+        [ticketStatus]="ticketStatus$ |async" (add)="addAsset($event)" (update)="updateAsset($event)"
+        (getAssetTicket)="getAssetTickets($event)">
+    </app-asset-form-ui>
+</div>

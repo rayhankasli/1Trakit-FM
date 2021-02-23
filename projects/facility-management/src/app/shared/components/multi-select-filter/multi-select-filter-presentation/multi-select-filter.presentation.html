@@ -1,0 +1,55 @@
+<div class="d-flex align-items-center">
+  <div class="input-group search-area w-auto mr-2">
+    <input type="text" [formControl]="searchField" class="form-control" placeholder="Search">
+    <div #parentDropdown="bs-dropdown" class="btn-group input-group-append" dropdown [autoClose]="true"
+      [insideClick]="true">
+      <button id="button-split" type="button" dropdownToggle
+        class="btn btn-outline-light text-gray-dark d-flex align-items-center justify-content-center btn-icon dropdown-toggle search-dropdown-btn">
+        <span *ngIf="isFilterApplied" class="badge badge-icon badge-primary rounded-circle position-absolute"></span>
+      </button>
+      <div *dropdownMenu class="dropdown-menu dropdown-menu-right mt-0 rounded py-0 shadow-sm" role="menu"
+        aria-labelledby="button-nested">
+        <div role="menuitem" class="nested-dropdown" #dropdown="bs-dropdown" [autoClose]="true" [insideClick]="true"
+          dropdown placement="right">
+          <form [formGroup]="multiSelectFilterForm">
+            <angular2-multiselect [data]="requestors" formControlName="requestedById"
+              [settings]="requestedByDropSettings">
+              <c-badge>
+                <ng-template let-item="item"><label>{{item.userName}}</label></ng-template>
+              </c-badge>
+              <c-item>
+                <ng-template let-item="item"><label>{{item.userName}}</label></ng-template>
+              </c-item>
+            </angular2-multiselect>
+            <angular2-multiselect [data]="assignedTo" formControlName="assignedToId" [settings]="assignToDropSettings">
+              <c-badge>
+                <ng-template let-item="item"><label>{{item.userName}}</label></ng-template>
+              </c-badge>
+              <c-item>
+                <ng-template let-item="item"><label>{{item.userName}}</label></ng-template>
+              </c-item>
+            </angular2-multiselect>
+            <angular2-multiselect [data]="statuses" formControlName="statusId" [settings]="statusDropSettings">
+              <c-item>
+                <ng-template let-item="item">
+                  <app-status-badge [statusId]="item.statusId"></app-status-badge>
+                </ng-template>
+              </c-item>
+              <c-badge>
+                <ng-template let-item="item">
+                  <app-status-badge [statusId]="item.statusId"></app-status-badge>
+                </ng-template>
+              </c-badge>
+            </angular2-multiselect>
+            <div class="px-2 py-1">
+              <a (click)="onReset()" class="cursor-pointer text-primary d-flex align-items-center justify-content-center reset-btn">
+                <span class="icon icon-refresh"></span>
+                <span class="pl-2 font-weight-medium">Clear</span>
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

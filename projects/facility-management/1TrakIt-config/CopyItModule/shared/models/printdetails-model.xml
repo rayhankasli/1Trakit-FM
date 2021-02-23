@@ -1,0 +1,98 @@
+
+<models>
+<model name="PrintDetailsRequest" group="PrintDetails">
+			<properties>
+
+                      <property name="reproductionType" jsonProperty="reproductionType" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="REPRODUCTIONTYPE"  >
+					<validations>
+						<validation type="Required" labelKey="REPRODUCTIONTYPE.REQUIRED" />
+					</validations>
+          </property>
+                     <property name="tabs" jsonProperty="tabs" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="TABS"  >
+					<validations>
+						<validation type="Required" labelKey="TABS.REQUIRED" />
+					</validations>
+				</property>
+
+                 <property name="finishing" jsonProperty="finishing" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="FINISHING"  >
+					<validations>
+						<validation type="Required" labelKey="FINISHING.REQUIRED" />
+					</validations>
+				</property>
+
+                 <property name="envelopeQuantity" jsonProperty="envelopeQuantity" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="ENVELOPEQUANTITY"  >
+					<validations>
+						<validation type="Required" labelKey="ENVELOPEQUANTITY.REQUIRED" />
+					</validations>
+				</property>
+
+                  <property name="overSizedCopy" jsonProperty="overSizedCopy" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="OVERSIZEDCOPY"  >
+					<validations>
+						<validation type="Required" labelKey="OVERSIZEDCOPY.REQUIRED" />
+					</validations>
+				</property>
+
+                <property name="coverPageType" jsonProperty="coverPageType" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="PAGETYPE"  >
+					<validations>
+						<validation type="Required" labelKey="PAGETYPE.REQUIRED" />
+					</validations>
+				</property>
+
+           <property name="coverPageSize" jsonProperty="coverPageSize" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="SIZE"  >
+					<validations>
+						<validation type="Required" labelKey="SIZE.REQUIRED" />
+					</validations>
+				</property>
+
+                 <property name="coverPageColor" jsonProperty="coverPageColor" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="COLOR"  >
+					<validations>
+						<validation type="Required" labelKey="COLOR.REQUIRED" />
+            </validations>
+				</property>
+
+                 <property name="coverPageWeight" jsonProperty="coverPageWeight" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="WEIGHT"  >
+					<validations>
+						<validation type="Required" labelKey="WEIGHT.REQUIRED" />
+            </validations>
+				</property>
+
+           <property name="middlePagesize" jsonProperty="middlePageSize" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="MIDDLEPAGESIZE"  >
+					<validations>
+						<validation type="Required" labelKey="MIDDLEPAGESIZE.REQUIRED" />
+            </validations>
+				</property>
+
+                 <property name="middlePageColor" jsonProperty="middledPageColor" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="MIDDLEPAGECOLOR"  >
+					<validations>
+						<validation type="Required" labelKey="MIDDLEPAGECOLOR.REQUIRED" />
+            </validations>
+				</property>
+
+                 <property name="middlePageWeight" jsonProperty="middledPageWeight" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="WEIGHT"  >
+					<validations>
+						<validation type="Required" labelKey="WEIGHT.REQUIRED" />
+            </validations>
+				</property>
+
+</properties>
+						</model>
+
+
+<model name="PrintDetailsResponse" group="PrintDetails">
+				<properties>
+
+                      <property name="reproductionType" jsonProperty="reproductionType" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="REPRODUCTIONTYPE"  >
+					<validations>
+						<validation type="Required" labelKey="REPRODUCTIONTYPE.REQUIRED" />
+</validations>
+				</property>
+            <property name="tabs" jsonProperty="tabs" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="TABS"  >
+					<validations>
+						<validation type="Required" labelKey="TABS.REQUIRED" />
+            </validations>
+				</property>
+
+        </properties>
+
+		</model>
+        </models>

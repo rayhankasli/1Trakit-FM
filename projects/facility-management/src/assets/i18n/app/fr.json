@@ -1,0 +1,11 @@
+{
+    "lblLanguage": "Choisir la langue",
+    "dataTableBreadCrumb": "Table de données",
+    "formControlBreadCrumb": "Contrôle de forme",
+    "accordionBreadCrumb": "Accordéon",
+    "tabBreadCrumb": "Languette",
+    "dataTableTitle": "Gérer la table de données",
+    "formControlTitle": "Gérer le contrôle de formulaire",
+    "accordionTitle": "Gérer Accordéon",
+    "tabTitle": "Onglet Gérer"
+}

@@ -1,0 +1,191 @@
+<label for="frontAndBackCover" class="small mt-0 mb-2 font-weight-semibold">
+  CHARGES{{isEstimates ? ' (ESTIMATED)' : ''}}:
+</label>
+<div class="card">
+  <div class="card-body p-3">
+    <ul class="d-flex flex-wrap p-0 mb-0 list-unstyled">
+      <li class="d-flex align-items-center flex-wrap charges-list-item pr-1">
+        <small class="text-dark font-weight-medium py-1">Printing: </small>
+      </li>
+      <ng-container *ngFor="let envelop of envelopes;let first=first;trackBy:trackBy.bind(this,'copyItEnvelopeId')">
+        <li class="d-flex align-items-center flex-wrap charges-list-item">
+          <small class="text-dark font-weight-medium py-1">Envelope - {{envelop?.envelope}}: </small>
+          <label class="selected-option mx-2 mb-0">
+            <span class="value-label px-3">
+              {{envelop?.quantity || 0}} *
+              {{(isRateTypeTenant ? envelop?.defaultTenantRate: envelop?.defaultClientRate) || 0}}
+            </span>
+          </label>
+        </li>
+      </ng-container>
+      <li *ngIf="tabs" class="d-flex align-items-center flex-wrap charges-list-item">
+        <small class="text-dark font-weight-medium py-1">Tab - {{tabs?.tab}}
+          {{tabs?.instruction?('-'+tabs?.instruction):''}}: </small>
+        <label class="selected-option mx-2 mb-0">
+          <span class="value-label px-3">
+            {{tabs?.quantity || 0}} *
+            {{(isRateTypeTenant ? tabs?.defaultTenantRate: tabs?.defaultClientRate) || 0}}</span>
+        </label>
+      </li>
+      <ng-container
+        *ngFor="let paperStock of paperStocks;let first=first;trackBy:trackBy.bind(this,'copyItPaperStockId')">
+        <li class="d-flex align-items-center flex-wrap charges-list-item">
+          <small class="text-dark font-weight-medium py-1">Paper Stock - {{paperStock?.paperStock}}
+            {{paperStock?.instruction?('-'+paperStock?.instruction):''}}: </small>
+          <label class="selected-option mx-2 mb-0">
+            <span class="value-label px-3">
+              {{paperStock?.quantity || 0}} *
+              {{(isRateTypeTenant ? paperStock?.defaultTenantRate: paperStock?.defaultClientRate) || 0}}
+            </span>
+          </label>
+        </li>
+      </ng-container>
+      <ng-container
+        *ngFor="let overSizedCopy of overSizedCopies;let first=first;trackBy:trackBy.bind(this,'copyItOverSizedCopyId')">
+        <li class="d-flex align-items-center flex-wrap charges-list-item">
+          <small class="text-dark font-weight-medium py-1">Oversized Copy - {{overSizedCopy?.overSizedCopy}}: </small>
+          <label class="selected-option mx-2 mb-0">
+            <span class="value-label px-3">
+              {{overSizedCopy?.quantity || 0}} *
+              {{(isRateTypeTenant ? overSizedCopy?.defaultTenantRate: overSizedCopy?.defaultClientRate) || 0}}
+            </span>
+          </label>
+        </li>
+      </ng-container>
+      <ng-container *ngFor="let finishing of finishings;let first=first;trackBy:trackBy.bind(this,'copyItFinishingId')">
+        <li class="d-flex align-items-center flex-wrap charges-list-item">
+          <small class="text-dark font-weight-medium py-1">Finishing - {{finishing?.finishing}}
+            {{finishing?.finishingSubItemValue ? '-' + finishing?.finishingSubItemValue : ''}}
+            {{finishing?.instruction?('-'+finishing?.instruction):''}}:
+          </small>
+          <label class="selected-option mx-2 mb-0">
+            <span class="value-label px-3">
+              {{finishing?.quantity || 0}} *
+              {{(isRateTypeTenant ? finishing?.defaultTenantRate: finishing?.defaultClientRate) || 0}}
+            </span>
+          </label>
+        </li>
+      </ng-container>
+      <!-- Estimates for the selected Middle pages paper-size -->
+      <ng-container *ngIf="isEstimates">
+        <ng-container
+          *ngFor="let paperSize of paperSizeForEstimates;let first=first;trackBy:trackBy.bind(this,'copyItPaperSizeId')">
+          <li class="d-flex align-items-center flex-wrap charges-list-item">
+            <small class="text-dark font-weight-medium py-1">Paper Size - {{paperSize?.paperSizeOptionDetail}}: </small>
+            <label class="selected-option mx-2 mb-0">
+              <span class="value-label px-3">
+                {{paperSize?.paperSideTypeId === copyItPaperSideType.TWO_SIDED ? (copyItInfo?.noOfPages * copyItInfo?.noOfCopies)/2 : (copyItInfo?.noOfPages * copyItInfo?.noOfCopies) || 0}}
+                *
+                {{(isRateTypeTenant ? paperSize?.defaultTenantRate: paperSize?.defaultClientRate) || 0}}
+              </span>
+            </label>
+          </li>
+        </ng-container>
+      </ng-container>
+      <!-- historical assets -->
+      <ng-container *ngIf="allowColorReproduction">
+        <ng-container
+          *ngFor="let asset of historicalAssetList;let first=first;trackBy:trackBy.bind(this,'copyItAssetMeterId')">
+          <ng-container *ngIf="asset?.colorClientConfigureDefaultId">
+            <li class="d-flex align-items-center flex-wrap charges-list-item">
+              <small class="text-dark font-weight-medium py-1">{{asset?.manufacturer}} -
+                {{asset?.colorClientConfigureDefault}}:
+              </small>
+              <label class="selected-option mx-2 mb-0">
+                <span class="value-label px-3">
+                  {{asset?.chargeColorRead}} *
+                  {{(isRateTypeTenant? asset.colorDefaultTenantRate:asset.colorDefaultClientRate) || 0}}
+                </span>
+              </label>
+            </li>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="allowBWReproduction">
+        <ng-container
+          *ngFor="let asset of historicalAssetList;let first=first;trackBy:trackBy.bind(this,'copyItAssetMeterId')">
+          <ng-container *ngIf="asset?.bWClientConfigureDefaultId">
+            <li class="d-flex align-items-center flex-wrap charges-list-item">
+              <small class="text-dark font-weight-medium py-1">{{asset?.manufacturer}} -
+                {{asset?.bWClientConfigureDefault}}:
+              </small>
+              <label class="selected-option mx-2 mb-0">
+                <span class="value-label px-3">
+                  {{asset?.chargeBWRead}} *
+                  {{(isRateTypeTenant? asset.bWDefaultTenantRate:asset.bWDefaultClientRate) || 0}}
+                </span>
+              </label>
+            </li>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <!-- current active assets -->
+      <ng-container *ngIf="allowColorReproduction">
+        <ng-container
+          *ngFor="let asset of currentAssetList;let first=first;trackBy:trackBy.bind(this,'copyItAssetMeterId')">
+          <ng-container *ngIf="asset?.colorClientConfigureDefaultId">
+            <li class="d-flex align-items-center flex-wrap charges-list-item">
+              <small class="text-dark font-weight-medium py-1">
+                {{asset?.manufacturer}} - {{asset?.paperSizeColorOptionDetail}}:
+              </small>
+              <label class="selected-option mx-2 mb-0">
+                <span class="value-label px-3">
+                  {{asset?.chargeColorRead}} * {{asset?.chargeColorRate}}
+                </span>
+              </label>
+            </li>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="allowBWReproduction">
+        <ng-container
+          *ngFor="let asset of currentAssetList;let first=first;trackBy:trackBy.bind(this,'copyItAssetMeterId')">
+          <ng-container *ngIf="asset?.bWClientConfigureDefaultId">
+            <li class="d-flex align-items-center flex-wrap charges-list-item">
+              <small class="text-dark font-weight-medium py-1">
+                {{asset?.manufacturer}} - {{asset?.paperSizeBWOptionDetail}}:
+              </small>
+              <label class="selected-option mx-2 mb-0">
+                <span class="value-label px-3">
+                  {{asset?.chargeBWRead}} * {{asset?.chargeBWRate}}
+                </span>
+              </label>
+            </li>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ul>
+
+    <div class="d-flex align-items-baseline mt-4">
+      <div class="flex-grow-1 d-flex justify-content-end align-items-center">
+        <label class="mb-0 mr-2 text-dark font-weight-semibold small">Total Print Charges:</label>
+      </div>
+      <div class="flex-shrink-0 total-charge border-left">
+        <label class="mb-0 ml-2 d-flex align-items-baseline font-weight-normal text-success">
+          ${{totalPrintAmount | number: decimal}}
+        </label>
+      </div>
+    </div>
+    <div class="d-flex align-items-baseline">
+      <div class="flex-grow-1 d-flex justify-content-end align-items-center">
+        <label class="mb-0 mr-2 text-dark font-weight-semibold small">Total Attribute Charges:</label>
+      </div>
+      <div class="flex-shrink-0 total-charge border-left">
+        <label class="mb-0 ml-2 d-flex align-items-baseline font-weight-normal text-success">
+          ${{totalAmount | number: decimal}}
+        </label>
+      </div>
+    </div>
+    <div class="d-flex align-items-baseline">
+      <div class="flex-grow-1 d-flex justify-content-end align-items-center">
+        <label class="mb-0 mr-2 text-dark font-weight-semibold small">Total Copies &amp; Attribute Charges:</label>
+      </div>
+      <div class="flex-shrink-0 total-charge border-left">
+        <label class="mb-0 ml-2 d-flex align-items-baseline font-weight-semibold text-success">
+          $<span class="h3 mb-0">{{totalAmount + totalPrintAmount | number: decimal}}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

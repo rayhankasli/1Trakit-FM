@@ -1,0 +1,12 @@
+<form [formGroup]="userFormGroup">
+  <div class="form-group mb-0 d-flex align-items-center mr-2">
+    <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Status:</label>
+    <ng-select id="status" appendTo="body" [items]="statusList" formControlName="isActive" bindLabel="statusKey"
+      bindValue="statusValue" [clearable]="false" class="form-control ng-select-sm p-0 mr-2" [searchable]="false">
+    </ng-select>
+    <label for="clients" class="text-gray-dark font-weight-medium mb-0 mr-2 flex-shrink-0">
+      Client:
+    </label>
+    <trakit-client-select [clients]="clients" formControlName="clientId"></trakit-client-select>
+  </div>
+</form>

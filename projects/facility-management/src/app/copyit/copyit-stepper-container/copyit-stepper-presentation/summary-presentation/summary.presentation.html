@@ -1,0 +1,503 @@
+<div class="summary-form flex-grow-1 p-3 overflow-auto">
+  <ngb-accordion #accordion="ngbAccordion" [activeIds]="activeIds" [closeOthers]="true"
+    (panelChange)="toggleAccordion($event)">
+    <ngb-panel id="0">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 h5 flex-grow-1 btn text-left accordion-header mr-2">REQUEST
+            INFORMATION DETAILS</button>
+          <button type="button" ngbPanelToggle class="btn bg-transparent p-0 btn-icon flex-shrink-0">
+            <span [class]="opened ? 'icon icon-minus' : 'icon icon-add'"></span>
+          </button>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="row">
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2">
+              Client Name:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.companyName}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              User Name:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.requestForName}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Email Address:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.emailAddress}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Phone Number:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.phoneNumber}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Project Code:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.accountNo}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Department:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.departmentName}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Job Name:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.jobname}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Price Quote:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{priceQuote}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Proof:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{proof}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 col-xl-2 mb-2" *ngIf="copyItInfo?.tenants">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Rate Request Type:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.rateRequestType}}
+            </div>
+          </div>
+          <div class="form-group col-12 mb-0">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Upload Files:
+            </label>
+            <div class="d-flex flex-wrap mt-1">
+              <ng-container *ngFor="let fileName of copyItInfo?.fileName;trackBy:trackBy.bind(this,'')">
+                <label class="d-flex align-items-center text-dark bg-light rounded small mb-1 mr-1">
+                  <span class="px-2 py-1">{{ fileName }}</span>
+                </label>
+              </ng-container>
+            </div>
+            <div class="d-flex flex-wrap mt-1">
+              <ng-container *ngIf="copyItInfo?.shareFilePath">
+                <label class="d-flex align-items-center text-dark bg-light rounded small mb-1 mr-1">
+                  <span class="px-2 py-1">{{copyItInfo?.shareFilePath}}</span>
+                </label>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="1">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 h5 flex-grow-1 btn text-left accordion-header mr-2">SCHEDULING
+            DETAILS
+          </button>
+          <button type="button" ngbPanelToggle class="btn bg-transparent p-0 btn-icon flex-shrink-0">
+            <span [class]="opened ? 'icon icon-minus' : 'icon icon-add'"></span>
+          </button>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="row">
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2">
+              Due Date:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.dueDate | date: dateFormat}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Time:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.dueTime | ngbTimePicker }}
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="2">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 h5 flex-grow-1 btn text-left accordion-header mr-2">PRINT
+            DETAILS
+          </button>
+          <button type="button" ngbPanelToggle class="btn bg-transparent p-0 btn-icon flex-shrink-0">
+            <span [class]="opened ? 'icon icon-minus' : 'icon icon-add'"></span>
+          </button>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="row">
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              No. Of Pages:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.noOfPages}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              No. Of Copies/ Sets:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.noOfCopies}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Total:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{copyItInfo?.noOfPages * copyItInfo?.noOfCopies || 0}}
+            </div>
+          </div>
+
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2">
+              Reproduction Type:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.reproductionTypes">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container *ngFor="let item of copyItInfo?.reproductionTypes;trackBy:trackBy.bind(this,'copyItReproductionTypeId')">
+                    <ng-container [ngTemplateOutlet]="itemTemplate"
+                      [ngTemplateOutletContext]="{item:item.reproductionType, quantity: null}">
+                    </ng-container>
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Tabs:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.tab">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item: copyItInfo?.tab.tab, instruction:copyItInfo?.tab.instruction, quantity: copyItInfo?.tab.quantity}">
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Finishing:
+              <span class="asterisk">*</span>
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.finishings">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container *ngFor="let item of copyItInfo?.finishings;trackBy:trackBy.bind(this,'copyItFinishingId')">
+                    <ng-container [ngTemplateOutlet]="itemTemplate"
+                      [ngTemplateOutletContext]="{item:item.finishing, instruction:item?.instruction, quantity: item.quantity}">
+                    </ng-container>
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+          <div *ngIf="enableEnvelop" class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Envelope & Quantity:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.envelopes">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container *ngFor="let item of copyItInfo?.envelopes;trackBy:trackBy.bind(this,'copyItEnvelopeId')">
+                    <ng-container [ngTemplateOutlet]="itemTemplate"
+                      [ngTemplateOutletContext]="{item:item.envelope, instruction:item?.instruction, quantity: item.quantity}">
+                    </ng-container>
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+          <div *ngIf="copyItInfo?.overSizedCopies?.length>0" class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Oversized Copy:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                <ng-container *ngFor="let item of copyItInfo?.overSizedCopies;trackBy:trackBy.bind(this,'copyItOverSizedCopyId')">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item:item.overSizedCopy, instruction:item?.instruction, quantity: item.quantity}">
+                  </ng-container>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12">
+            <hr class="mt-0">
+          </div>
+          <div class="col-12 mb-3">
+            <div class="d-flex align-items-center book-cover mb-2">
+              <label for="frontAndBackCover" class="text-uppercase small font-weight-semibold mb-0">
+                Front Cover & Back:
+              </label>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Page Type:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              {{pageType}}
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Size:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.frontCoverPageSize">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container [ngTemplateOutlet]="paperSizeTemplate"
+                    [ngTemplateOutletContext]="{item: copyItInfo?.frontCoverPageSize}">
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2" *ngIf="copyItInfo?.showFrontPageCover$ | async">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Color:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium" *ngIf="copyItInfo?.frontCoverPageColor">
+              <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                <ng-container [ngTemplateOutlet]="itemTemplate"
+                  [ngTemplateOutletContext]="{item: copyItInfo?.frontCoverPageColor.color, instruction:copyItInfo?.frontCoverPageColor.instruction , quantity: copyItInfo?.frontCoverPageColor.quantity}">
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Stock / Weight:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                <ng-container *ngFor="let item of copyItInfo?.frontCoverPageWeight;trackBy:trackBy.bind(this,'copyItPaperStockId')">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item:item.paperStock, instruction:item.instruction, quantity: item.quantity}">
+                  </ng-container>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <hr class="mt-0">
+          </div>
+          <div class="col-12 mb-3">
+            <div class="d-flex align-items-center middle-pages mb-2">
+              <label for="frontAndBackCover" class="text-uppercase small font-weight-semibold mb-0">
+                Middle Pages:
+              </label>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Size:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                <ng-container *ngIf="copyItInfo?.middlePageSize">
+                  <ng-container [ngTemplateOutlet]="paperSizeTemplate"
+                    [ngTemplateOutletContext]="{item: copyItInfo?.middlePageSize}">
+                  </ng-container>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2" *ngIf="copyItInfo?.showMiddlePageCover$ | async">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Color:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                <ng-container *ngIf="copyItInfo?.middlePageColor">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item: copyItInfo?.middlePageColor.color, instruction:copyItInfo?.middlePageColor.instruction, quantity: copyItInfo?.middlePageColor.quantity}">
+                  </ng-container>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Stock / Weight:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                <ng-container *ngFor="let item of copyItInfo?.middlePageWeight;trackBy:trackBy.bind(this,'copyItPaperStockId')">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item:item.paperStock, instruction:item.instruction, quantity: item.quantity}">
+                  </ng-container>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="3" *ngIf="enableShipping">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 h5 flex-grow-1 btn text-left accordion-header mr-2">SHIPPING
+            DETAILS
+          </button>
+          <button type="button" ngbPanelToggle class="btn bg-transparent p-0 btn-icon flex-shrink-0">
+            <span [class]="opened ? 'icon icon-minus' : 'icon icon-add'"></span>
+          </button>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="row">
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2">
+              Delivered To:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.deliveredTo">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item: copyItInfo?.deliveredTo, quantity: null}">
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Shipping Method:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.shippingServiceId">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item: extractShippingServices(copyItInfo?.shippingServiceId), quantity: null}">
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Charge Ship Account:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.shippingOptionId">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item: extractShippingOptionValue(copyItInfo?.shippingOptionId), quantity: null}">
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6 col-lg-3 mb-2">
+            <label class="form-label mb-0 mr-2 flex-shrink-0">
+              Instruction:
+            </label>
+            <div class="form-control-plaintext text-wrap font-weight-medium">
+              <ng-container *ngIf="copyItInfo?.shippingOptionValue">
+                <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{item: copyItInfo?.shippingOptionValue, quantity: null}">
+                  </ng-container>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+  <div class="d-flex align-items-baseline estimate-cost mt-3 mb-2">
+    <h5 class="text-dark font-weight-medium">Estimated Quote:</h5>
+    <div class="text-secondary-dark ml-2">
+      <span class="font-weight-medium">$</span>
+      <span class="h3 mb-0 font-weight-medium">{{copyItInfo?.totalAmount | number:decimal}}</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #itemTemplate let-item="item" let-instruction="instruction" let-quantity="quantity">
+  <ul class="p-0 m-0 d-flex flex-wrap align-items-center">
+    <li class="selected-option">
+      <ng-container [ngTemplateOutlet]="quantity ? quantityTemplate1 : noQuantityTemplate1"
+        [ngTemplateOutletContext]="{item:item, instruction:instruction}">
+      </ng-container>
+      <ng-template #quantityTemplate1 let-item="item">
+        <span class="value-label">{{item}}{{instruction?'-'+instruction:''}} ({{ quantity }})</span>
+      </ng-template>
+      <ng-template #noQuantityTemplate1 let-item="item">
+        <span class="value-label">{{ item }}{{instruction?'-'+instruction:''}}</span>
+      </ng-template>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #paperSizeTemplate let-item="item" let-instruction="instruction">
+  <ul class="p-0 m-0 d-flex flex-wrap align-items-center">
+    <li class="selected-option">
+      <ng-container
+        [ngTemplateOutlet]="item.paperSize && item.paperColorType && item.paperSideType ? sizeWithColorAndSide : singleSize"
+        [ngTemplateOutletContext]="{item:item, instruction:item?.instruction}">
+      </ng-container>
+      <ng-template #sizeWithColorAndSide let-item="item" let-instruction="instruction">
+        <span class="value-label">{{item.paperSize}}{{instruction?'-'+instruction:''}}
+          ({{ item.paperColorType + '-' + item.paperSideType }})</span>
+      </ng-template>
+      <ng-template #singleSize let-item="item" let-instruction="instruction">
+        <span class="value-label">{{item.paperSize}}{{instruction?'-'+instruction:''}}</span>
+      </ng-template>
+    </li>
+  </ul>
+</ng-template>

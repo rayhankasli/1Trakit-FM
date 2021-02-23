@@ -1,0 +1,61 @@
+<trackit-page-actions>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="ml-auto d-flex align-items-center">
+      <!-- Status dropdown -->
+      <div class="form-group mb-0 d-flex align-items-center mr-2">
+        <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Status:</label>
+        <ng-select [disabled]="!isSuperUser" (change)="onStatusChange($event)" appendTo="body"
+          [(ngModel)]="statusOption" [items]="status" [clearable]="false" [searchable]="false" [bindLabel]="'statusKey'"
+          [bindValue]="'statusValue'" id="status" class="text-capitalize form-control ng-select-sm p-0">
+        </ng-select>
+      </div>
+
+      <!-- Search box -->
+      <trackit-search (searchText)="onSearch($event)"></trackit-search>
+
+      <!-- Add new button -->
+      <button type="button" class="btn btn-primary d-flex align-items-center" title="Add New Client"
+        routerLink="/clients/add" *hasPermission="clientsEnum.add">
+        <span class="icon icon-add mr-2"></span>
+        <span>NEW CLIENT</span>
+      </button>
+    </div>
+  </div>
+</trackit-page-actions>
+<!-- Data-table mobile view or desktop view -->
+<app-client-list-desktop-presentation [clients]="baseResponse?.clientList" [startIndex]="tableProperty?.start"
+  (openBookItConfig)="onOpenBookItConfig($event)" (openCopyItConfig)="onOpenCopyItConfig($event)"
+  (openMailConfig)="onOpenMailConfig($event)" (openWorkflowConfig)="onOpenWorkflowConfig($event)"
+  (setClientStatus)="onSetStatus($event)">
+</app-client-list-desktop-presentation>
+
+<!-- Data-table footer area -->
+<div *ngIf="baseResponse?.clientList?.length > 0 || tableProperty.pageNumber >= 1"
+  class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <!-- Data-table total entry status -->
+  <div class="data-tbl-status text-muted">
+    Showing {{tableProperty?.start}} to {{tableProperty?.end}} of {{baseResponse?.total}} entries
+  </div>
+
+  <!-- Data-table pagination -->
+  <div class="data-tbl-pagination ml-auto d-flex">
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon"
+      [disabled]="tableProperty.pageNumber === 0" type="button" (click)="onPageChange(tableProperty.pageNumber - 1)">
+      <span class="icon icon-arrow-prev"></span>
+    </button>
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon ml-2"
+      [disabled]="tableProperty?.end >= baseResponse?.total" type="button"
+      (click)="onPageChange(tableProperty.pageNumber + 1)">
+      <span class="icon icon-arrow-next"></span>
+    </button>
+    <!-- Data-table total entry display length -->
+    <select name="tbl-length" id="tbl-length" class="ml-2 form-control"
+      (change)="onPageSizeChange($event.target.value)">
+      <ng-container *ngFor="let item of pageSize; trackBy:trackBy.bind(this,'')">
+        <option [selected]='(tableProperty?.pageLimit===item)' value="{{item}}">
+          {{item}}
+        </option>
+      </ng-container>
+    </select>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+.chart-legend {
+  .legend {
+    font-size: $chart-legend-font-size;
+  }
+  .legend-name {
+    max-width: min-content;
+  }
+  .legend-info {
+    column-count: 3;
+    max-width: 80px;
+  }
+}
+
+.chart-title {
+  font-size: $font-size-base;
+}
+
+// Chart Wrapper
+.chart-wrapper {
+  svg {
+    text {
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+.empty-data {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 1;
+}
+
+.empty-data-container{
+  height: 350px;
+  width: 100%;
+}
+
+svg > g:last-child > g:last-child { pointer-events: none }

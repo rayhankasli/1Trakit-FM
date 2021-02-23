@@ -1,0 +1,128 @@
+{
+    "FIRST_NAME": {
+        "LABEL": "First Name",
+        "PLACEHOLDER": "First Name",
+        "REQUIRED": "First Name is required.",
+        "MINLENGTH": "min 2 required",
+        "MAXLENGTH": "max 50 only",
+        "REGEX": "character only"
+    },
+    "MIDDLE_NAME": {
+        "LABEL": "Middle Name",
+        "PLACEHOLDER": "Middle Name",
+        "REQUIRED": "Middle Name is required.",
+        "MINLENGTH": "min 2 required",
+        "MAXLENGTH": "max 50 only",
+        "REGEX": "character only"
+    },
+    "LAST_NAME": {
+        "LABEL": "Last Name",
+        "PLACEHOLDER": "Last Name",
+        "REQUIRED": "Last Name is required.",
+        "MINLENGTH": "min 2 required",
+        "MAXLENGTH": "max 50 only",
+        "REGEX": "character only"
+    },
+    "PROFILE_IMG": {
+        "LABEL": "Change Profile",
+        "REQUIRED": "RPofile is required",
+        "REGEX": "Allowd only png jpg files."
+    },
+    "EMAIL": {
+        "LABEL": "Email",
+        "PLACEHOLDER": "Email",
+        "REQUIRED": "Email is required",
+        "REGEX": "enter valid email id"
+    },
+    "PASSWORD": {
+        "LABEL": "Password",
+        "PLACEHOLDER": "Password",
+        "REQUIRED": "Password is required.",
+        "MINLENGTH": "",
+        "MAXLENGTH": "",
+        "REGEX": ""
+    },
+    "CURRENT_PASSWORD": {
+        "LABEL": "Current Password",
+        "PLACEHOLDER": "Current Password",
+        "REQUIRED": "Current Password is required.",
+        "MINLENGTH": "Password should contain min 8 char.",
+        "MAXLENGTH": "Password should contain max 16 char.",
+        "REGEX": "mixed values"
+    },
+    "NEW_PASSWORD": {
+        "LABEL": "New Password",
+        "PLACEHOLDER": "New Password",
+        "REQUIRED": "New Password is required.",
+        "MINLENGTH": "Password should contain min 8 char.",
+        "MAXLENGTH": "Password should contain max 16 char.",
+        "REGEX": "mixed values"
+    },
+    "CONFIRM_PASSWORD": {
+        "LABEL": "Confirm Password",
+        "PLACEHOLDER": "Confirm Password",
+        "REQUIRED": "Confirm Password is required.",
+        "MINLENGTH": "Password should contain min 8 char.",
+        "MAXLENGTH": "Password should contain max 16 char.",
+        "REGEX": "mixed values"
+    },
+    "PHONE_NO": {
+        "LABEL": "Phone No.",
+        "PLACEHOLDER": "Phone No.",
+        "REQUIRED": "Phone Number is required.",
+        "REGEX": "Enter valid phone number."
+    },
+    "DOB": {
+        "LABEL": "Date Of Birth",
+        "PLACEHOLDER": "mm/dd/yyyy",
+        "REQUIRED": "",
+        "REGEX": "select only past date."
+    },
+    "LANGUAGE": {
+        "LABEL": "Language",
+        "REQUIRED": "Language selection is required.",
+        "REGEX": ""
+    },
+    "ADDRESS": {
+        "LABEL": "Address",
+        "PLACEHOLDER": "Enter your address",
+        "REQUIRED": "Address is required.",
+        "MINLENGTH": "min 5 char",
+        "MAXLENGTH": "Max 200 char",
+        "REGEX": ""
+    },
+    "COUNTRY": {
+        "LABEL": "Country",
+        "REQUIRED": "Country is required.",
+        "REGEX": ""
+    },
+    "PASSPORT": {
+        "LABEL": "Passport Number",
+        "PLACEHOLDER": "Passport Number",
+        "REGEX": ""
+    },
+    "GENDER": {
+        "LABEL": "Gender",
+        "REQUIRED": "Gender selection is required."
+    },
+    "MARITAL": {
+        "LABEL": "Marital Status",
+        "REQUIRED": "Marital Status selection is required."
+    },
+    "FULL_NAME": {
+        "LABEL": "Full Name",
+        "PLACEHOLDER": "Full Name",
+        "REQUIRED": "Full Name is required.",
+        "MINLENGTH": "min 2 required",
+        "MAXLENGTH": "max 50 only",
+        "REGEX": "character only"
+    },
+    "USERNAME": {
+        "LABEL": "Username",
+        "PLACEHOLDER": "Username",
+        "REQUIRED": "Username is required.",
+        "MINLENGTH": "min 2 required",
+        "MAXLENGTH": "max 50 only",
+        "REGEX": "character only"
+    }
+}

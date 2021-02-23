@@ -1,0 +1,69 @@
+<trackit-page-actions>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="ml-auto d-flex align-items-center">
+
+      <trackit-search (searchText)="onSearch($event)"></trackit-search>
+
+      <button type="button" title="Add New Floor" class="btn btn-primary d-flex align-items-center" #addButton
+        (click)="openForm(addButton)" *hasPermission="floorEnum.add">
+        <span class="icon icon-add mr-2"></span>
+        <span>New Floor</span>
+      </button>
+    </div>
+  </div>
+</trackit-page-actions>
+<!-- Data-table mobile view or desktop view -->
+
+<!-- Data-table footer area -->
+<ngb-accordion #accordion="ngbAccordion" [activeIds]="activeIds" [closeOthers]="true">
+  <ngb-panel *ngIf="!floors || floors.length === 0">
+    <ng-template ngbPanelHeader>
+      <div class="d-flex align-items-center justify-content-center py-2">
+        <span class="m-0 text-muted font-weight-normal text-transform-none">No record found</span>
+      </div>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel id="{{i}}" *ngFor="let floor of floors;trackBy: trackBy.bind(this,'id');let i= index">
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button ngbPanelToggle type="button"
+          class="m-0 mr-2 btn flex-grow-1 accordion-header h5 d-flex align-items-center" (click)="onOpen(floor)"
+          *hasPermission="roomEnum.view">
+          <span class="icon icon-floor mr-2"></span>
+          Floor [{{floor.floorType}}] - {{floor.nickName}} ({{floor.totalRoom}})
+        </button>
+        <div class="d-flex align-items-center">
+          <button type="button" title="{{floor.status ? 'Inactive' :'Active'}}"
+            class="btn btn-outline-light mr-2 d-flex align-items-center justify-content-center btn-icon"
+            (click)="onToggleStatus(floor)" *hasPermission="floorEnum.changeStatus">
+            <span class="icon text-gray-dark {{floor.status ? 'icon-block' :'icon-tick icon-1x'}}"></span>
+          </button>
+          <button type="button" title="Edit"
+            class="{{floor.isEditable ?'btn-primary text-white' : 'btn-outline-light text-gray-dark'}} btn mr-2 d-flex align-items-center justify-content-center btn-icon"
+            #editButton (click)="openForm(editButton,floor)" *hasPermission="floorEnum.update">
+            <span [class]="'icon icon-edit '"></span>
+          </button>
+          <button type="button" title="Delete" [disabled]="floor.status"
+            class="btn btn-outline-light mr-2 d-flex align-items-center justify-content-center btn-icon"
+            (click)="openModal(floor)" *hasPermission="floorEnum.delete">
+            <span [class]="'icon icon-delete text-gray-dark'"></span>
+          </button>
+          <button type="button" title="{{opened ? 'Collapse' : 'Expand'}}" ngbPanelToggle class="btn bg-transparent"
+            (click)="onOpen(floor)" *hasPermission="roomEnum.view">
+            <span [class]="opened ? 'icon icon-minus' : 'icon icon-add'"></span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <div class="row">
+        <div class="col-12 p-0">
+          <app-room-list-ui [rooms]="rooms" [roomLayouts]="roomLayouts" [roomTypes]="roomTypes" (getRoomTypes)="onGetRoomTypes($event)"
+            (deleteRoom)="onDeleteRoom($event)" (addRoom)="onAddRoom($event)" (addRoomType)="onAddRoomType($event)"
+            (updateRoom)="onUpdateRoom($event)">
+          </app-room-list-ui>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

@@ -1,0 +1,55 @@
+<form focusInvalidInput [forceCheck]="isNext" [formGroup]="shippingDetailsFormGroup"
+  class="floating-form flex-grow-1 {{isEditForm || isCopyItConfig ? 'px-1 overflow-hidden' : 'p-3 overflow-auto'}}">
+  <div class="row">
+    <div class="form-group col-md-6 col-12 col-lg-4">
+      <input type="text" class="form-control" formControlName="deliveredTo" floatingLabel autoFocus />
+      <label class="floating-form-label">Deliver To
+      </label>
+      <div ngxErrors="deliveredTo" [isFormSubmitted]="isFormSubmitted">
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Allowed only 30 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4">
+      <ng-select [clearable]="false" #shippingMethod [items]="copyItConfigurations?.shippingServices"
+        bindLabel="shippingService" bindValue="shippingServiceId" formControlName="shippingServiceId"
+        selectFloatingLabel class="form-control float-outline p-0" appendTo="body">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="shippingMethod.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="" class="floating-form-label">
+        Shipping Method
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4">
+      <ng-select [clearable]="false" #shippingOption [items]="shippingOptionValues" bindLabel="shippingOption"
+        bindValue="shippingOptionId" [clearable]="true" [searchable]="false" formControlName="shippingOptionId"
+        (change)="onShippingOptionChange()" selectFloatingLabel class="form-control float-outline p-0" appendTo="body">
+      </ng-select>
+
+      <label for="" class="floating-form-label">
+        Charge Ship Account
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-12" *ngIf="isInstruction">
+      <input type="text" class="form-control" formControlName="shippingOptionValue" floatingLabel />
+      <label class="floating-form-label">Instruction</label>
+      <div ngxErrors="shippingOptionValue" [isFormSubmitted]="isFormSubmitted">
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Allowed only 30 characters
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

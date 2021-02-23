@@ -1,0 +1,11 @@
+{
+    "lblLanguage": "Select language",
+    "dataTableBreadCrumb": "Data-table",
+    "formControlBreadCrumb": "Form-control",
+    "accordionBreadCrumb": "Accordion",
+    "tabBreadCrumb": "Tab",
+    "dataTableTitle": "Manage Data-table",
+    "formControlTitle": "Manage Form-control",
+    "accordionTitle": "Manage Accordion",
+    "tabTitle": "Manage Tab"
+}

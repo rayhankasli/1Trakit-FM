@@ -1,0 +1,7 @@
+<div class="px-3 h-100 overflow-hidden">
+    <app-client-list-ui [baseResponse]="clients$ | async" (getClient)="getClients($event)"
+        (deleteClient)="deleteClient($event)" (setClientStatus)="setClientStatus($event)"
+        (openBookItConfig)="openBookItConfig($event)" (openCopyItConfig)="openCopyItConfig($event)"
+        (openMailConfig)="openMailConfig($event)" (openWorkflowConfig)="openWorkflowConfig($event)">
+    </app-client-list-ui>
+</div>

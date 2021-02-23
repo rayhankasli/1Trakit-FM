@@ -1,0 +1,15 @@
+@media print {
+  .print-area {
+    .title {
+      font-size: $font-size-base * 1.3;
+    }
+  }
+  .card {
+    page-break-inside: avoid;
+  }
+
+  @page {
+    size: auto; 
+    margin: 1cm 0.5cm 1cm 0.5cm;
+  }
+}

@@ -1,0 +1,11 @@
+<div class="tab-container flex-shrink-0">
+  <ul class="nav nav-tabs px-3">
+    <li *hasPermission="workflowConfigurationEnum.view" class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="workflow">Workflow</a>
+    </li>
+    <li *hasPermission="workflowConfigurationEnum.viewReason" class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="workflow-reasons">Task not completed - Reasons</a>
+    </li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,778 @@
+// Table style
+.data-tbl {
+  border: $table-border-width solid $table-border-color;
+  border-radius: $border-radius;
+  // Enable or Disable Table Header Border
+  thead {
+    th {
+      @if $enable-table-header-border {
+        border-bottom: 2 * $table-border-width solid $table-border-color;
+      } @else {
+        border-bottom: none;
+      }
+    }
+  }
+
+  tfoot {
+    td {
+      vertical-align: middle;
+      font-size: $th-font-size;
+      font-weight: $th-font-weight;
+      background-color: $table-head-color;
+      color: color-yiq($table-head-color, $dark: $table-color);
+      text-transform: uppercase;
+
+      @include media-breakpoint-down("xl") {
+        font-size: $font-size-base * 0.8;
+      }
+      @include media-breakpoint-down("lg") {
+        font-size: $font-size-base * 0.7;
+      }
+    }
+  }
+
+  &.rounded-bottom-0 {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.rounded-top-0 {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  // Enable or Disable Full Table Border
+  @if $enable-table-border {
+    @if $enable-rounded {
+      border-collapse: separate;
+      border-spacing: 0;
+    } @else {
+      border: $table-border-width solid $table-border-color;
+    }
+
+    th,
+    td {
+      // border: $table-border-width solid $table-border-color;
+      border-left: none;
+      border-right: none;
+      padding: $table-cell-padding;
+
+      @include media-breakpoint-down("xl") {
+        padding: 0.6rem 0.5rem;
+      }
+      @include media-breakpoint-down("lg") {
+        padding: 0.6rem 0.275rem;
+      }
+
+      .fleet-report-table & {
+        padding: 0.4rem 0.5rem;
+        font-size: $font-size-base * 0.725;
+      }
+
+      .report-task-table & {
+        font-size: $font-size-base * 0.75;
+      }
+    }
+
+    th {
+      .office-table-list & {
+        padding: 0.5rem 0.5rem;
+      }
+      .floor-count {
+        font-size: $font-size-base * 0.7;
+      }
+    }
+
+    thead {
+      th,
+      td {
+        @if $enable-row-spacing {
+          border-bottom: $table-border-width solid $table-border-color;
+        } @else {
+          border-bottom: 0;
+        }
+      }
+    }
+  } @else {
+    border: none;
+
+    th,
+    td {
+      border: none;
+    }
+
+    thead {
+      th,
+      td {
+        border-bottom: none;
+      }
+    }
+  }
+
+  //  Enable or Disable Table Row border
+  @if $enable-table-row-box-shadow {
+    tr {
+      box-shadow: $box-shadow-sm;
+      @if $enable-rounded {
+        border-radius: $border-radius;
+      } @else {
+        border-radius: 0;
+      }
+    }
+  }
+
+  @if $enable-row-spacing {
+    border-collapse: separate;
+    border-spacing: $row-space;
+  } @else {
+    background-color: $table-bg;
+  }
+
+  thead {
+    th {
+      vertical-align: middle;
+      font-size: $th-font-size;
+      font-weight: $th-font-weight;
+
+      @include media-breakpoint-down("xl") {
+        font-size: $font-size-base * 0.8;
+      }
+      @include media-breakpoint-down("lg") {
+        font-size: $font-size-base * 0.7;
+      }
+
+      @if $enable-table-head-color {
+        background-color: $table-head-color;
+        color: color-yiq($table-head-color, $dark: $table-color);
+      }
+
+      @if $th-text-uppercase {
+        text-transform: uppercase;
+      }
+    }
+
+    &.sticky-table-header {
+      background-color: $table-head-color;
+      th {
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 99;
+      }
+      .table-sub-header {
+        th {
+          top: 42px;
+          @include media-breakpoint-down("xl") {
+            top: 38px;
+          }
+          @include media-breakpoint-down("lg") {
+            top: 35px;
+          }
+        }
+      }
+    }
+
+    .table-sub-header {
+      @if $enable-table-head-color {
+        th {
+          background-color: darken($table-head-color, 5%);
+        }
+      }
+    }
+
+    .main-header-row {
+      th {
+        &:not(:first-child) {
+          border-left: 1px solid lighten($border-color, 4%);
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      @if $enable-row-spacing and $table-row-bg !=transparent {
+        background-color: $table-row-bg;
+      }
+
+      &.selected-row {
+        @if $table-selected-row-filled {
+          background-color: $table-selected-row-fill-color;
+          color: color-yiq($table-selected-row-fill-color);
+          &:hover {
+            background: darken($table-selected-row-fill-color, 5%);
+            color: color-yiq($table-selected-row-fill-color);
+          }
+          td {
+            border-color: $table-selected-row-fill-color;
+            .btn {
+              color: inherit;
+            }
+          }
+        }
+      }
+      @if $table-hover-bg !=null {
+        &:hover {
+          background-color: $table-hover-bg;
+          color: $table-hover-color;
+        }
+      }
+
+      &.table-inline-form {
+        td {
+          padding: 0.45rem 0.25rem;
+          @include media-breakpoint-up("xxl") {
+            padding: 0.4rem 0.4rem;
+          }
+        }
+        .form-control,
+        .ng-select .ng-option-label,
+        .btn,
+        .btn-icon {
+          font-size: $td-font-size;
+
+          @include media-breakpoint-down("xl") {
+            font-size: $font-size-base * 0.8;
+          }
+          @include media-breakpoint-down("lg") {
+            font-size: $font-size-base * 0.75;
+          }
+        }
+      }
+      &.quarter-data-row {
+        td {
+          background-color: rgba($gray, 0.1);
+
+          &:first-child {
+            background-color: rgba($gray, 0.2);
+          }
+        }
+      }
+      &.current-data-row {
+        td {
+          background-color: lighten($danger, 15%);
+          color: color-yiq(lighten($danger, 15%));
+
+          &:first-child {
+            background-color: $danger;
+            color: color-yiq($danger);
+          }
+        }
+      }
+      &.average-data-row {
+        td {
+          background-color: lighten($gray-dark, 20%);
+          color: color-yiq(lighten($gray-dark, 20%));
+
+          &:first-child {
+            background-color: lighten($gray-dark, 10%);
+            color: color-yiq(lighten($gray-dark, 10%));
+          }
+        }
+      }
+      &.ytd-data-row {
+        td {
+          background-color: lighten($gray-600, 25%);
+          color: color-yiq(lighten($gray-600, 25%));
+
+          &:first-child {
+            background-color: lighten($gray-600, 20%);
+            color: color-yiq(lighten($gray-600, 20%));
+          }
+        }
+      }
+
+      &.table-header-light {
+        td {
+          background-color: lighten($gray-light, 5%);
+        }
+      }
+
+      &.overdue-data {
+        td {
+          background-color: rgba($danger, 0.3);
+          border-top-color: lighten($danger, 22);
+
+          .icon {
+            color: $gray-dark;
+          }
+        }
+      }
+
+      @each $name, $value in $status-bg {
+        &.bg-#{$name} {
+          td {
+            @if $name == "due-in" {
+              background-color: rgba($value, 0.57);
+              border-top-color: lighten($value, 5);
+            } @else {
+              background-color: rgba($value, 0.25);
+              border-top-color: lighten($value, 30);
+            }
+            .icon {
+              color: $gray-dark;
+            }
+          }
+        }
+      }
+
+      &.historical-read-data {
+        td {
+          border-top: none;
+          padding-top: 0;
+        }
+        .meter-read-item {
+          max-width: 80px;
+          margin-left: auto;
+          @include media-breakpoint-up("xl") {
+            max-width: 160px;
+          }
+        }
+        .paper-size-item {
+          max-width: 80px;
+          @include media-breakpoint-up("xl") {
+            max-width: 140px;
+          }
+        }
+      }
+    }
+
+    td {
+      font-size: $td-font-size;
+
+      @include media-breakpoint-down("xl") {
+        font-size: $font-size-base * 0.8;
+      }
+      @include media-breakpoint-down("lg") {
+        font-size: $font-size-base * 0.75;
+      }
+
+      @if $enable-data-valign-center {
+        vertical-align: middle;
+      }
+
+      &.add-user-form,
+      &.update-user-form {
+        position: relative;
+
+        &::before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: $primary;
+          height: 100%;
+          width: 4px;
+          content: "";
+        }
+      }
+    }
+  }
+
+  .column-sort {
+    cursor: pointer;
+
+    span {
+      display: inline-block;
+      position: relative;
+      padding-right: 15px;
+      user-select: none;
+
+      @include media-breakpoint-between("lg", "lg") {
+        padding-right: 12px;
+      }
+      @include media-breakpoint-between("xl", "xl") {
+        padding-right: 14px;
+      }
+
+      &::before,
+      &::after {
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        opacity: 0.3;
+        font-family: "app-icons";
+      }
+
+      &::before {
+        content: "\e911";
+      }
+
+      &::after {
+        content: "\e912";
+      }
+    }
+
+    &.sort-asc {
+      span {
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.sort-desc {
+      span {
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .custom-control {
+    padding-left: 2 * $custom-control-gutter + $custom-control-indicator-size;
+  }
+}
+
+// Data-table status
+.data-tbl-status {
+  font-size: $table-font-size;
+}
+
+// Data-table pagination
+.data-tbl-pagination {
+  .pagination {
+    margin: 0;
+  }
+}
+
+// Data-table filter
+.data-tbl-filter {
+  position: fixed;
+  top: $dashboard-topbar-height-sm;
+  right: 0;
+  bottom: 0;
+  width: $table-filter-width;
+  max-width: 100%;
+  z-index: 9;
+  @include transition($transition-base);
+
+  @include media-breakpoint-up("xxl") {
+    top: $dashboard-topbar-height;
+  }
+
+  .filter-title {
+    font-size: $font-size-base * 1.4;
+    letter-spacing: 1.3px;
+  }
+
+  .filter-body {
+    flex-grow: 1;
+    overflow: hidden;
+
+    label {
+      flex: 0 0 auto;
+    }
+
+    .filter-content {
+      overflow: auto;
+    }
+  }
+}
+
+// Data-table Dropdown
+.data-tbl-dropdown {
+  .dropdown-toggle {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+// Hide content in mobile or tablet device.
+@media screen and (min-width: 992px) {
+  .hidden-in-large {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .hidden-in-small {
+    display: none;
+  }
+
+  table {
+    .data-tbl-details {
+      padding: 0;
+      background-color: $gray-200;
+      border-top: none;
+    }
+
+    .detail-action-btn {
+      &.open {
+        transform: rotate(180deg);
+        @include transition($transition-base);
+      }
+    }
+  }
+
+  .table-hover {
+    tbody {
+      tr {
+        &.details-row {
+          &:hover {
+            background: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  // Data-table pagination
+
+  .data-tbl-status {
+    font-size: 0.8rem;
+  }
+
+  .data-tbl-length {
+    .form-control {
+      font-size: 0.8rem;
+      padding: 5px;
+    }
+  }
+
+  .data-tbl-pagination {
+    li {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// Data-table sorting for small devices
+.data-tbl-sorting {
+  position: fixed;
+  top: $topbar-height;
+  right: 0;
+  bottom: 0;
+  width: $table-filter-width;
+  z-index: 9;
+  @include transition($transition-base);
+
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
+}
+
+.data-desc {
+  display: inline-block;
+  max-width: 120px;
+
+  @include media-breakpoint-up("xl") {
+    max-width: 180px;
+  }
+}
+
+.employee-name,
+.visitor-name {
+  display: inline-block;
+  max-width: 100px;
+
+  @include media-breakpoint-up("xl") {
+    max-width: 120px;
+  }
+}
+.department-name {
+  display: inline-block;
+  max-width: 150px;
+
+  @include media-breakpoint-up("xl") {
+    max-width: 200px;
+  }
+}
+
+.report-data-table {
+  flex: 1 0 $report-data-table-width-sm;
+  max-width: $report-data-table-width-sm;
+
+  @include media-breakpoint-up("xl") {
+    flex: 1 0 $report-data-table-width;
+    max-width: $report-data-table-width;
+  }
+
+  @include media-breakpoint-up("xxl") {
+    flex: 1 0 360px;
+    max-width: 360px;
+  }
+}
+
+.report-data-table {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .table-header {
+      flex-shrink: 0;
+      padding-right: 18px;
+      background-color: $table-head-color;
+      @include border-top-radius($border-radius);
+      position: relative;
+    }
+    .table-body {
+      overflow-y: auto;
+    }
+  }
+}
+
+// Table inside the accordion
+.table-max-height {
+  max-height: $table-max-height;
+}
+
+.report-table-height {
+  max-height: $table-lg-max-height;
+
+  @include media-breakpoint-up("xxl") {
+    max-height: 520px;
+  }
+}
+
+// Meter Read Data Table
+.meter-read-tbl {
+  .table-sub-header th,
+  .table-body td {
+    &:nth-child(1) {
+      min-width: 30px;
+      max-width: 30px;
+    }
+    &:nth-child(2) {
+      min-width: 80px;
+      max-width: 80px;
+    }
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5),
+    &:nth-child(6),
+    &:nth-child(7),
+    &:nth-child(8) {
+      min-width: 70px;
+      max-width: 70px;
+    }
+    &:nth-child(9),
+    &:nth-child(10),
+    &:nth-child(11) {
+      min-width: 60px;
+      max-width: 60px;
+    }
+    &:nth-child(12) {
+      min-width: 30px;
+      max-width: 30px;
+    }
+
+    @include media-breakpoint-up("xl") {
+      &:nth-child(3),
+      &:nth-child(4),
+      &:nth-child(5),
+      &:nth-child(6),
+      &:nth-child(7),
+      &:nth-child(8) {
+        min-width: 100px;
+        max-width: 100px;
+      }
+      &:nth-child(9),
+      &:nth-child(10),
+      &:nth-child(11) {
+        min-width: 80px;
+        max-width: 80px;
+      }
+      &:nth-child(12) {
+        min-width: 40px;
+        max-width: 40px;
+      }
+    }
+  }
+}
+
+// Priority Task
+.priority-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: $danger;
+  color: color-yiq($danger);
+  font-size: $font-size-base * 0.65;
+}
+
+// Table Caption
+.top-caption {
+  caption-side: top;
+}
+
+// Meter Read Table Footer
+.total-values {
+  background-color: darken($light, 2%);
+}
+.total-value-label,
+.total-values {
+  padding: 10px;
+  font-size: $th-font-size;
+  font-weight: $font-weight-semibold;
+
+  @include media-breakpoint-down("xl") {
+    font-size: $font-size-base * 0.8;
+  }
+  @include media-breakpoint-down("lg") {
+    font-size: $font-size-base * 0.7;
+  }
+}
+.meter-read-report-table {
+  .overflow-y-scroll {
+    overflow-y: scroll;
+  }
+  table {
+    th,
+    td {
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3),
+      &:nth-child(4) {
+        min-width: 90px;
+        max-width: 90px;
+      }
+      &:nth-child(5),
+      &:nth-child(6),
+      &:nth-child(7) {
+        min-width: 70px;
+        max-width: 70px;
+      }
+      &.total-column-width {
+        width: 120px;
+        min-width: 120px;
+        max-width: 120px;
+      }
+    }
+    tfoot {
+      th,
+      td {
+        &:nth-child(4) {
+          width: 18px;
+          min-width: 18px;
+          max-width: 18px;
+        }
+      }
+    }
+  }
+}
+
+// Fleet report table
+.fleet-report-table {
+  table {
+    th,
+    td {
+      width: 126px;
+      min-width: 126px;
+      max-width: 126px;
+    }
+  }
+  .nested-table {
+    th,
+    td {
+      &:first-child,
+      &:last-child {
+        max-width: 119px;
+        min-width: 119px;
+        width: 119px;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Indicates the begning of the component -->
+<!--
+name   : The name of the component class suffixed with Component. Its container will be named as UserContainerComponent. Its presentation class will be named as
+UserPresentationComponent and its selector will be <app-user-ui> and its presenter service will be named as UserPresenter.
+module : The module to which the component belongs to. If the module does not exist, the generator should create a module and its associated routing file
+, register the component in the declarations array and add its route in the routing file of the module. In case a new module is created, the
+generator should add the module in the lazy loaded routes of app.routing.module.
+breadcrumbKey : The breadcrums label whose value will be fetched from the JSON file by using ngx-translate.
+-->
+<component name="CopyitStepper" module="copyit" breadcrumbKey="copyit" xmlns:xi="http://www.w3.org/2001/XInclude">
+	<tabset>
+		<tab headerKey="RequestInformationDetails">
+			<xi:include href="./generator-config/CopyItModule/client/request-info-details-form.xml">
+			</xi:include>
+		</tab>
+		<tab headerKey="SchedulingDetails">
+			<xi:include href="./generator-config/CopyItModule/client/scheduling-details-form.xml">
+			</xi:include>
+		</tab>
+		<tab headerKey="PrintDetails">
+			<xi:include href="./generator-config/CopyItModule/client/print-details-form.xml">
+			</xi:include>
+		</tab>
+		<tab headerKey="Summary">
+    	<xi:include href="./generator-config/CopyItModule/client/summary-accordion.xml">
+			</xi:include>
+		</tab>
+	</tabset>
+</component>

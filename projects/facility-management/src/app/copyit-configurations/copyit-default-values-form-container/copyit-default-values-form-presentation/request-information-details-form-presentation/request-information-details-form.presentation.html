@@ -1,0 +1,109 @@
+<form focusInvalidInput [forceCheck]="isNext" class="floating-form" [formGroup]="requestInformationDetailsFormGroup">
+  <div class="row">
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <ng-select #requestorUser [items]="userList" bindLabel="fullName" bindValue="userId" [clearable]="false"
+        groupBy="user" formControlName="requestForId" selectFloatingLabel class="form-control float-outline p-0"
+        appendTo="body" (change)="onUserChange()">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="requestorUser.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ng-optgroup-tmp let-item="item">
+          {{item.roleName}}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          {{item.fullName}}
+        </ng-template>
+      </ng-select>
+      <label for="" class="floating-form-label">
+        User Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="requestForId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          User Name is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <input type="text" #emailAddress class="form-control" formControlName="emailAddress" floatingLabel />
+      <label for="emailAddress" class="floating-form-label">
+        Email Address
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="emailAddress" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Email Address is required
+        </div>
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Enter valid email address
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <input [textMask]="{mask: mask}" type="text" #phoneNumber class="form-control" formControlName="phoneNumber"
+        floatingLabel />
+      <label class="floating-form-label">Phone Number</label>
+      <div ngxErrors="phoneNumber" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Contact Number is required
+        </div>
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Enter valid contact number
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <input type="text" class="form-control" formControlName="jobname" floatingLabel />
+      <label class="floating-form-label">
+        Job Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="jobname" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Job Name is required
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Job Name should not be greater than 100 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <ng-select [items]="priceQuotes" bindLabel="priceQuoteValue" bindValue="isPriceQuote" [searchable]="false"
+        [clearable]="false" formControlName="isPriceQuote" floatingLabel class="form-control float-outline p-0"
+        appendTo="body">
+      </ng-select>
+      <label for="" class="floating-form-label">
+        Price Quote
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="isPriceQuote" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Price Quote is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <ng-select [items]="proofs" bindLabel="proofValue" bindValue="isProof" [searchable]="false" [clearable]="false"
+        formControlName="isProof" floatingLabel class="form-control float-outline p-0" appendTo="body">
+      </ng-select>
+      <label for="" class="floating-form-label">
+        Proof
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="isProof" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Proof is required
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

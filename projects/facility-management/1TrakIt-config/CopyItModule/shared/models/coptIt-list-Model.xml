@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<models>
+    <model name="CopyItResponseModel" group="CopyItResponseModel">
+		    <properties> 
+			<property name="Client" jsonProperty="clientName" type="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Client"  >
+				<validations>
+					<validation type="Required" labelKey="Client.REQUIRED"></validation> 
+				</validations>
+			</property>
+			<property name="Description" jsonProperty="description" type="string"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Description"  >
+				<validations>
+					<validation type="Required" labelKey="Description.REQUIRED"></validation>					
+				</validations>
+			</property>
+			<property name="RequestedBy" jsonProperty="requestedBy" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="RequestedBy">
+				<validations>
+					<validation type="Required" labelKey="RequestedBy.REQUIRED"></validation> 					
+				</validations>
+			</property>
+			<property name="DueDtae" jsonProperty="dueDate" type="String"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="DueDate">
+				<validations>
+					<validation type="Required" labelKey="DueDate.REQUIRED"></validation> 					
+				</validations>			
+			</property>
+			<property name="AssignTo" jsonProperty="assignTo" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="AssignTo" >
+				<validations>
+					<validation type="Required" labelKey="AssignTo.REQUIRED"></validation> 
+				</validations>
+			</property>	
+			<property name="Status" jsonProperty="status" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Status">				
+				<validations>
+					<validation type="Required" labelKey="Status.REQUIRED"></validation> 
+				</validations>
+			</property>				
+		    </properties>
+    </model>		
+</models>

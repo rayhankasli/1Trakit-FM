@@ -1,0 +1,301 @@
+<button #printBtn hidden type="button" class="btn btn-outline-light" [useExistingCss]="true" printSectionId="printable"
+  ngxPrint printTitle="1TrakIt-FM | Copy It" title="Print">
+  <span class="icon icon-print icon-1x text-gray-dark"></span>
+</button>
+<section id="printable">
+  <ng-container *ngIf="copyItInfo">
+    <div class="p-3 print-area">
+      <div class="border-bottom mb-3 pb-3">
+        <img [src]="host+'/assets/img/1TRAKIT.png'" alt="1Trakit Logo">
+      </div>
+      <h4 class="mb-3 title text-center">Copy It</h4>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Request Information Details
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Client Name:</label>
+                <span class="small">{{copyItInfo?.companyName || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Project Code / Cost Center:</label>
+                <span class="small">{{copyItInfo?.accountNo || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">User Name:</label>
+                <span class="small">{{copyItInfo?.requestForName || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Proof:</label>
+                <span class="small">{{YesNo[copyItInfo?.isProof] || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Email:</label>
+                <span class="small">{{copyItInfo?.emailAddress || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Phone Number:</label>
+                <span class="small">{{copyItInfo?.phoneNumber || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Price Quote Needed:</label>
+                <span class="small">{{YesNo[copyItInfo?.isPriceQuote] || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Department/Suite:</label>
+                <span class="small">{{copyItInfo?.departmentName || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Job Name:</label>
+                <span class="small">{{copyItInfo?.jobname || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Copy It Number:</label>
+                <span class="small">{{copyItInfo?.copyItNumber || '-'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Scheduling Details
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Due Date/Time:</label>
+                <span class="small">
+                  {{copyItInfo?.dueDate|date:dateFormat}}
+                  {{copyItInfo?.dueTime|ngbTimePicker}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Print Details
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">No.of Copies/Sets:</label>
+                <span class="small">{{copyItInfo?.noOfCopies}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">No.of Original Pages:</label>
+                <span class="small">{{copyItInfo?.noOfPages}}</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Total Pages:</label>
+                <span class="small"> {{(copyItInfo?.noOfCopies * copyItInfo?.noOfPages) || 0 | number}}</span>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Reproduction Type:</label>
+                <span class="small">{{reproductionTypes || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Tab:</label>
+                <span class="small">{{tabs || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Paper Size - Copy Type:</label>
+                <span class="small">{{paperSizes || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Paper Color:</label>
+                <span class="small">{{paperColors || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Finishing:</label>
+                <span class="small">{{finishings || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Paper Stock:</label>
+                <span class="small">{{paperStocks || '-'}}</span>
+              </div>
+            </div>
+            <div *ngIf="enableEnvelop" class="col-6">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Envelope:</label>
+                <span class="small">{{envelopes || '-'}}</span>
+              </div>
+            </div>
+            <div *ngIf="copyItInfo?.overSizedCopies.length>0" class="col-6">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Oversized Copy:</label>
+                <span class="small">{{overSizedCopies || '-'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="enableShipping" class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Shipping Details
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-12 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Deliver To:</label>
+                <span class="small">{{copyItInfo?.deliveredTo || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-12 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Shipping Method:</label>
+                <span class="small">{{copyItInfo?.shippingService || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <label class="font-weight-semibold">Charge Ship Account</label>
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Charge Shipping To:</label>
+                <span class="small">{{copyItInfo?.shippingOptionValue || '-'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Picked Assets
+        </div>
+        <div class="card-body p-3">
+          <table *ngIf="pickAssets.length;else assetNone" class="table data-tbl w-100 mb-0">
+            <thead>
+              <tr>
+                <th>Manufacturer</th>
+                <th>Asset No</th>
+                <th>Model No</th>
+                <th class="text-center" colspan="2">Color Historical Reads</th>
+                <th class="text-center" colspan="2">B & W Historical Reads</th>
+              </tr>
+              <tr>
+                <th colspan="3"></th>
+                <th class="text-center">Color Reads</th>
+                <th class="text-center">Paper Sizes</th>
+                <th class="text-center">B & W Reads</th>
+                <th class="text-center">Paper Sizes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                *ngFor="let asset of pickAssets;let i=index;trackBy:trackBy.bind(this,'copyItAssetMeterId')">
+                <tr>
+                  <td>{{(pickAssets[i-1]?.assetId !== asset.assetId) ? asset.manufacturer : null}}</td>
+                  <td>{{(pickAssets[i-1]?.assetId !== asset.assetId) ? asset.assetNo :null}}</td>
+                  <td>{{(pickAssets[i-1]?.assetId !== asset.assetId) ? asset.modelNo :null}}</td>
+                  <td class="text-center">{{asset.previousColorRead +' - '+ asset.currentColorRead}}</td>
+                  <td class="text-center">{{asset.colorClientConfigureDefault || '-'}}</td>
+                  <td class="text-center">{{asset.previousBWRead +' - '+ asset.currentBWRead}}</td>
+                  <td class="text-center">{{asset.bWClientConfigureDefault || '-'}}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+          <ng-template #assetNone>
+            None
+          </ng-template>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Copy Center Use Only - Quality Control
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Associate's Name:</label>
+                <span class="small">{{copyItInfo.associateName || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Date Completed:</label>
+                <span class="small">{{copyItInfo.completedDate|date:dateFormat || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Quality Check:</label>
+                <span class="small">{{YesNo[copyItInfo.isQualityCheck] || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Time Completed:</label>
+                <span class="small">{{(copyItInfo.completedTime|ngbTimePicker) || '-'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Total Charges {{isEstimates ? '(Estimated)':''}}
+        </div>
+        <div class="card-body p-3">
+          <div class="d-flex align-items-baseline mb-2">
+            <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Total Print Charges:</label>
+            <span class="small">${{(totalPrintAmount | number:decimal) || 0}}</span>
+          </div>
+          <div class="d-flex align-items-baseline mb-2">
+            <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Total Attribute Charges:</label>
+            <span class="small">${{(totalAmount | number:decimal) || 0}}</span>
+          </div>
+          <div class="d-flex align-items-baseline">
+            <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Total Copies & Attribute Charges:</label>
+            <span class="small">${{((totalAmount + totalPrintAmount) | number:decimal) || 0}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>

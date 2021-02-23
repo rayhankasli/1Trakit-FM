@@ -1,0 +1,149 @@
+<trackit-page-actions>
+  <div class="d-flex align-items-center">
+    <div class="form-group mb-0 d-flex align-items-center mr-2">
+      <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Status:</label>
+      <ng-select appendTo="body" [items]="status" bindLabel="" bindValue="" [clearable]="false"
+        [(ngModel)]="accountStatus" floatingLabel class="form-control ng-select-sm float-outline p-0 text-capitalize"
+        [searchable]="false" (change)="onStatusChange($event)">
+      </ng-select>
+    </div>
+    <trackit-search (searchText)="onSearch($event)"></trackit-search>
+    <button type="button" class="btn {{ !formOpen ? 'btn-primary': 'btn-outline-secondary'}} d-flex align-items-center"
+      (click)="addForm()" title="{{!formOpen ? 'New Account Number' : 'Cancel' }}"
+      *hasPermission="manageAccountEnum.add">
+      <span class="{{ !formOpen ? 'icon icon-add': 'icon icon-times'}} mr-2"></span>
+      <span>{{!formOpen ? "New Account Number" :"Cancel" }}</span>
+    </button>
+  </div>
+</trackit-page-actions>
+<!-- Data-table mobile view or desktop view -->
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 40px;">
+      <col style="width: 120px;">
+      <col style="width: 130px;">
+      <col style="width: 100px;">
+      <col style="width: 150px;">
+      <col style="width: 150px;">
+      <col style="width: 40px;">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th>
+          <span>Id</span>
+        </th>
+        <th appSortingOrder [column]="'departmentName'" (orderType)="onSortOrder('departmentName',$event)" scope="col"
+          class="column-sort">
+          <span>Department Name</span>
+        </th>
+        <th appSortingOrder [column]="'accountNo'" (orderType)="onSortOrder('accountNo',$event)" scope="col"
+          class="column-sort">
+          <span>Account Number</span>
+        </th>
+        <th scope="col">
+          <span>Type</span>
+        </th>
+        <th scope="col">
+          <span>Assign To Requestor</span>
+        </th>
+        <th scope="col">
+          <span>Assign To Associate</span>
+        </th>
+        <th class="text-center">
+          <span>actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr app-copyit-manage-account-form-ui class="table-inline-form" *ngIf="formOpen" style="display: contents;"
+        [assignToRequestor]="assignToRequestor " (cancel)="closeEditForm()" [assignToAssociate]="assignToAssociate "
+        (add)="onAdd($event)">
+      </tr>
+      <ng-container
+        *ngFor="let copyitManageAccount of baseResponse?.accountList;trackBy: trackBy.bind(this,'clientAccountId');let i= index">
+        <tr *ngIf="!copyitManageAccount.isEditable">
+          <td>{{copyitManageAccount.clientAccountId}}</td>
+          <td>{{copyitManageAccount.departmentName}}</td>
+          <td>{{copyitManageAccount.accountNo}}</td>
+          <td>{{copyitManageAccount.isActive ? 'Active' : 'Inactive'}}</td>
+          <td>
+            {{copyitManageAccount.assignToRequestors.length ? copyitManageAccount.assignToRequestors[0]?.userName: '-'}}
+            <span *ngIf="copyitManageAccount.assignToRequestors.length > 1">
+              +
+              {{copyitManageAccount.assignToRequestors.length ? copyitManageAccount.assignToRequestors.length - 1: ''}}
+            </span>
+          </td>
+          <td>
+            {{copyitManageAccount.assignToAssociates.length ? copyitManageAccount.assignToAssociates[0]?.userName:'-'}}
+            <span *ngIf="copyitManageAccount.assignToAssociates.length > 1">
+              +
+              {{copyitManageAccount.assignToAssociates.length ? copyitManageAccount.assignToAssociates.length - 1: ''}}
+            </span>
+          </td>
+          <td class="text-center">
+            <div ngbDropdown container="body" class="data-tbl-dropdown">
+              <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+                <span class="icon icon-more"></span>
+              </button>
+              <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                <button type="button" class="dropdown-item" ngbDropdownItem (click)="openEditForm(copyitManageAccount)"
+                  *hasPermission="manageAccountEnum.update">
+                  <span class="icon icon-edit mr-2"></span>
+                  <span>Edit</span>
+                </button>
+                <button [disabled]="copyitManageAccount?.isActive" type="button" class="dropdown-item" ngbDropdownItem
+                  (click)="openModal(copyitManageAccount)" *hasPermission="manageAccountEnum.delete">
+                  <span class="icon icon-delete mr-2"></span>
+                  <span>Delete</span>
+                </button>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr app-copyit-manage-account-form-ui *ngIf="copyitManageAccount.isEditable"
+          [copyitManageAccount]="copyitManageAccount" [assignToRequestor]="assignToRequestor "
+          [assignToAssociate]="assignToAssociate " (update)="onUpdate($event)" (cancel)="closeEditForm()"
+          class="table-inline-form {{copyitManageAccount.isEditable ? 'edit-form' : ''}}" style="display: contents;">
+        </tr>
+      </ng-container>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="(!baseResponse || baseResponse?.accountList?.length === 0) && !formOpen">
+        <td colspan="10" class="text-muted text-center">No Record Found</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<!-- Data-table footer area -->
+
+<div *ngIf="baseResponse?.accountList?.length > 0 || tableProperty.pageNumber >= 1"
+  class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <!-- Data-table total entry status -->
+  <div class="data-tbl-status text-muted">
+    Showing {{tableProperty?.start}} to {{tableProperty?.end}} of {{baseResponse?.total}} entries
+  </div>
+
+  <!-- Data-table pagination -->
+  <div class="data-tbl-pagination ml-auto d-flex">
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon"
+      [disabled]="tableProperty.pageNumber === 0" type="button" (click)="onPageChange(tableProperty.pageNumber - 1)">
+      <span class="icon icon-arrow-prev"></span>
+    </button>
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon ml-2"
+      [disabled]="tableProperty?.end >= baseResponse?.total" type="button"
+      (click)="onPageChange(tableProperty.pageNumber + 1)">
+      <span class="icon icon-arrow-next"></span>
+    </button>
+    <!-- Data-table total entry display length -->
+    <select name="tbl-length" id="tbl-length" class="ml-2 form-control"
+      (change)="onPageSizeChange($event.target.value)">
+      <ng-container *ngFor="let item of pageSize;trackBy:trackBy.bind(this,'')">
+        <option [selected]='(tableProperty?.pageLimit===item)' value="{{item}}">
+          {{item}}
+        </option>
+      </ng-container>
+    </select>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+// App Icons
+@import 'assets/app-icons/app-icon.css';
+
+// App Base files--> Colors, Variable and directives
+@import "assets/scss/base/index";
+
+// Bootstrap Required partials
+@import 'assets/scss/vendor/bootstrap-base';
+
+// external lib. styles
+@import '~ngx-toastr/toastr-bs4-alert.scss';
+@import "~@ng-select/ng-select/scss/default.theme.scss";
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss";
+
+// Bootstrap components
+@import 'assets/scss/vendor/bootstrap-components';
+
+// Add CDK overlay css
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+// App Layout --> Sidebar, Topbar and Content
+@import 'assets/scss/layout/index';
+
+// Add Custom component style
+@import 'assets/scss/component/index';
+
+// Add Utilities style
+@import 'assets/scss/utilities/index';

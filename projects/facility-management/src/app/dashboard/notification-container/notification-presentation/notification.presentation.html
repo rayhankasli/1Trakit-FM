@@ -1,0 +1,38 @@
+<cdk-virtual-scroll-viewport *ngIf="!isData; else elseBlock" [itemSize]="50" class="h-100">
+  <div class="p-2">
+    <!-- When notification are not-readable: Add 'active' class with class 'notification' -->
+    <div class="d-flex flex-column cursor-pointer px-3 py-2 border rounded mb-2 notification"
+      *cdkVirtualFor="let notification of notifications; trackBy:trackBy.bind(this,'notification')"
+      (click)="checkType(notification)">
+      <div class="d-flex align-items-center justify-content-between mb-1">
+        <div class="d-flex align-items-center" *ngIf="notification.copyItId">
+          <span class="icon icon-copy icon-3x mr-2"></span>
+          <h6 class="mb-0 notification-type font-weight-semibold text-dark">Copy It</h6>
+        </div>
+        <div class="d-flex align-items-center" *ngIf="notification.bookItId">
+          <span class="icon icon-meeting icon-3x mr-2"></span>
+          <h6 class="mb-0 notification-type font-weight-semibold text-dark">Book It</h6>
+        </div>
+        <div class="d-flex align-items-center" *ngIf="notification.assetId">
+          <span class="icon icon-print icon-3x mr-2"></span>
+          <h6 class="mb-0 notification-type font-weight-semibold text-dark">Fleet</h6>
+        </div>
+      </div>
+
+      <span class="mb-2 d-flex notification-desc text-gray-dark">{{notification.notification}}</span>
+
+      <div class="notification-time d-flex align-items-center">
+        <span class="icon icon-calendar text-gray mr-1"></span>
+        <span class="text-gray mr-1">Due Date: </span>
+        <span>{{notification?.dueDate | date:dateFormat}}</span>
+      </div>
+    </div>
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<ng-template #elseBlock>
+  <div class="d-flex align-items-center justify-content-center h-100">
+    No Data Found
+
+  </div>
+</ng-template>

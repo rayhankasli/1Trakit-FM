@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="CopyIt" module="copyit" breadcrumbKey="BREADCRUMB.COPYIT"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrackIt-config/CopyItModule/shared\controllers/copyIt-list-Controller.xml" />
+    <xi:include href="./1TrackIt-config/CopyItModule/shared/models/coptIt-list-Model.xml" />
+    <table responseModel="CopyItResponseModel" controller="CopyItList" isCheckable="false"
+    isAddable="true" hasBreadcrumb="true" hasFilters="false" hasSorting="true"
+    hasPagination="true" hasActions="true" hasGlobalSearch="true">
+        <action>
+            <edit enabled="true" labelKey="EDIT"></edit>
+            <delete enabled="true" labelKey="DELETE"></delete>
+        </action>
+        <columns>
+            <column isFilterable="false" isSortable="false" class="align-left">clientName</column>
+            <column isFilterable="false" isSortable="true" class="align-left">description</column>
+            <column isFilterable="false" isSortable="true" class="align-left">requestedBy</column>
+            <column isFilterable="false" isSortable="true" class="align-left">dueDate</column>
+            <column isFilterable="false" isSortable="false" class="align-left">assignTo</column>
+            <column isFilterable="false" isSortable="false" class="align-left">status</column>
+        </columns>
+    </table>
+
+</component>

@@ -1,0 +1,30 @@
+{
+    "tableHeader": {
+        "id": "ID_fr",
+        "name": "NAME_fr",
+        "company": "COMPANY_fr",
+        "group": "GROUP_fr",
+        "createdAt": "CREATED AT_fr",
+        "email": "EMAIL_fr",
+        "mobileNumber": "MOBILE NUMBER_fr",
+        "productNumber": "PRODUCT NUMBER_fr",
+        "description": "DESCRIPTION_fr",
+        "image": "IMAGE_fr"
+    },
+    "btnFilter": "Filter_fr",
+    "btnNewRecord": "Add New Record_fr",
+    "btnEdit": "Edit_fr",
+    "btnDelete": "Delete_fr",
+    "tblMessage": "No Record Found_fr",
+    "paginationShowing": "Showing_fr",
+    "paginationTo": "to_fr",
+    "paginationOf": "of_fr",
+    "paginationEntries": "entries_fr",
+    "titleFilter": "Filter_fr",
+    "search":"Search_fr...",
+    "nextPage":"Suivant",
+    "previewPage":"Aperçu",
+    "confirmationMessage":"Do you want to delete record_fr ?",
+    "filterResetButton":"Reset_fr",
+    "filterApplyButton":"Apply_fr"
+}

@@ -1,0 +1,58 @@
+<trackit-page-actions>
+  <div class="d-flex order-2 align-items-center justify-content-end flex-shrink-0 ml-2">
+    <button type="button" class="btn btn-primary d-flex align-items-center" (click)="exportAsPDF()"
+      title="Export as PDF" *hasPermission="totalCopyJobsEnum.totalCopyJobsExportPdf"
+      [disabled]="totalCopyJobsList?.length <= 0">
+      <span>Export as PDF</span>
+    </button>
+  </div>
+</trackit-page-actions>
+
+<div class="flex-grow-1 h-100 px-3 overflow-hidden mb-3">
+  <div class="d-flex h-100 overflow-hidden">
+    <div class="report-data-table overflow-y-auto overflow-x-hidden border rounded mb-3 h-100">
+      <table class="table data-tbl w-100 position-relative mb-0 border-0">
+        <colgroup>
+          <col style="width: 80px;">
+          <col style="width: 80px;">
+          <col style="width: 80px;">
+          <col style="width: 80px;">
+        </colgroup>
+        <thead class="sticky-table-header">
+          <tr>
+            <th class="text-center" scope="col" *ngFor="let header of tableHeader;trackBy:trackBy.bind(this,'')">
+              <span>{{header}}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr [ngClass]="{'current-data-row': totalJobs?.month === (currentMonth | date:'MMM'), 
+              'quarter-data-row': totalJobs?.month === '1st Qtr' || totalJobs?.month === '2nd Qtr' || totalJobs?.month === '3rd Qtr' || totalJobs?.month === '4th Qtr', 
+              'ytd-data-row':  totalJobs?.month === 'YTD', 
+              'average-data-row': totalJobs?.month === 'Avg'}" *ngFor="let totalJobs of totalCopyJobsList;trackBy:trackBy.bind(this,'month')">
+            <td class="text-center">{{totalJobs?.month}}</td>
+            <td class="text-center" *ngFor="let yearValue of totalJobs?.data;trackBy:trackBy.bind(this,'year')">
+              {{(yearValue?.value !== null) ? (yearValue?.value | number:decimal) : '-'}}
+            </td>
+          </tr>
+
+          <!-- colspan base on total column -->
+          <tr *ngIf="!totalCopyJobsList || totalCopyJobsList.length === 0">
+            <td colspan="4" class="h-100">
+              <div class="text-muted  d-flex align-items-center justify-content-center h-100">
+                No record found
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col pr-0 overflow-hidden">
+      <div class="card h-100 overflow-hidden">
+        <!-- to add the chart (Google Chart) -->
+        <div class="h-100 w-100" #totalCopyJobs></div>
+      </div>
+    </div>
+  </div>
+</div>

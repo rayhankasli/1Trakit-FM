@@ -1,0 +1,41 @@
+<form class="floating-form mt-2 add-floor-dropdown bg-white rounded shadow p-3" [formGroup]="floorFormGroup">
+  <div class="row">
+    <div class="form-group col-12">
+      <input type="text" class="form-control" [readonly]="floor ? true : false" formControlName="floorType" floatingLabel trakcitTrim
+        autoFocus />
+      <label class="floating-form-label">
+        Floor
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="floorType" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Enter number only.
+        </div>
+        <div ngxError="required" [when]="['touched','dirty']">
+          Floor is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-12">
+      <input type="text" class="form-control" formControlName="nickName" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        Nickname
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="nickName" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Nickname is required
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Nickname should not be greater than 30 character
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <button type="button" title="Save" class="btn btn-primary btn-block text-center" (click)="saveFloor();">
+        <span class="icon icon-save mr-2"></span>
+        <span>Save</span>
+      </button>
+    </div>
+  </div>
+</form>

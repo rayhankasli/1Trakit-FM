@@ -1,0 +1,47 @@
+<label for="frontAndBackCover" class="small mt-0 mb-2 font-weight-semibold">
+    COPY CENTER USE ONLY - QUALITY CONTROL:
+</label>
+<div class="card">
+    <div class="card-body floating-form p-3">
+        <div focusInvalidInput [forceCheck]="isNext" [formGroup]="copyCenterForm" class="row">
+            <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+                <input class="form-control" floatingLabel trackitonlystring trakcitTrim type="text"
+                    formControlName="associateName">
+                <label class="floating-form-label">
+                    Associate's Name
+                </label>
+            </div>
+
+            <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3"
+                [ngClass]="{'float-above':readOnlyCopyCenterForm?.completedDate}">
+                <input disabled class="form-control" type="text" id="completedDate"
+                    [value]="readOnlyCopyCenterForm?.completedDate | date:dateFormat">
+                <label class="floating-form-label">
+                    Date Completed
+                </label>
+                <label class="icon icon-calendar date-picker-label text-gray mb-0" for="completedDate"></label>
+            </div>
+
+            <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3"
+                [ngClass]="{'float-above':readOnlyCopyCenterForm?.completedTime}">
+                <input type="text" class="form-control" id="completedTime" floatingLabel preventText
+                    formControlName="completedTime" [value]="readOnlyCopyCenterForm.completedTime" />
+                <label class="floating-form-label">
+                    Time Completed
+                </label>
+                <label class="icon icon-clock date-picker-label text-gray mb-0" for="completedTime"></label>
+            </div>
+
+            <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+                <ng-select [clearable]="false" [searchable]="false" selectFloatingLabel appendto="body"
+                    [items]="isQualityOptions" bindLabel="label" bindValue="value"
+                    class="form-control float-outline p-0" role="listbox" formControlName="isQualityCheck">
+                </ng-select>
+                <label class="floating-form-label" for="">
+                    Quality Check
+                </label>
+            </div>
+
+        </div>
+    </div>
+</div>

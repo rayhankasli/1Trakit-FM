@@ -1,0 +1,86 @@
+<ng-container>
+  <div class="d-flex justify-content-between align-items-start mb-3 mt-4">
+    <h5 class="mb-0">Tasks</h5>
+    <div class="ml-auto d-flex align-items-start">
+      <trackit-search class="mr-n2"(searchText)="onSearch($event)"></trackit-search>
+
+      <!-- Start Date -->
+      <form [formGroup]="filterTaskFormGroup" class="floating-form d-flex flex-wrap align-items-start">
+        <div class="d-flex flex-column mr-n2">
+          <div class="d-flex align-items-center form-group mb-1 mt-0 px-2">
+            <input type="text" calendarFlotingLabel preventText bsDatepicker #dp="bsDatepicker"
+              class="form-control datepicker-sm" id="startDate" placement="bottom" formControlName="startDate"
+              autocomplete="off">
+            <label for="startDate" class="floating-form-label">
+              Start Date
+              <span class="asterisk">*</span>
+            </label>
+            <label class="icon icon-calendar date-picker-label text-gray mb-0" for="startDate"></label>
+          </div>
+          <div class="px-2" ngxErrors="startDate" [isFormSubmitted]="isFormSubmitted">
+            <div class="mt-0" ngxError="required" [when]="['touched','dirty']">
+              Start Date is required
+            </div>
+          </div>
+        </div>
+
+        <!-- End Date -->
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-center form-group mb-1 mt-0 px-2">
+            <input type="text" calendarFlotingLabel preventText bsDatepicker #dp="bsDatepicker"
+              class="form-control datepicker-sm" id="endDate" placement="bottom" formControlName="endDate"
+              [minDate]="minDate" autocomplete="off">
+            <label for="endDate" class="floating-form-label">
+              End Date
+              <span class="asterisk">*</span>
+            </label>
+            <label class="icon icon-calendar date-picker-label text-gray mb-0" for="endDate"></label>
+          </div>
+          <div class="px-2" ngxErrors="endDate" [isFormSubmitted]="isFormSubmitted">
+            <div class="mt-0" ngxError="required" [when]="['touched','dirty']">
+              End Date is required
+            </div>
+          </div>
+        </div>
+      </form>
+      <button type="button" class="btn btn-outline-secondary mr-2" (click)="applyTaskFilter()" title="Search">Search</button>
+
+      <button type="button" class="btn btn-primary" [disabled]="baseResponse?.taskList.length <= 0"
+      *hasPermission="reportsTaskEnum.reportTaskExportExcel" (click)="exportExcel()" title="Export as Excel">Export as
+        Excel</button>
+
+    </div>
+  </div>
+  <!-- Data-table mobile view or desktop view -->
+  <app-task-report-list-desktop-presentation [taskReports]="baseResponse?.taskList"></app-task-report-list-desktop-presentation>
+
+  <!-- Data-table footer area -->
+  <div *ngIf="baseResponse?.taskList.length > 0 || tableProperty.pageNumber >= 1"
+    class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+    <!-- Data-table total entry status -->
+    <div class="data-tbl-status text-muted">
+      Showing {{tableProperty?.start}} to {{tableProperty?.end}} of {{baseResponse?.totalCount}} entries
+    </div>
+    <!-- Data-table pagination -->
+    <div class="data-tbl-pagination ml-auto d-flex">
+      <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon"
+        [disabled]="tableProperty.pageNumber === 0" type="button" (click)="onPageChange(tableProperty.pageNumber - 1)">
+        <span class="icon icon-arrow-prev"></span>
+      </button>
+      <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon ml-2" [disabled]="tableProperty?.end >= baseResponse?.totalCount"
+        type="button" (click)="onPageChange(tableProperty.pageNumber + 1)">
+        <span class="icon icon-arrow-next"></span>
+      </button>
+      <!-- Data-table total entry display length -->
+      <select name="tbl-length" id="tbl-length" class="ml-2 form-control"
+        (change)="onPageSizeChange($event.target.value)">
+        <ng-container *ngFor="let item of pageSize;trackBy:trackBy.bind(this,'')">
+          <option [selected]='(tableProperty?.pageLimit===item)' value="{{item}}">
+            {{item}}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+
+</ng-container>

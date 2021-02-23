@@ -1,0 +1,6 @@
+<div class="px-3 d-flex flex-column h-100">
+  <app-report-task-presentation-ui [clients]="clients$ | async" [taskChart]="(taskChart$ | async) || []"
+    [yearList]="years$ | async" (getChartDetail)="getChartData($event)" [backlogChart]="(backlogChart$ | async) || []"
+    [baseResponse]="taskReports$ | async" (getTaskReport)="getTaskReports($event)" (exportExcelData)="exportExcelData()"
+    (loadYears)="loadYears($event)"></app-report-task-presentation-ui>
+</div>

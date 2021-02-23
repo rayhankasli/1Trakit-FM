@@ -1,0 +1,22 @@
+{
+    "lblUserName": "User name",
+    "lblDescription": "Description",
+    "lblIsAdmin": "Is Admin",
+    "lblCity": "Single Select Dropdown",
+    "lblMultiCity": "Multi Select Dropdown",
+    "lblDOB": "Date of birth",
+    "lblUploadDile": "Upload photo",
+    "lblState": "Search for a state",
+    "userName": "Enter user name",
+    "description": "Enter description",
+    "singleCity": "Select city",
+    "multiCity": "Select multi city",
+    "birthDate": "Enter date of birth",
+    "state": "Enter state",
+    "btnSave": "Save",
+    "lblOrderTime": "Order time",
+    "orderTime":"Enter order time",
+    "btnCancel": "Cancel",
+    "contactNumber":"Enter contact number",
+    "lblContactNumber": "Contact No."
+}

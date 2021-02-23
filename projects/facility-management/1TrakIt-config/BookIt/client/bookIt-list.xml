@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="BookIt" module="bookIt" breadcrumbKey="BREADCRUMB.BOOKIT"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrakIt-config\BookIt\shared\Controller\bookIt-list-controller.xml" />
+    <xi:include href="./1TrakIt-config\BookIt\shared\Model\bookIt-list-model.xml" />
+    <table responseModel="BookItResponseModel" controller="BookIt" isCheckable="false"
+    isAddable="true" hasBreadcrumb="true" hasFilters="false" hasSorting="true"
+    hasPagination="true" hasActions="true" hasGlobalSearch="true">
+        <action>
+            <edit enabled="true" labelKey="EDIT"></edit>
+            <delete enabled="true" labelKey="DELETE"></delete>
+        </action>
+        <columns>
+            <column isFilterable="false" isSortable="false" class="align-left">bookitnumber</column>
+            <column isFilterable="false" isSortable="true" class="align-left">companyname</column>
+            <column isFilterable="false" isSortable="false" class="align-left">eventname</column>
+            <column isFilterable="false" isSortable="false" class="align-left">description</column>
+            <column isFilterable="false" isSortable="true" class="align-left">requestedby</column>
+            <column isFilterable="false" isSortable="true" class="align-left">duedate</column>
+            <column isFilterable="false" isSortable="false" class="align-left">assignTo</column>
+            <column isFilterable="false" isSortable="false" class="align-left">status</column>
+        </columns>
+    </table>
+
+</component>

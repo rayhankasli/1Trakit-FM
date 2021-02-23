@@ -1,0 +1,9 @@
+<app-copyit-stepper-ui class="d-flex flex-column h-100 w-100 overflow-hidden" 
+  [clientsList]="clientsList$ | async"
+  [clientMaster]="clientMaster$ | async" 
+  [usersListAndConfiguration]="usersListAndConfiguration$ | async" 
+  [userDetails]="userDetails$ | async"
+  (usersListAndConfigurationByClient)="usersListAndConfigurationByClient($event)"
+  (userDetailsByUser)="userDetailsByUser($event)" 
+  (saveData)="saveData($event)">
+</app-copyit-stepper-ui>

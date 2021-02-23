@@ -1,0 +1,90 @@
+<div class="flex-grow-1 overflow-auto px-3">
+  <ngb-accordion #accordion="ngbAccordion" [activeIds]="activeIds" [closeOthers]="true" [destroyOnHide]="false"
+    (panelChange)="toggleAccordion($event)">
+    <ngb-panel id="0">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 mr-2 h5 flex-grow-1 btn text-left accordion-header">REQUEST
+            INFORMATION DETAILS</button>
+          <ng-container [ngTemplateOutlet]="accordionButtons" [ngTemplateOutletContext]="{opened:opened, panelId: '0'}">
+          </ng-container>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="row">
+          <div class="col-12">
+            <app-request-information-details-form-ui [isNext]="isRequestFormNext" [userList]="userList"
+              [userDetail]="userDetail" (getUserDetail)="getUserDetailByUserId($event)"
+              [defaultConfigurations]="defaultValues">
+            </app-request-information-details-form-ui>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="2">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 mr-2 h5 flex-grow-1 btn text-left accordion-header">PRINT
+            DETAILS</button>
+          <ng-container [ngTemplateOutlet]="accordionButtons" [ngTemplateOutletContext]="{opened:opened, panelId: '2'}">
+          </ng-container>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="row">
+          <div class="col-12">
+            <app-print-details-form-ui [isCopyItConfig]="true" [hideQuantity]="true" [isNext]="isPrintFormNext"
+              isClearValidation="true" [defaultCopyItConfiguration]="defaultValues"
+              [copyItConfiguration]="configurations">
+            </app-print-details-form-ui>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="3">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <div class="d-flex align-items-center justify-content-between">
+          <button type="button" ngbPanelToggle class="m-0 mr-2 h5 flex-grow-1 btn text-left accordion-header">SHIPPING
+            DETAILS</button>
+          <ng-container [ngTemplateOutlet]="accordionButtons" [ngTemplateOutletContext]="{opened:opened, panelId: '3'}">
+          </ng-container>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="row">
+          <div class="col-12">
+            <trakit-shipping-details-form-ui [isCopyItConfig]="true" [isNext]="isShippingFormNext"
+              [defaultConfigurations]="defaultValues" [copyItConfigurations]="configurations">
+            </trakit-shipping-details-form-ui>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
+<div class="d-flex justify-content-end flex-shrink-0 p-3">
+  <ng-container *ngIf="canEdit">
+    <button disableOnAjax type="submit" class="btn btn-primary d-flex align-items-center" (click)="submiteDefaultValues()">
+      <span class="icon icon-tick mr-2"></span>
+      <span>Submit</span>
+    </button>
+  </ng-container>
+</div>
+
+<ng-template #accordionButtons let-opened="opened" let-panelId="panelId">
+  <ng-container *ngIf="!opened">
+    <button type="button" (click)="openAccordionPanel(panelId)"
+      class="btn bg-transparent flex-shrink-0 p-0 btn-icon d-flex align-items-center justify-content-center">
+      <span class="icon icon-add"></span>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="opened">
+    <ng-container *ngIf="canEdit">
+      <button type="button" (click)="saveDetails(panelId)" class="btn btn-outline-primary d-flex align-items-center"
+        title="Confirm changes">
+        <span>Confirm</span>
+      </button>
+    </ng-container>
+
+  </ng-container>
+</ng-template>

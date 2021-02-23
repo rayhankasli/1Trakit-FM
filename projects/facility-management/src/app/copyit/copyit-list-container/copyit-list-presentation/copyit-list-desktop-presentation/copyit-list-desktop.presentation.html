@@ -1,0 +1,97 @@
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 30px">
+      <col style="width: 100px">
+      <col style="width: 120px">
+      <col style="width: 90px">
+      <col style="width: 110px">
+      <col style="width: 80px">
+      <col style="width: 50px">
+      <col style="width: 40px">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th>
+          <span>ID</span>
+        </th>
+        <th appSortingOrder [column]="'companyName'" (orderType)="onSortOrder('companyName',$event)" scope="col"
+          class="column-sort">
+          <span>Client</span>
+        </th>
+        <th>
+          <span>Description</span>
+        </th>
+        <th appSortingOrder [column]="'requestedBy'" (orderType)="onSortOrder('requestedBy',$event)" scope="col"
+          class="column-sort">
+          <span>Requested By</span>
+        </th>
+        <th appSortingOrder [column]="'dueDate'" (orderType)="onSortOrder('dueDate',$event)" scope="col"
+          class="column-sort">
+          <span>Due Date</span>
+        </th>
+        <th>
+          <span>Assign To</span>
+        </th>
+        <th>
+          <span>Status</span>
+        </th>
+        <th class="text-center">
+          <span>actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let copyItList of copyItLists;trackBy: trackBy.bind(this,'copyItId');let i= index">
+        <tr trakItDueDateTime [dueDateTime]="copyItList.dueDateTime" [statusId]="copyItList.copyItStatusId">
+          <td>{{copyItList.copyItNumber}}</td>
+          <td>{{copyItList.companyName}}</td>
+          <td>{{copyItList.accountNo ? copyItList.accountNo + ' | ' : ''}} {{copyItList.jobname}}</td>
+          <td>{{copyItList.requestedBy}}</td>
+          <td>{{copyItList.dueDateTime | date : dateFormat}}</td>
+          <td>{{copyItList.associateName || '-'}}</td>
+          <td>
+            <app-status-badge [statusId]="copyItList.copyItStatusId"></app-status-badge>
+          </td>
+          <td>
+            <div ngbDropdown container="body" class="data-tbl-dropdown text-center">
+              <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+                <span class="icon icon-more"></span>
+              </button>
+              <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu"
+                class="dropdown-menu dropdown-menu-right">
+                <ng-container [ngTemplateOutlet]="!(isArchived$ | async) ? actions: views"
+                  [ngTemplateOutletContext]="{copyItList:copyItList}"></ng-container>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+      <!-- colspan base on total column -->
+      <tr *ngIf="!copyItLists || copyItLists.length === 0">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- for all actions -->
+<ng-template #actions let-copyItList="copyItList">
+  <button type="button" class="dropdown-item" ngbDropdownItem [routerLink]="[copyItList.copyItId]">
+    <span class="icon icon-edit mr-2"></span>
+    <span>{{'Edit'}}</span>
+  </button>
+  <button *hasPermission="copyItPermissions.delete" type="button" class="dropdown-item" ngbDropdownItem
+    [disabled]="copyItList?.copyItStatusId !== StatusEnum.new" (click)="openModal(copyItList)">
+    <span class="icon icon-delete mr-2"></span>
+    <span>{{'Delete'}}</span>
+  </button>
+</ng-template>
+
+<!-- for read only mode -->
+<ng-template #views let-copyItList="copyItList">
+  <button type="button" class="dropdown-item" ngbDropdownItem [routerLink]="[copyItList.copyItId]">
+    <span class="icon icon-preview mr-2"></span>
+    <span>{{'View'}}</span>
+  </button>
+</ng-template>

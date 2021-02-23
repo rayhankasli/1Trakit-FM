@@ -1,0 +1,212 @@
+// Status card style
+.card-icon {
+  flex: 0 0 auto;
+  background: rgba($primary, 0.1);
+  width: $card-status-icon-size;
+  height: $card-status-icon-size;
+  color: $primary;
+  font-size: 36px;
+}
+
+.card-status {
+  color: $gray-dark;
+  letter-spacing: 0.3px;
+}
+
+.card {
+  .card-header {
+    &.bg-primary-color {
+      background-color: $primary;
+
+      button {
+        color: color-yiq($primary);
+      }
+    }
+
+    @each $color, $value in $theme-colors {
+      &.bg-#{$color}-color {
+        background: $value;
+        color: color-yiq($value);
+      }
+    }
+
+    button {
+      &.disabled,
+      &:disabled {
+        color: $text-muted;
+      }
+    }
+  }
+
+  .card-body {
+    color: $text-muted;
+  }
+}
+
+// Card-view container
+.card-view-container {
+  @include media-breakpoint-between("xs", "sm") {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: $transition-base;
+    z-index: 9;
+  }
+}
+
+// High Priority Card
+.card {
+  &.priority {
+    .card-body {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        width: 100%;
+        background-color: transparent;
+        @include border-bottom-radius($border-radius);
+        content: "";
+      }
+    }
+    &.high {
+      .card-body {
+        &::before {
+          background-color: $danger;
+        }
+      }
+    }
+    &.medium {
+      .card-body {
+        &::before {
+          background-color: $success;
+        }
+      }
+    }
+    &.low {
+      .card-body {
+        &::before {
+          background-color: $warning;
+        }
+      }
+    }
+  }
+}
+
+// Notification Area
+.notification-area {
+  position: absolute;
+  top: $dashboard-topbar-height-sm;
+  right: 0;
+  bottom: 0;
+  width: $notification-list-width;
+  z-index: 9;
+
+  @include media-breakpoint-up('xxl') {
+    top: $dashboard-topbar-height;
+  }
+
+  .cdk-virtual-scroll-content-wrapper {
+    right: 0;
+  }
+}
+.notification {
+  background-color: $white;
+  box-shadow: 0 2px 4px rgba($black, 0.1);
+  &:hover {
+    box-shadow: 0 4px 6px rgba($black, 0.15);
+  }
+  .notification-type {
+    font-size: $font-size-base * 0.9;
+  }
+  .notification-desc,
+  .notification-time {
+    font-size: $font-size-base * 0.8;
+  }
+  .notification-time {
+    .icon {
+      font-size: $font-size-base * 0.875;
+    }
+  }
+
+  &.active {
+    background-color: lighten($gray-light, 5%);
+    .notification-desc,
+    .notification-time {
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+
+// Cost-Recovery
+.cost-recovery {
+  height: 290px;
+
+  @include media-breakpoint-up('xl') {
+    height: 380px;
+  }
+
+  @include media-breakpoint-up('xxl') {
+    height: 400px;
+  }
+
+  .cost-recovery-header,
+  .cost-recovery-footer {
+    background-color: lighten($gray-light, 5%);
+  }
+
+  .data-title,
+  .data-value {
+    font-size: $font-size-base * 0.8125;
+    font-weight: $font-weight-medium;
+
+    @include media-breakpoint-up('xxl') {
+      font-size: $font-size-base * 0.875;
+    }
+  }
+  .data-title {
+    color: darken($gray, 5%);
+  }
+  .data-value {
+    color: $gray-dark;
+  }
+  .sub-title {
+    font-size: $font-size-base * 0.75;
+    font-weight: $font-weight-medium;
+  }
+}
+.request-title {
+  font-size: $font-size-base * 1.1;
+}
+.total-charge {
+  min-width: 220px;
+}
+
+.open-request-content {
+  max-height: 560px;
+}
+
+// Copy-it charges list 
+.charges-list-item {
+  position: relative;
+
+  &:not(:first-child) {
+    &::before {
+      content: "\e916";
+      font-family: "app-icons";
+      margin: 0 5px;
+      color: $gray-800;
+    }
+  }
+  &:nth-child(2){ 
+    &::before{
+      display: none;
+    }
+  }
+}

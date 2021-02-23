@@ -1,0 +1,139 @@
+<div ngbDropdown container="body" class="multiselect" #dropdownMenu="ngbDropdown">
+  <button type="button" #dropdownButton class="d-flex position-relative form-control align-items-center"
+    id="{{bindValue}}" ngbDropdownAnchor (click)="$event.stopPropagation(); openDropdownMenu(dropdownMenu)">
+    <span class="text-uppercase font-weight-semibold">{{dropdownLabel}}</span>
+    <ng-container *ngIf="isValueRequired">
+      <span class="asterisk">*</span>
+    </ng-container>
+  </button>
+  <div #dropdownPanel class="shadow-sm multiselect-dropdown border mt-0" ngbDropdownMenu aria-labelledby="dropdownMenu">
+    <div class="multiselect-search border-bottom">
+      <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+        <input type="text" class="form-control border-0 pr-0" #searchElement placeholder="Search" aria-label="Search"
+          aria-describedby="button-addon" (input)="search($event.target.value)">
+        <div class="input-group-append">
+          <button class="btn bg-transparent text-gray" type="button">
+            <span class="icon icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="(itemsList | textSearch : searchText : bindValue) as results;">
+      <ul class="px-3 list-unstyled mb-0 multiselect-dropdown-list">
+        <!-- else is for cases where search:Search term is undefined or null  -->
+        <li class="py-xl-2 py-1 multiselect-dropdown-item"
+          *ngFor="let item of results; let index=index; trackBy:trackBy.bind(this,bindPrimaryKeyField) ">
+          <div class="row {{!item.list ? 'align-items-center' : 'align-items-baseline'}}">
+            <ng-container *ngIf="isCheckboxSelection">
+              <div class="custom-control col-auto flex-grow-1 cursor-pointer custom-checkbox"
+                (click)="onItemChange(item)">
+                <input type="checkbox" [checked]="item.selected" id="{{bindValue}}-{{index}}"
+                  class="custom-control-input" />
+                <label class="form-check-label ml-2 custom-control-label">{{item[bindValue]}}</label>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="isRadioSelection">
+              <div class="custom-control col-auto flex-grow-1 cursor-pointer custom-radio" (click)="onItemChange(item)">
+                <input type="radio" [checked]="item.selected" id="{{bindValue}}-{{index}}"
+                  class="custom-control-input" />
+                <label class="form-check-label ml-2 custom-control-label">{{item[bindValue]}}</label>
+              </div>
+            </ng-container>
+            <ng-container [ngTemplateOutlet]="!item.list ? singleControl : multipleControl "
+              [ngTemplateOutletContext]="{ item: item }">
+            </ng-container>
+          </div>
+        </li>
+        <li class="multiselect-dropdown-item py-2 option-disabled" *ngIf="!results.length">No items found</li>
+      </ul>
+    </ng-container>
+
+  </div>
+  <ng-container>
+    <ul class="d-flex flex-wrap p-0 mb-0 mt-1 list-unstyled">
+      <ng-container
+        *ngFor="let item of selectedDataItems; let i = index;trackBy:trackBy.bind(this,bindPrimaryKeyField)">
+        <li class="selected-option" *ngIf="i < selectedItemIndex">
+          <ng-container
+            [ngTemplateOutlet]="item[bindValue] !== 'N/A' && isTextBoxRequired ? quantityTemplate : noQuantityTemplate"
+            [ngTemplateOutletContext]="{item:item}">
+          </ng-container>
+          <ng-container *ngIf="!isDisabled">
+            <button type="button" tabindex="-1" (click)="clearItem(item)"
+              class="btn btn-link btn-sm rounded-circle cancel-btn flex-shrink-0 d-flex align-items-center h-100 px-1 py-0">
+              <span class="icon icon-close text-gray-dark" aria-hidden="true"></span>
+            </button>
+          </ng-container>
+        </li>
+      </ng-container>
+      <ng-template #quantityTemplate let-item="item">
+        <span class="value-label" *ngIf=!item.list>{{item[bindValue]}} ({{ item.defaultTenantRate }} -
+          {{ item.defaultClientRate }})</span>
+        <span class="value-label" *ngIf=item.list>{{item[bindValue]}} <span
+            *ngFor="let item1 of item.list;trackBy:trackBy.bind(this,bindPrimaryKeyField)">({{ item1.defaultTenantRate }}
+            -
+            {{ item1.defaultClientRate }})</span></span>
+      </ng-template>
+      <ng-template #noQuantityTemplate let-item="item">
+        <span class="value-label">{{item[bindValue]}}</span>
+      </ng-template>
+      <li>
+        <button type="button" class="btn btn-link text-transform-none font-weight-medium py-0"
+          [hidden]="selectedItemIndex > 2" *ngIf="selectedDataItems.length > 2"
+          (click)="changeIndex(selectedDataItems.length)">
+          <span>+{{selectedDataItems.length - 2}} More </span>
+        </button>
+        <button type="button" class="btn btn-link text-transform-none font-weight-medium py-0"
+          [hidden]="selectedItemIndex < 2 || selectedItemIndex === 2" *ngIf="selectedDataItems.length > 2"
+          (click)="changeIndex(2)">
+          <span>Read Less</span>
+        </button>
+      </li>
+    </ul>
+  </ng-container>
+</div>
+
+<ng-template #multipleControl let-item="item">
+  <div class="ml-auto col-auto" *ngIf="item.selected">
+    <div class="d-flex flex-column mb-2" *ngFor="let item1 of item.list;trackBy:trackBy.bind(this,bindPrimaryKeyField)">
+      <label class="form-label font-weight-medium text-center mb-1" *ngIf="item.selected">{{item1['paperColorType'] }} -
+        {{  item1['paperSideType']}}:</label>
+      <div class="d-flex align-items-center">
+        <ng-container *ngIf="item.selected ">
+          <label class="form-label text-gray flex-shrink-0 mx-2 mb-0">Tenant Rate:</label>
+          <div class="form-group m-0 w-90">
+            <input class="form-control" [value]="item1.defaultTenantRate ? item1.defaultTenantRate : 0"
+              (input)="onTenantRateInput(item1, $event.target.value)" trakitOnlyNumber [allowPeriod]="true" />
+          </div>
+        </ng-container>
+        <ng-container *ngIf="item.selected ">
+          <label class="form-label text-gray flex-shrink-0 mx-2 mb-0">Client Rate:</label>
+          <div class="form-group m-0 w-90">
+            <input class="form-control" [value]="item1.defaultClientRate ? item1.defaultClientRate : 0"
+              (input)="onClientRateInput(item1, $event.target.value)" trakitOnlyNumber [allowPeriod]="true" />
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #singleControl let-item="item">
+  <div class="ml-auto {{isTextBoxRequired && item.selected ? 'col-auto' : ''}}" *ngIf="item[bindValue] !== 'N/A'">
+    <div class="d-flex align-items-center justify-content-end">
+      <ng-container *ngIf="isTextBoxRequired && item.selected">
+        <label class="form-label text-gray flex-shrink-0 mx-2 mb-0">Tenant Rate:</label>
+        <div class="form-group m-0 w-90">
+          <input class="form-control" [value]="item.defaultTenantRate ? item.defaultTenantRate : 0"
+            (input)="onTenantRateInput(item, $event.target.value)" trakitOnlyNumber [allowPeriod]="true" />
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isTextBoxRequired && item.selected ">
+        <label class="form-label text-gray flex-shrink-0 mx-2 mb-0">Client Rate:</label>
+        <div class="form-group m-0 w-90">
+          <input class="form-control" [value]="item.defaultClientRate ? item.defaultClientRate : 0"
+            (input)="onClientRateInput(item, $event.target.value)" trakitOnlyNumber [allowPeriod]="true" />
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

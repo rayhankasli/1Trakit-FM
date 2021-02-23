@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<controller name="Fleet">
+
+	<resources>
+		<resource type="FleetResponseModel" name="Fleet" route="fleet" />
+	</resources>
+
+</controller>

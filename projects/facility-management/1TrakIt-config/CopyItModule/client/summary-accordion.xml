@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="Summary" module="copyit" breadcrumbKey="BREADCRUMB.SUMMARY"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <accordion hasFooter="false">
+        <leaf headerKey="REQUEST INFORMATION DETAILS">
+            <xi:include href="./generator-config/CopyItModule/client/request-info-details-form.xml"></xi:include>
+        </leaf>
+        <leaf headerKey="SCHEDULING DETAILS">
+            <xi:include href="./generator-config/CopyItModule/client/scheduling-details-form.xml"></xi:include>
+        </leaf>
+        <leaf headerKey="PRINT DETAILS">
+            <xi:include href="./generator-config/CopyItModule/client/print-details-form.xml"></xi:include>
+        </leaf>
+    </accordion>
+</component>

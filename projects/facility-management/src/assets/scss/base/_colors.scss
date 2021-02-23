@@ -1,0 +1,261 @@
+// Theme-colors
+/*================================ 
+    Variables from ROC style guide
+================================== */
+$primary:           #2f6bff;  // Primary color
+$primary-dark:        darken($primary, 18.5%);  // Primary element's hover color, Active and Selected state color
+
+// Neutral colors
+$gray:              #9EA2AE;  // Icon, Placeholder color
+$gray-light:        #E6E7EB;  // Disabled color
+$gray-dark:         #444851;  // Form label, Secondary body text color
+
+$white:             #ffffff;
+$gray-100:          #f8f9fa;
+$gray-200:          #e9ecef;
+$gray-300:          #dee2e6;
+$gray-400:          #ced4da;
+$gray-500:          #adb5bd;
+$gray-600:          #8a8fa5;
+$gray-700:          #495057;
+$gray-800:          #343a40;
+$gray-900:          #212529;
+$black:             #000000;
+
+// Body text colors
+$body-color:        $gray-dark;  // Body text, Headings color
+$body-inverted-color: $white;   // Inverted body text color
+
+// Semantic colors
+$blue:            #22a8ee;
+$yellow:          #ffbf3a;
+$orange:          #ff8f2b;
+$purple:          #763fea;
+$red:             #fa3a4b;
+$cyan:            #02e6e6;
+$brown:           #795548;
+$green:           #2ec740;
+
+$success:         $green;   // Success actions, positive button color
+$info:            $blue;    // Info actions
+$warning:         $yellow;  // Warning actions
+$danger:          $red;     // Danger actions, negative button color
+
+
+/*===================================== 
+    End: Variables from ROC style guide
+======================================= */
+
+$secondary:         #171f46;
+$secondary-dark:    #111634;
+$light:             #F5F6FA;
+$container-bg:      #ffffff;
+
+$theme-colors: (
+    "primary":      $primary,
+    "secondary":    $secondary,
+    "success":      $success,
+    "info":         $info,
+    "warning":      $warning,
+    "danger":       $danger,
+    "error":        $danger,
+    "gray":         $gray,
+    "gray-dark":    $gray-dark,
+    "primary-dark":   $primary-dark,
+    "secondary-dark": $secondary-dark,
+    "light":          $gray-light,
+    "medium-gray":    $gray-600
+);
+
+
+// TOPBAR Color
+$topbar-bg: $white;
+
+// Border
+$border-color:      #E6E7EB;
+
+// Shadow
+$box-shadow-sm:         0 4px 8px rgba($black, .175);
+$breadcrumb-active-color:          $secondary-dark;
+
+// Button
+$btn-active-box-shadow:         none;
+
+
+/***************************
+    => DATA TABLE    
+***************************/
+
+$table-bg: null; // --> Table background color
+$table-color: $body-color; // --> Table Text color
+$table-border-color: $border-color; // --> Table Border Color
+// --> To apply thead color, Make sure $enable-table-head-color is true in _variables.scss 
+$table-head-color: #E6E7EB; // --> Table Heading Background color
+$table-row-bg: $white; // --> Table Row background color
+$table-hover-color: $body-color; // --> Table Row Hover Background Color
+$table-hover-bg: transparent; // --> Table Row Hover Text Color
+$table-selected-row-fill-color: $primary; // --> Table Selected Row Fill color
+
+
+/***************************
+    => End DATA TABLE    
+***************************/
+
+/****************
+    => Forms   
+****************/
+// --> Input background color
+$input-bg: $white;
+$input-color: $secondary-dark;
+$input-disabled-bg: $light;
+$input-disabled-color: $gray-dark;
+$input-border-color: $border-color;
+$input-placeholder-color: $gray-400;
+$custom-file-color:$input-placeholder-color;
+$custom-file-button-color: $primary;
+
+$input-focus-border-color:  $secondary;
+
+$custom-control-indicator-checked-border-color: $primary;
+$custom-control-indicator-checked-bg:           $primary;
+$custom-control-label-color:                    $gray-dark;
+
+$custom-control-indicator-border-color:         $gray-dark;
+
+// $input-color: $gray-700;
+/******************
+    Custom files   
+*******************/
+$custom-file-button-color:                 $white;
+$custom-file-button-bg:                    $primary;
+
+// ==> ng-select
+$ng-select-highlight: $secondary;
+$ng-select-primary-text: $gray-900;
+$ng-select-disabled-text: $gray-100;
+$ng-select-border: $input-border-color;
+$ng-select-bg: $input-bg;
+
+// Multiselect
+$multiselect-option-disabled-text:  #b7bec5;
+
+/******************
+    => End Forms   
+*******************/
+
+/***************
+    => Tabs
+***************/
+$nav-tabs-border-color:                 transparent;
+$nav-link-disabled-color:               $gray-600;
+$nav-pills-link-active-bg:              $primary;
+$nav-tabs-border-color:                 $nav-pills-link-active-bg;
+$nav-tabs-link-border-color:            $gray-400;
+$nav-tabs-link-hover-border-color:      $gray-200 $gray-200 $nav-tabs-border-color;
+$nav-tabs-active-border-color:          transparent;
+$nav-divider-color:                     $gray-200;
+/***************
+    => End Tabs
+*****************/
+
+/******************************
+    => Accordion  
+*****************************/
+
+$accordion-color:                   $secondary-dark; // Accordion Text color
+// To apply color to accordion head, Make sure $enable-accordion-head-color is true in _variables.scss 
+$accordion-head-bg:                 $white; // Accordion Heading Background color
+$accordion-body-bg:                 $white; // Accordion Body Background color
+$accordion-head-hover-color:        null; // Accordion Head Hover Background Color
+$accordion-border-color:            $border-color; // Accordion Overall Border Color
+$accordion-head-border-color:       $accordion-border-color; // Accordion Head Border Color
+$accordion-body-border-color:       $accordion-border-color; // Accordion Body Border Color
+$accordion-active:                  $primary; // Background for Active Accordion
+$accordion-bg:                      $white;
+
+/******************************
+    => End Accordion  
+*****************************/
+
+/******************************
+    => Time Slot 
+*****************************/
+$time-slot: (
+  "active": $white,
+  "disabled": $gray-light,
+  "cancelled": $danger,
+  "selected": $primary
+);
+
+/******************************
+    => Stepper  
+*****************************/
+
+$stepper-label-color:               $secondary-dark;
+$stepper-active-label-color:        $primary;
+$stepper-success-label-color:       $success;
+
+$stepper-indicator-bg:              $gray-light;
+$stepper-active-indicator-bg:       $primary;
+$stepper-success-indicator-bg:       $success;
+
+// Badge-color
+$colors: (
+    "blue"      : $blue,
+    "yellow"    : $yellow,
+    "orange"    : $orange,
+    "purple"    : $purple,
+    "red"       : $red,
+    "cyan"      : $cyan,
+    "brown"     : $brown,
+    "green"     : $green,
+    "gray"      : $gray
+);
+
+// Full Calendar
+$current-date-highlight-bg:         lighten($primary, 36);
+$current-date-color:                $primary;
+
+$full-calendar-header-bg:           lighten($gray-light, 6%);
+
+$event-item-border-color:           $gray;
+$event-item-hover-bg:               lighten($gray-light, 4%);
+$event-item-today-hover-bg:         rgba($primary, 0.08);
+
+// Status
+$new                         : $blue;
+$assigned                    : $yellow;
+$in-progress                 : $green;
+$completed                   : $purple;
+$re-open                     : $red;
+$on-hold                     : $black;
+$request-for-information     : $brown;
+$close                       : $gray;
+$quality-review              : $green;
+
+$status: (
+  "new"                         : $new,
+  "assigned"                    : $assigned,
+  "in-progress"                 : $in-progress,
+  "completed"                   : $completed,
+  "re-open"                     : $re-open,
+  "on-hold"                     : $on-hold,
+  "request-for-information"     : $request-for-information,
+  "close"                       : $close,
+  "quality-review"              : $quality-review
+);
+
+$status-bg: (
+    "in-progress":              $success,
+    "due-in":                   #FFEB3B,
+    "overdue":                  $danger,
+    "close":                    $info,
+);
+
+$operable :         $blue;
+$in-operable:       $yellow;
+
+$fleet-status: (
+    "operable":         $operable,
+    "in-operable":      $in-operable,
+);

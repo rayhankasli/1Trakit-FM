@@ -1,0 +1,183 @@
+<form focusInvalidInput [forceCheck]="isFormSubmitted"
+  class="floating-form flex-grow-1 d-flex flex-column w-100 overflow-hidden" [formGroup]="copyitOptionsFormGroup">
+  <div class="flex-grow-1 overflow-auto px-3">
+    <div class="row pt-1">
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.paperSizes" bindValue="paperSize" bindLabel="paperSizeColorSideId"
+          id="paperSizes" [isCheckboxSelection]="true" formControlName="paperSizes" [isTextBoxRequired]="true"
+          [isCustomList]="true" [dropdownLabel]="'Paper Size'" [isValueRequired]="true">
+        </trakit-custom-dropdown>
+        <div ngxErrors="paperSizes" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Paper Size is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.envelopes" bindValue="envelope" bindLabel="envelopeId"
+          [isCheckboxSelection]="true" formControlName="envelopes" id="envelop" [isTextBoxRequired]="true"
+          [dropdownLabel]="'Envelope And Quantity'" [isValueRequired]="true">
+        </trakit-custom-dropdown>
+        <div ngxErrors="envelopes" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Envelope And Quantity is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.paperColors" bindValue="color" bindLabel="colorId"
+          [isCheckboxSelection]="true" formControlName="paperColors" id="paperColor" [dropdownLabel]="'Paper Color'"
+          [isValueRequired]="true">
+        </trakit-custom-dropdown>
+        <div ngxErrors="paperColors" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Paper Color is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.paperStocks" bindValue="paperStock" bindLabel="paperStockId"
+          id="paperStock" [isCheckboxSelection]="true" formControlName="paperStocks" [isTextBoxRequired]="true"
+          [dropdownLabel]="'Paper Stock'" [isValueRequired]="true">
+        </trakit-custom-dropdown>
+        <div ngxErrors="paperStocks" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Paper Stock is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.finishings" bindValue="finishing" bindLabel="finishingId"
+          id="finishing" [isCheckboxSelection]="true" formControlName="finishings" [isTextBoxRequired]="true"
+          [dropdownLabel]="'Finishing'" [isValueRequired]="true">
+        </trakit-custom-dropdown>
+        <div ngxErrors="finishings" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Finishing is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.tabs" bindValue="tab" bindLabel="tabId" [isCheckboxSelection]="true"
+          formControlName="tabs" id="tab" [isTextBoxRequired]="true" [dropdownLabel]="'Tabs'" [isValueRequired]="true">
+        </trakit-custom-dropdown>
+        <div ngxErrors="tabs" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Tabs is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.reproductionTypes" bindValue="reproductionType"
+          bindLabel="reproductionTypeId" [isCheckboxSelection]="true" formControlName="reproductionTypes"
+          id="reproductionType" [dropdownLabel]="'Reproduction Type'" [isValueRequired]="true">
+        </trakit-custom-dropdown>
+        <div ngxErrors="reproductionTypes" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Reproduction Type is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.overSizedCopies" bindValue="overSizedCopy" bindLabel="overSizedCopyId"
+          [isCheckboxSelection]="true" formControlName="overSizedCopies" id="overSizedCopy" [isTextBoxRequired]="true"
+          [dropdownLabel]="'Oversized Copy'" [isValueRequired]="false">
+        </trakit-custom-dropdown>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <trakit-custom-dropdown bindPrimaryKeyField="clientConfigureDefaultId"
+          [items]="masterData?.copyitMasterData?.requestorSections" bindValue="requestorSection"
+          bindLabel="requestorSectionId" [isCheckboxSelection]="true" formControlName="requestorSections"
+          id="requestorSection" [dropdownLabel]="'Requestor Section'" [isValueRequired]="false">
+        </trakit-custom-dropdown>
+      </div>
+      <div class="form-group mt-0 col-md-6 col-12 col-lg-6">
+        <ng-select #shippingService appendTo="body" class="form-control ng-select-lg float-outline p-0"
+          [clearable]="false" [items]="masterData?.copyitMasterData?.shippingServices" [multiple]="true"
+          groupBy="shippingServiceParent" [selectableGroup]="true" [selectableGroupAsModel]="false" [searchable]="false"
+          [closeOnSelect]="false" placeholder="Select age" bindLabel="shippingService"
+          formControlName="shippingServices">
+          <ng-template ng-label-tmp>
+          </ng-template>
+          <ng-template ng-header-tmp>
+            <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+              <input type="text" autoFocus class="form-control border-0 pr-0"
+                (input)="shippingService.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                aria-describedby="button-addon">
+              <div class="input-group-append">
+                <button class="btn bg-transparent text-gray" type="button">
+                  <span class="icon icon-search"></span>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+            <div class="custom-control flex-shrink-0 custom-checkbox">
+              <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+              <label class="form-check-label ml-2 custom-control-label">{{item.shippingServiceParent}}</label>
+            </div>
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+            <div class="custom-control flex-shrink-0 custom-checkbox">
+              <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+              <label class="form-check-label ml-2 custom-control-label">{{item.shippingService}}</label>
+            </div>
+          </ng-template>
+        </ng-select>
+        <label class="text-uppercase d-flex floating-form-label multiple-select-dropdown">
+          shipping Method
+          <span class="asterisk">*</span>
+        </label>
+        <ng-container>
+          <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+            <ng-container *ngFor="let item of selectedDataItem;trackBy:trackBy.bind(this,''); let i= index">
+              <li class="selected-option" *ngIf="i < selectedItemIndex">
+                <span class="value-label">{{item.shippingService}}</span>
+                <ng-container *ngIf="!formControls.shippingServices.disabled">
+                  <button type="button" tabindex="-1"
+                    class="btn btn-link btn-sm rounded-circle cancel-btn flex-shrink-0 d-flex align-items-center h-100 px-1 py-0">
+                    <span class="icon icon-close text-gray-dark" (click)="removeItem(item)" aria-hidden="true"></span>
+                  </button>
+                </ng-container>
+              </li>
+            </ng-container>
+            <li>
+              <button type="button" class="btn btn-link py-0" [hidden]="selectedItemIndex > 2"
+                *ngIf="selectedDataItem.length > 2" (click)="changeIndex(selectedDataItem.length)">
+                <span>+{{selectedDataItem.length - 2}} More </span>
+              </button>
+              <button type="button" class="btn btn-link py-0"
+                [hidden]="selectedItemIndex < 2 || selectedItemIndex === 2" *ngIf="selectedDataItem.length > 2"
+                (click)="changeIndex(2)">
+                <span>Read Less</span>
+              </button>
+            </li>
+          </ul>
+        </ng-container>
+        <div ngxErrors="shippingServices" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Shipping Method is required
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end flex-shrink-0 p-3">
+    <ng-container *ngIf="canEdit">
+      <button disableOnAjax type="submit" class="btn btn-primary d-flex align-items-center"
+        (click)="saveCopyitOptions();">
+        <span class="icon icon-tick mr-2"></span>
+        <span>Submit</span>
+      </button>
+    </ng-container>
+  </div>
+</form>

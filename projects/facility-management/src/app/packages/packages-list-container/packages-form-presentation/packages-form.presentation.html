@@ -1,0 +1,174 @@
+<form class="floating-form col-12" [formGroup]="packagesFormGroup">
+  <div class="row">
+    <div [hidden]="isEditMode" class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="barcode" floatingLabel trakcitTrim #barcode />
+      <label class="floating-form-label">
+        Barcode
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="barcode" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Barcode is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Barcode can not be more than 50 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="upiNumber" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        UPI Number
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="upiNumber" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          UPI Number is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          UPI Number can not be more than 30 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <ng-select #toUser [items]="userList" bindLabel="fullName" bindValue="userId" [searchable]="false"
+        [clearable]="false" (search)="customSearch($event)" formControlName="toUserId"
+        (change)="changeToUser($event)" selectFloatingLabel class="form-control float-outline p-0" appendTo="body">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0" (input)="toUser.filter($event.target.value)"
+              placeholder="Search" aria-label="Search" aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label class="floating-form-label">
+        To
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="toUserId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          To is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="packageFrom" floatingLabel trakcitTrim />
+      <label class="floating-form-label">
+        From
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="packageFrom" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          From is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <ng-select #deliveryService [items]="deliveryServiceList" bindLabel="deliveryServiceName"
+        bindValue="deliveryServiceId" [clearable]="false" formControlName="deliveryServiceId" floatingLabel
+        (change)="onDeliveryCompanyChange($event)" class="form-control float-outline p-0" appendTo="body">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="deliveryService.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label class="floating-form-label">
+        Delivery Service Company
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="deliveryServiceId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Delivery Service Company is required
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="showCustomDeliveryCompany">
+      <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+        <input type="text" class="form-control" formControlName="deliveryServiceFrom" floatingLabel trakcitTrim />
+        <label class="floating-form-label">
+          Other Company Name
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="deliveryServiceFrom" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Other Company Name is required
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="building" floatingLabel />
+      <label class="floating-form-label">
+        Building
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="floor" floatingLabel />
+      <label class="floating-form-label">
+        Floor
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <input type="text" class="form-control" formControlName="deskLocation" floatingLabel />
+      <label class="floating-form-label">
+        Desk Location
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <ng-select [items]="slots" bindLabel="slot" bindValue="slotId" [searchable]="false" [clearable]="false"
+        appendTo="body" formControlName="slotId" floatingLabel class="form-control float-outline p-0">
+        <ng-template ng-label-tmp let-item="item">
+          {{selectedDeliveryDate | slotDateFormatPipe:item.slotTime}}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          {{selectedDeliveryDate | slotDateFormatPipe:item.slotTime}}
+        </ng-template>
+      </ng-select>
+      <label class="floating-form-label">
+        Slot
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="slotId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Slot is required
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isEditMode" class="form-group col-md-6 col-12 col-lg-4 col-xl-3">
+      <button type="button" title="Save" class="btn btn-outline-secondary" (click)="savePackages(true)">
+        Save & Scan New
+      </button>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xl-3 ml-auto">
+      <div class="row">
+        <div class="col-6">
+          <button type="button" title="Cancel" (click)="cancel()"
+            class="btn d-flex w-100 align-items-center justify-content-center btn-secondary">
+            <span class="icon icon-times mr-2"></span>
+            <span>Cancel</span>
+          </button>
+        </div>
+        <div class="col-6">
+          <button type="button" title="Save"
+            class="btn d-flex w-100 align-items-center justify-content-center btn-primary" (click)="savePackages();">
+            <span class="icon icon-save mr-2"></span>
+            <span>Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

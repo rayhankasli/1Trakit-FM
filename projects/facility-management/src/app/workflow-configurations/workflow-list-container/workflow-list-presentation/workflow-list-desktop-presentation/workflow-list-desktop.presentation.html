@@ -1,0 +1,92 @@
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 120px">
+      <col style="width: 120px">
+      <col style="width: 140px">
+      <col style="width: 140px">
+      <col style="width: 40px">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th scope="col">
+          <span>{{ 'WORKFLOW NAME' }}</span>
+        </th>
+        <th appSortingOrder [column]="'officeId'" (orderType)="onSortOrder('officeId',$event)" scope="col"
+          class="column-sort">
+          <span>{{ 'OFFICE' }}</span>
+        </th>
+        <th appSortingOrder [column]="'workflowStartTime'" (orderType)="onSortOrder('workflowStartTime',$event)"
+          scope="col" class="column-sort">
+          <span>{{ 'Workflow START TIME' }}</span>
+        </th>
+        <th appSortingOrder [column]="'firstName'" (orderType)="onSortOrder('firstName',$event)" scope="col"
+          class="column-sort">
+          <span>{{ 'ASSIGN TO' }}</span>
+        </th>
+        <th class="text-center">
+          <span>{{ 'actions' }}</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr app-workflow-form-ui *ngIf="addWorkFlow" class="table-inline-form" style="display: contents;"
+        [offices]="offices" [assignerList]="assigner" (closeWorkflowForm)="closeForm($event)"
+        (add)="addWorkNewFlow($event)">
+      </tr>
+
+      <ng-container *ngFor="let workflow of workflows;trackBy: trackBy.bind(this,'workflowId');let i= index">
+        <tr *ngIf="!workflow.isEditable">
+          <td class="cursor-pointer" [routerLink]="[workflow.workflowId,'task']">{{workflow.workflowName}}</td>
+          <td class="cursor-pointer" [routerLink]="[workflow.workflowId,'task']">
+            {{workflow.officeName}}-{{workflow.officeNickName}}</td>
+          <td class="cursor-pointer" [routerLink]="[workflow.workflowId,'task']">
+            {{workflow.workflowStartTime | ngbTimePicker}}</td>
+          <td class="cursor-pointer" [routerLink]="[workflow.workflowId,'task']">{{workflow.assignedTo}}</td>
+          <td class="text-center">
+            <div ngbDropdown container="body" class="data-tbl-dropdown">
+              <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+                <span class="icon icon-more"></span>
+              </button>
+              <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                <button class="dropdown-item" ngbDropdownItem (click)="editWorkFlow(workflow)"
+                  *hasPermission="workflowEnum.update">
+                  <span class="icon icon-edit mr-2"></span>
+                  <span>{{'Edit'}}</span>
+                </button>
+                <button class="dropdown-item" ngbDropdownItem (click)="openModal(workflow)"
+                  [disabled]="workflow.isActive ? true: false" *hasPermission="workflowEnum.delete">
+                  <span class="icon icon-delete mr-2"></span>
+                  <span>{{'Delete'}}</span>
+                </button>
+                <button class="dropdown-item" ngbDropdownItem (click)="onToggleStatus(workflow)"
+                  *hasPermission="workflowEnum.changeStatus">
+                  <span class="icon {{workflow.isActive ? 'icon-block': 'icon-check-circle' }} mr-2"></span>
+                  <span>{{workflow.isActive ? 'Inactive': 'Active' }}</span>
+                </button>
+                <button class="dropdown-item" ngbDropdownItem (click)="openCreateCopyModal(workflow)"
+                  *hasPermission="workflowEnum.copy">
+                  <span class="icon icon-files icon-1x mr-2"></span>
+                  <span>{{'Create a New Copy'}}</span>
+                </button>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr app-workflow-form-ui *ngIf="workflow.isEditable" class="table-inline-form" style="display: contents;"
+          [workflow]="workflow" [offices]="offices" [assignerList]="assigner" (closeWorkflowForm)="closeForm($event)"
+          (update)="updateWorkFlow($event)">
+        </tr>
+        <tr app-workflow-form-ui *ngIf="workflow.isCreateNewCopy" class="table-inline-form" style="display: contents;"
+          [workflow]="workflow" [offices]="offices" [assignerList]="assigner" (closeWorkflowForm)="closeForm($event)"
+          (add)="addWorkNewFlow($event)">
+        </tr>
+      </ng-container>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="(!workflows || workflows.length === 0) && !addWorkFlow ">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

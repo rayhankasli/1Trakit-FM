@@ -1,0 +1,57 @@
+<trackit-page-actions>
+  <div class="d-flex order-2 align-items-center justify-content-end flex-shrink-0 ml-2">
+    <button type="button" (click)="exportAsPDF()" class="btn btn-primary d-flex align-items-center"
+      title="Export as PDF" *hasPermission="timelinessEnum.timelinessExportPdf"
+      [disabled]="timelinessList?.length <= 0">
+      <span>Export as PDF</span>
+    </button>
+  </div>
+</trackit-page-actions>
+
+<div class="flex-grow-1 h-100 px-3 overflow-hidden mb-3">
+  <div class="d-flex h-100 overflow-hidden">
+    <div class="report-data-table overflow-y-auto overflow-x-hidden border rounded mb-3 h-100">
+      <table class="table data-tbl w-100 position-relative mb-0 border-0">
+        <colgroup>
+          <col style="width: 90px;">
+          <col style="width: 90px;">
+          <col style="width: 90px;">
+        </colgroup>
+        <thead class="sticky-table-header">
+          <tr>
+            <th class="text-center" scope="col" *ngFor="let header of tableHeader;trackBy:trackBy.bind(this,'')">
+              <span>{{header}}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr [ngClass]="{'current-data-row': copyList?.month === (currentMonth | date:'MMM'), 
+              'quarter-data-row': copyList?.month === '1st Qtr' || copyList?.month === '2nd Qtr' || copyList?.month === '3rd Qtr' || copyList?.month === '4th Qtr', 
+              'ytd-data-row':  copyList?.month === 'YTD', 
+              'average-data-row': copyList?.month === 'Avg'}" *ngFor="let copyList of timelinessList;trackBy:trackBy.bind(this,'month')">
+            <td class="text-center">{{copyList?.month}}</td>
+            <td class="text-center" *ngFor="let yearValue of copyList?.data;trackBy:trackBy.bind(this,'year')">
+              {{yearValue?.value !== null ? yearValue?.value + '%' : '-'}}
+            </td>
+          </tr>
+
+          <!-- colspan base on total column -->
+          <tr *ngIf="!timelinessList || timelinessList.length === 0">
+            <td colspan="3" class="h-100">
+              <div class="text-muted  d-flex align-items-center justify-content-center h-100">
+                No record found
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col pr-0 overflow-hidden">
+      <div class="card h-100 overflow-hidden">
+        <!-- to add the chart (Google Chart) -->
+        <div class="h-100 w-100" #timelinessRef></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+{
+    "FULL_NAME": {
+        "LABEL": "Full Name",
+        "PLACEHOLDER": "Full Name",
+        "REQUIRED": "Full Name is required.",
+        "MINLENGTH": "min 2 required",
+        "MAXLENGTH": "max 50 only",
+        "REGEX": "character only"
+    },
+    "USER_NAME": {
+        "LABEL": "User Name",
+        "PLACEHOLDER": "User Name",
+        "REQUIRED": "User Name is required.",
+        "MINLENGTH": "min 2 required",
+        "MAXLENGTH": "max 50 only",
+        "REGEX": "character only in User name"
+    },
+    "EMAIL": {
+        "LABEL": "Email",
+        "PLACEHOLDER": "Email",
+        "REQUIRED": "Email is required",
+        "REGEX": "enter valid email"
+    },
+    "PASSWORD_HASH": {
+        "LABEL": "Password",
+        "PLACEHOLDER": "Password",
+        "REQUIRED": "Password is required.",
+        "MINLENGTH": "",
+        "MAXLENGTH": "",
+        "REGEX": "enter strong password"
+    },
+    
+    "CONFIRM_PASSWORD": {
+        "LABEL": "Confirm Password",
+        "PLACEHOLDER": "Confirm Password",
+        "REQUIRED": "Confirm Password is required.",
+        "REGEX": "enter same password "
+    },
+    "PHONE_NUMBER": {
+        "LABEL": "Phone Number",
+        "PLACEHOLDER": "Phone number",
+        "REQUIRED": "Phone Number is required.",
+        "REGEX": "Enter valid phone number."
+    },
+    
+    "TERM_CONDITION":{
+        "CHECKED":"Please accept terms & conditions"
+    },
+    "CAPTCHA":{
+        "CHECKED":"Clear captch first"
+    },
+    "LANGUAGE":{
+        "LABEL": "Language",
+        "PLACEHOLDER": "Select Language",
+        "REQUIRED": "LANGUAGE is required."
+    },
+    "InvalidClient": "Invalid client id:",
+
+    "PassConfNotSame": "Password and confirm password do not match.",
+
+    "DuplicateUsername": "Username is already taken.",
+
+    "DuplicateEmail": "Email is already taken.",
+
+    "DuplicatePhone": "Mobile number already exist.",
+
+    "PasswordLength": "Minimum Password Length Required is {0}",
+
+    "PasswordLowercase": "Password must have atleast one lowercase character.",
+
+    "PasswordUppercase": "Password must have atleast one uppercase character.",
+
+    "PasswordDigit": "Password must have atleast one number character.",
+
+    "PasswordSymbol": "Password must have atleast one special character.",
+
+    "PasswordSameChar": "Passwords cannot be all the same character.",
+
+    "PasswordOldSame": "Can not reuse old password.",
+
+    "UnableLoadUser": "Unable to load user"
+}

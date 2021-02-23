@@ -1,0 +1,62 @@
+<trackit-page-actions>
+  <button type="button" class="btn order-2 btn-primary flex-shrink-0 d-flex align-items-center ml-2"
+    (click)="exportAsPDF()" title="Export as PDF" *hasPermission="facilityHelpDeskEnum.facilityHelpDeskExportPdf"
+    [disabled]="facilitiesHelpDeskList?.length <= 0">
+    <span>Export as PDF</span>
+  </button>
+</trackit-page-actions>
+
+<div class="d-flex align-items-center mb-3 flex-shrink-0 px-3">
+  <div class="flex-grow-1 text-center">
+    <span class="text-uppercase small font-weight-medium">FACILITIES HELP DESK - WORK ORDER TICKETS
+      {{currentMonth | date:'y'}}</span>
+  </div>
+</div>
+
+<div class="flex-grow-1 h-100 px-3 overflow-hidden mb-3">
+  <div class="d-flex h-100 overflow-hidden">
+    <div class="report-data-table overflow-y-auto overflow-x-hidden border rounded mb-3 h-100">
+      <table class="table data-tbl w-100 position-relative mb-0 border-0">
+        <colgroup>
+          <col style="width: 180px;">
+          <col style="width: 170px;">
+        </colgroup>
+        <thead class="sticky-table-header">
+          <tr>
+            <th class="text-center" scope="col">
+              <span>WORK ORDER TICKETS</span>
+            </th>
+            <th class="text-center" scope="col">
+              <span>FACILITIES HELP DESK</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- current-data-row, quarter-data-row -->
+          <tr [ngClass]="{'current-data-row': data.month === (currentMonth | date:'MMM'), 
+          'ytd-data-row':  data.month === 'YTD', 
+          'average-data-row': data.month === 'Avg'}" *ngFor="let data of facilitiesHelpDeskList;trackBy:trackBy.bind(this,'month')">
+            <td class="text-center">{{data.month}}</td>
+            <td class="text-center"> {{data?.helpDeskValue !== null ? data?.helpDeskValue : '-'}}</td>
+          </tr>
+
+          <!-- colspan base on total column -->
+          <tr *ngIf="!facilitiesHelpDeskList || facilitiesHelpDeskList.length === 0">
+            <td colspan="2" class="h-100">
+              <div class="text-muted  d-flex align-items-center justify-content-center h-100">
+                No record found
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col pr-0 overflow-hidden">
+      <div class="card h-100 overflow-hidden">
+        <!-- to add the chart (Google Chart) -->
+        <div class="h-100 w-100" #facilitiesHelpDesk></div>
+      </div>
+    </div>
+  </div>
+</div>

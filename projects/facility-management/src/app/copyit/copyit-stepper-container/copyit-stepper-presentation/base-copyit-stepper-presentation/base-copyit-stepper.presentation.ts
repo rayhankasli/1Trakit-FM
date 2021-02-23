@@ -1,0 +1,42 @@
+import { Output, EventEmitter, Input, Inject, NgZone } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+// ------------------------------------------------------------ //
+import { CopyItInfo } from '../../../../shared/modules/copy-it-print-details/models/copyit-info/copyit-info';
+import { BaseCloseSelectDropdown } from '../../../../core/base-classes/base-close-select-dropdown';
+
+/** BaseCopyitStepperPresentation */
+export class BaseCopyitStepperPresentation extends BaseCloseSelectDropdown {
+
+    /**  isNext is used to set the input */
+    @Input() public set isNext(value: number) {
+        if (value) {
+            this._isNext = value;
+            this.baseNextStep.next(Date.now())
+        }
+    }
+
+    public get isNext(): number {
+        return this._isNext;
+    }
+
+    /** Event emitter is used for emit copyIt Info data */
+    @Output() public saveCopyItInfo: EventEmitter<CopyItInfo>;
+
+    /** This property is used for subscribing step */
+    public baseNextStep$: Observable<number>;
+
+    /** This property used for store step */
+    private baseNextStep: Subject<number>;
+    /** _isNext is used to set isNext value */
+    private _isNext: number;
+
+    constructor(
+        @Inject('Window') window: Window,
+        zone: NgZone
+    ) {
+        super(window, zone)
+        this.baseNextStep = new Subject<number>();
+        this.baseNextStep$ = this.baseNextStep.asObservable();
+        this.saveCopyItInfo = new EventEmitter<CopyItInfo>();
+    }
+}

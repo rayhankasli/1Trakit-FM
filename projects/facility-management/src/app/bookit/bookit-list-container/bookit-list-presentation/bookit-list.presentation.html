@@ -1,0 +1,57 @@
+<trackit-page-actions>
+  <div class="d-flex align-items-center flex-wrap">
+    <app-multi-select-filter-ui [statuses]="statuses" [requestors]="requestors" [assignedTo]="assignedTo"
+      [multiSelectFilterForm]="multiSelectFilterForm" [clients]="clients" (searchTerm)="onSearchTerm($event)">
+    </app-multi-select-filter-ui>
+    <div [formGroup]="multiSelectFilterForm" class="d-flex align-items-center form-group mb-0 mr-2">
+      <label for="clients" class="text-gray-dark font-weight-medium mb-0 mr-2 flex-shrink-0">
+        Client:
+      </label>
+      <trakit-client-select [clients]="clients" formControlName="clientId"></trakit-client-select>
+    </div>
+
+    <!-- Legend for background color -->
+    <app-legend-list [ngClass]="{'mr-n2':(isArchived$ | async)}"></app-legend-list>
+
+    <ng-container *ngIf="!(isArchived$ | async)">
+      <a *hasPermission="bookItPermissions.add" role="button" class="btn btn-primary d-flex align-items-center"
+        title="Add New Book It Request" routerLink="./add-new-request">
+        <span class="icon icon-add mr-2"></span>
+        <span>New book it request</span>
+      </a>
+    </ng-container>
+  </div>
+</trackit-page-actions>
+
+<!-- Data-table mobile view or desktop view -->
+<trakit-bookit-list-desktop-presentation [bookItList]="baseResponse?.bookItList">
+</trakit-bookit-list-desktop-presentation>
+<!-- Data-table footer area -->
+<div *ngIf="baseResponse?.bookItList?.length > 0 || tableProperty.pageNumber >= 1"
+  class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <!-- Data-table total entry status -->
+  <div class="data-tbl-status text-muted">
+    Showing {{tableProperty?.start}} to {{tableProperty?.end}} of {{baseResponse?.total}} entries
+  </div>
+  <!-- Data-table pagination -->
+  <div class="data-tbl-pagination ml-auto d-flex">
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon"
+      [disabled]="tableProperty.pageNumber === 0" type="button" (click)="onPageChange(tableProperty.pageNumber - 1)">
+      <span class="icon icon-arrow-prev"></span>
+    </button>
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon ml-2"
+      [disabled]="tableProperty?.end >= baseResponse?.total" type="button"
+      (click)="onPageChange(tableProperty.pageNumber + 1)">
+      <span class="icon icon-arrow-next"></span>
+    </button>
+    <!-- Data-table total entry display length -->
+    <select name="tbl-length" id="tbl-length" class="ml-2 form-control"
+      (change)="onPageSizeChange($event.target.value)">
+      <ng-container *ngFor="let item of pageSize; trackBy:trackBy.bind(this,'') ">
+        <option [selected]='(tableProperty?.pageLimit===item)' value="{{item}}">
+          {{item}}
+        </option>
+      </ng-container>
+    </select>
+  </div>
+</div>

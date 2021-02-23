@@ -1,0 +1,86 @@
+<ng-container [formGroup]="workflowFormGroup">
+  <td>
+    <div class="form-group m-0">
+      <input type="text" class="form-control" formControlName="workflowName" autoFocus />
+      <div ngxErrors="workflowName" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Workflow Name is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Allow only 30 characters
+        </div>
+      </div>
+    </div>
+  </td>
+  <td>
+    <div class="form-group m-0">
+      <ng-select #office [items]="offices" selectFloatingLabel bindLabel="office" bindValue="officeId"
+        [clearable]="false" formControlName="officeId" class="form-control float-outline p-0" appendTo="body"
+        [searchable]="false">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0" (input)="office.filter($event.target.value)"
+              placeholder="Search" aria-label="Search" aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <div ngxErrors="officeId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Office is required
+        </div>
+      </div>
+    </div>
+  </td>
+  <td>
+    <div class="form-group m-0">
+      <app-time-picker formControlName="workflowStartTime">
+        <label ctrlLabel for="workflowStartTime" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+        <div ngxErrors="workflowStartTime" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Workflow Start Time is required
+          </div>
+        </div>
+      </app-time-picker>
+    </div>
+  </td>
+  <td>
+    <div class="form-group m-0">
+      <ng-select #assigner [items]="assignerList" selectFloatingLabel bindLabel="assignTo" bindValue="assignedToId"
+        [clearable]="false" formControlName="assignedToId" appendTo="body" class="form-control float-outline p-0"
+        [searchable]="false">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="assigner.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <div ngxErrors="assignedToId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Assign To is required
+        </div>
+      </div>
+    </div>
+  </td>
+  <td class="d-flex align-items-center justify-content-center">
+    <button class="btn btn-primary btn-icon btn-icon d-flex align-items-center justify-content-center mr-1"
+      (click)="saveWorkflow();">
+      <span class="icon icon-save"></span>
+    </button>
+    <button *ngIf="isCancel" type="button" title="Cancel" (click)="cancel()"
+      class="btn btn-gray-dark btn-icon d-flex align-items-center justify-content-center">
+      <span class="icon icon-times"></span>
+    </button>
+  </td>
+</ng-container>

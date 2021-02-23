@@ -1,0 +1,17 @@
+<div class="d-flex flex-column border rounded-left h-100 overflow-hidden">
+  <div class="flex-shrink-0 d-flex">
+    <div class="col p-2 calendar-header" *ngFor="let days of headerItems;trackBy:trackBy.bind(this,''); let idx = index;">
+      <span>{{ days }}</span>
+    </div>
+  </div>
+  <div class="flex-grow-1 d-flex flex-column">
+    <div class="d-flex flex-grow-1 border-top" *ngFor="let rowData of setRowField;trackBy:trackBy.bind(this,''); let idx = index;">
+      <!--  Add class 'current-date' in button element for current date -->
+      <button type="button" (click)="dayClick(days)" class="col flex-column px-2 py-1 calendar-date-btn {{days.disabled ? 'text-muted' : ''}} {{ isCurrentDate(days.utcDate) ? 'current-date' : '' }}"
+      *ngFor="let days of rowData.dateGroup;trackBy:trackBy.bind(this,''); let idx = index;">
+        <span>{{ days.date }}</span>
+        <span class="event-number d-flex align-items-center justify-content-center" *ngIf="days.event.length > 0">{{ days.event.length }}</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<!-- Legend for background color -->
+<div ngbDropdown placement="bottom-right" class="legend-dropdown">
+    <button type="button" title="Legend"
+        class="btn btn-icon legend-btn btn-link border d-flex flex-wrap align-items-center justify-content-center mr-2 text-gray"
+        ngbDropdownToggle>
+        <span class="color-indication bg-in-progress"></span>
+        <span class="color-indication bg-due-in"></span>
+        <span class="color-indication bg-overdue"></span>
+        <span class="color-indication bg-close"></span>
+    </button>
+    <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu" class="dropdown-menu">
+        <li ngbDropdownItem role="menuitem">
+            <span class="color-indication mr-2 bg-in-progress"></span>
+            <span>In Progress</span>
+        </li>
+        <li ngbDropdownItem role="menuitem">
+            <span class="color-indication mr-2 bg-due-in"></span>
+            <span>Due in 2 hours</span>
+        </li>
+        <li ngbDropdownItem role="menuitem">
+            <span class="color-indication mr-2 bg-overdue"></span>
+            <span>Overdue</span>
+        </li>
+        <li ngbDropdownItem role="menuitem">
+            <span class="color-indication mr-2 bg-close"></span>
+            <span>Closed/Completed</span>
+        </li>
+    </ul>
+</div>

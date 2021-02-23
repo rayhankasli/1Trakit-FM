@@ -1,0 +1,26 @@
+<header id="topbar" class="d-flex align-items-center border-bottom px-xxl-4 px-3">
+	<label for="toggle-menu" class="d-lg-none toggle-menu-icon d-flex mb-0 mr-3">
+		<span class="icon-arrow-left"></span>
+	</label>
+	<div class="topbar-menu h-100">
+		<ng-content select="[slot]"></ng-content>
+	</div>
+	<div class="ml-auto flex-shrink-0 d-flex align-items-center">
+		<ng-content select="[archivedNotification]"></ng-content>
+		<div class="user-profile" ngbDropdown container="body" placement="bottom-right" autoClose="true">
+			<button ngbDropdownToggle class="btn btn-user d-flex align-items-center">
+				<avatar [name]="fullName"></avatar>
+				<span class="username d-md-flex d-none">{{ fullName }}</span>
+			</button>
+			<ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu" class="dropdown-menu dropdown-menu-right">
+				<a class="dropdown-item cursor-pointer" routerLink="/user-profile" ngbDropdownItem>
+					<span>My Profile</span>
+				</a>
+				<ng-content select="[userMenu]"></ng-content>
+				<a (click)="logout()" class="dropdown-item cursor-pointer" ngbDropdownItem>
+					<span>Logout</span>
+				</a>
+			</ul>
+		</div>
+	</div>
+</header>

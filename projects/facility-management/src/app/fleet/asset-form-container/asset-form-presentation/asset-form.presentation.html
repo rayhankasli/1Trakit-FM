@@ -1,0 +1,551 @@
+<trackit-page-actions>
+  <ng-container *ngIf="(asset && !showAddTicket)">
+    <button *ngIf="!isArchived" class="btn btn-primary d-flex align-items-center" routerLink="ticket/add"
+      title="Add New Ticket">
+      <span class="icon icon-add mr-2"></span>
+      Add Ticket
+    </button>
+  </ng-container>
+</trackit-page-actions>
+<div class="card mb-3">
+  <div class="card-body p-0">
+    <form class="floating-form p-3" [formGroup]="assetFormGroup" novalidate>
+      <div class="row">
+        <div class="col-12">
+          <label class="small my-2 font-weight-semibold">
+            Asset Information:
+          </label>
+        </div>
+        <div class="form-group col-md-6 col-12">
+          <div class="d-flex align-items-center">
+            <label class="mb-0 flex-shrink-0 mr-3">
+              Asset Type
+              <span class="asterisk">*</span>
+            </label>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="Copier" formControlName="assetTypeId"
+                [value]="assetTypeOptions.COPIER" />
+              <label class="custom-control-label" for="Copier">Copier</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="Printer" formControlName="assetTypeId"
+                [value]="assetTypeOptions.PRINTER" />
+              <label class="custom-control-label" for="Printer">Printer</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="Other" formControlName="assetTypeId"
+                [value]="assetTypeOptions.OTHER" />
+              <label class="custom-control-label" for="Other">Other</label>
+            </div>
+          </div>
+          <div ngxErrors="assetTypeId" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Asset Type is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-12">
+          <div class="d-flex align-items-center">
+            <label class="mb-0 flex-shrink-0 mr-3">
+              Asset Category
+              <span class="asterisk">*</span>
+            </label>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="Centralized" formControlName="assetCategoryId"
+                [value]="1" />
+              <label class="custom-control-label" for="Centralized">Centralized</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="DeCentralized" formControlName="assetCategoryId"
+                [value]="2" />
+              <label class="custom-control-label" for="DeCentralized">De-Centralized</label>
+            </div>
+          </div>
+          <div ngxErrors="assetCategoryId" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Asset Category is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="assetNo" floatingLabel />
+          <label class="floating-form-label">Asset No
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="assetNo" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Asset No is required
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Asset No should not be greater than 30 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="manufacturer" floatingLabel />
+          <label class="floating-form-label">Manufacturer
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="manufacturer" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Manufacturer is required
+            </div>
+            <div ngxError="mustMatch" [when]="['touched','dirty']">
+              greater or equal to
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Manufacturer should not be greater than 30 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="modelNo" floatingLabel />
+          <label class="floating-form-label">Model No
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="modelNo" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Model No is required
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Model No should not be greater than 30 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="serialNo" floatingLabel />
+          <label class="floating-form-label">Serial No
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="serialNo" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Serial No is required
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Serial No should not be greater than 30 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="assetTagNo" floatingLabel />
+          <label class="floating-form-label">Service Tag No
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="assetTagNo" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Service Tag No is required
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Service Tag No should not be greater than 30 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xxl-3">
+          <ng-select #clientSelect appendTo="body" [items]="clients" bindLabel="client" bindValue="clientId"
+            [clearable]="false" formControlName="clientId" [searchable]="false" selectFloatingLabel
+            class="form-control float-outline p-0" (change)="onClientChange($event)">
+            <ng-template ng-header-tmp>
+              <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                <input type="text" autoFocus class="form-control border-0 pr-0"
+                  (input)="clientSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                  aria-describedby="button-addon">
+                <div class="input-group-append">
+                  <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                    <span class="icon icon-search"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </ng-select>
+          <label for="" class="floating-form-label">Client
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="clientId" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Client is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="location" floatingLabel />
+          <label class="floating-form-label">Location
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="location" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Location is required
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="!openMeterRead">
+          <div class="form-group col-md-12">
+            <textarea rows="5" name="description" class="form-control" formControlName="description" role="textarea"
+              floatingLabel></textarea>
+            <label class="floating-form-label">Description
+            </label>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Third Party Support -->
+      <div class="row">
+        <div class="col-12">
+          <label class="small my-2 font-weight-semibold">
+            Third Party Support:
+          </label>
+        </div>
+        <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="thirdPartyName" floatingLabel />
+          <label class="floating-form-label">Name
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="thirdPartyName" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Name is required
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Name should not be greater than 30 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+          <input [textMask]="{mask: mask}" type="text" class="form-control" formControlName="phoneNo" floatingLabel />
+          <label class="floating-form-label">Phone No
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="phoneNo" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Phone No is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="emailAddress" floatingLabel trakcitTrim />
+          <label class="floating-form-label">Email</label>
+          <div ngxErrors="emailAddress" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="pattern" [when]="['touched','dirty']">
+              Email is invalid
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Email No should not be greater than 50 characters
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meter Read -->
+      <ng-container *ngIf="openMeterRead">
+        <div class="row mt-2" formGroupName="assetMeter">
+          <div class="col-12">
+            <label class="small my-2 font-weight-semibold">
+              {{!asset ? 'First ' : ''}}Meter Read:
+            </label>
+          </div>
+          <div class="form-group col-md-6 col-12 col-xl-3 col-lg-4" *ngIf="isTenants">
+            <ng-select appendTo="body" [items]="requestType" bindLabel="requestType" bindValue="requestType"
+              [clearable]="false" [searchable]="false" formControlName="requestType" floatingLabel
+              class="form-control float-outline p-0">
+            </ng-select>
+            <label class="floating-form-label">Request Type
+            </label>
+          </div>
+          <ng-container *ngIf="!asset">
+            <!-- First Meter Read -->
+            <div class="form-group col-md-6 col-12 col-xl-3">
+              <input type="text" class="form-control" formControlName="currentColorRead" floatingLabel
+                trakitOnlyNumber />
+              <label class="floating-form-label">Color
+              </label>
+              <div ngxErrors="assetMeter.currentColorRead" [isFormSubmitted]="isFormSubmitted">
+                <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                  Current Color Read can not be allow more than 9 digits
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-12 col-xl-3">
+              <input type="text" class="form-control" formControlName="currentBwRead" floatingLabel trakitOnlyNumber />
+              <label class="floating-form-label">B&W
+              </label>
+              <div ngxErrors="assetMeter.currentBwRead" [isFormSubmitted]="isFormSubmitted">
+                <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                  Current B&W Read can not be allow more than 9 digits
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-12 col-xl-3">
+              <input type="text" class="form-control" formControlName="currentScanRead" floatingLabel
+                trakitOnlyNumber />
+              <label class="floating-form-label">Scan
+              </label>
+              <div ngxErrors="assetMeter.currentScanRead" [isFormSubmitted]="isFormSubmitted">
+                <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                  Current Scan Read can not be allow more than 9 digits
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="asset">
+            <div class="form-group col-md-6 col-12 col-xl-3 col-lg-4">
+              <input type="text" autocomplete="off" class="form-control" id="date" #dp="bsDatepicker" bsDatepicker
+                preventText formControlName="readingDate" container="body" [bsConfig]="bsConfig" placement="bottom"
+                calendarFlotingLabel>
+              <label class="floating-form-label">
+                Date
+              </label>
+              <label class="icon icon-calendar date-picker-label text-gray mb-0" for="date"></label>
+            </div>
+
+            <div class="col-12">
+              <div class="row">
+                <!-- Previous Reading -->
+                <div class="col-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-header p-3 text-dark small font-weight-medium">
+                      Previous Reading
+                    </div>
+                    <div class="card-body p-3">
+                      <div class="row">
+                        <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                          <input type="text" class="form-control" formControlName="previousColorRead" floatingLabel
+                            trakitOnlyNumber />
+                          <label class="floating-form-label">Color
+                            <span class="asterisk">*</span>
+                          </label>
+                          <div ngxErrors="assetMeter.previousColorRead" [isFormSubmitted]="isFormSubmitted">
+                            <div ngxError="required" [when]="['touched','dirty']">
+                              Color is required
+                            </div>
+                            <div ngxError="min" [when]="['touched','dirty']">
+                              Color read is greater or equal to {{asset?.assetMeter?.previousColorRead}}
+                            </div>
+                            <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                              Color Read can not be allow more than 9 digits
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                          <input type="text" class="form-control" formControlName="previousBwRead" floatingLabel
+                            trakitOnlyNumber />
+                          <label class="floating-form-label">B&W
+                            <span class="asterisk">*</span>
+                          </label>
+                          <div ngxErrors="assetMeter.previousBwRead" [isFormSubmitted]="isFormSubmitted">
+                            <div ngxError="required" [when]="['touched','dirty']">
+                              B&W is required
+                            </div>
+                            <div ngxError="min" [when]="['touched','dirty']">
+                              B&W read is greater or equal to {{asset?.assetMeter?.previousBwRead}}
+                            </div>
+                            <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                              B&W Read can not be allow more than 9 digits
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                          <input type="text" class="form-control" formControlName="previousScanRead" floatingLabel
+                            trakitOnlyNumber />
+                          <label class="floating-form-label">Scan
+                            <span class="asterisk">*</span>
+                          </label>
+                          <div ngxErrors="assetMeter.previousScanRead" [isFormSubmitted]="isFormSubmitted">
+                            <div ngxError="required" [when]="['touched','dirty']">
+                              Scan is required
+                            </div>
+                            <div ngxError="min" [when]="['touched','dirty']">
+                              Scan read is greater or equal to {{asset?.assetMeter?.previousScanRead}}
+                            </div>
+                            <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                              Scan Read can not be allow more than 9 digits
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Current Reading -->
+                <div class="col-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-header p-3 text-dark small font-weight-medium">
+                      Current Reading
+                    </div>
+                    <div class="card-body p-3">
+                      <div class="row">
+                        <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                          <input type="text" class="form-control" formControlName="currentColorRead" floatingLabel
+                            trakitOnlyNumber />
+                          <label class="floating-form-label">Color
+                          </label>
+                          <div ngxErrors="assetMeter.currentColorRead" [isFormSubmitted]="isFormSubmitted">
+                            <div ngxError="min" [when]="['touched','dirty']">
+                              Color read is greater or equal to {{assetFormGroup.value?.assetMeter?.previousColorRead}}
+                            </div>
+                            <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                              Current Color Read can not be allow more than 9 digits
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                          <input type="text" class="form-control" formControlName="currentBwRead" floatingLabel
+                            trakitOnlyNumber />
+                          <label class="floating-form-label">B&W
+                          </label>
+                          <div ngxErrors="assetMeter.currentBwRead" [isFormSubmitted]="isFormSubmitted">
+                            <div ngxError="min" [when]="['touched','dirty']">
+                              B&W read is greater or equal to {{assetFormGroup.value?.assetMeter?.previousBwRead}}
+                            </div>
+                            <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                              Current B&W Read can not be allow more than 9 digits
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                          <input type="text" class="form-control" formControlName="currentScanRead" floatingLabel
+                            trakitOnlyNumber />
+                          <label class="floating-form-label">Scan
+                          </label>
+                          <div ngxErrors="assetMeter.currentScanRead" [isFormSubmitted]="isFormSubmitted">
+                            <div ngxError="min" [when]="['touched','dirty']">
+                              Scan read is greater or equal to {{assetFormGroup.value?.assetMeter?.previousScanRead}}
+                            </div>
+                            <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                              Current Scan Read can not be allow more than 9 digits
+                            </div>
+                          </div>
+                        </div>
+                        <div class="text-center" ngxErrors="assetMeter.currentColorRead"
+                          [isFormSubmitted]="isFormSubmitted">
+                          <div ngxError="ValidateForm" [when]="['touched','dirty']">
+                            Please enter any current reading
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="row" formGroupName="rates">
+          <!-- Client Rates -->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-body p-3">
+                <label class="small mb-3 font-weight-semibold">
+                  Client Rates:
+                </label>
+                <div class="row">
+                  <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                    <input type="text" class="form-control" formControlName="colorRate" floatingLabel trakitOnlyNumber
+                      [allowPeriod]="true" />
+                    <label class="floating-form-label">Color
+                      <span class="asterisk">*</span>
+                    </label>
+                    <div ngxErrors="rates.colorRate" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="required" [when]="['touched','dirty']">
+                        Color is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                    <input type="text" class="form-control" formControlName="bwRate" floatingLabel trakitOnlyNumber
+                      [allowPeriod]="true" />
+                    <label class="floating-form-label">B&W
+                      <span class="asterisk">*</span>
+                    </label>
+                    <div ngxErrors="rates.bwRate" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="required" [when]="['touched','dirty']">
+                        B&W is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                    <input type="text" class="form-control" formControlName="scanRate" floatingLabel trakitOnlyNumber
+                      [allowPeriod]="true" />
+                    <label class="floating-form-label">Scan
+                      <span class="asterisk">*</span>
+                    </label>
+                    <div ngxErrors="rates.scanRate" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="required" [when]="['touched','dirty']">
+                        Scan is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tenant Rates -->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-body p-3">
+                <label class="small mb-3 font-weight-semibold">
+                  Tenant Rates:
+                </label>
+                <div class="row">
+                  <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                    <input type="text" class="form-control" formControlName="colorTenantRate" floatingLabel
+                      trakitOnlyNumber [allowPeriod]="true" />
+                    <label class="floating-form-label">Color
+                      <span class="asterisk">*</span>
+                    </label>
+                    <div ngxErrors="rates.colorTenantRate" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="required" [when]="['touched','dirty']">
+                        Color is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                    <input type="text" class="form-control" formControlName="bwTenantRate" floatingLabel
+                      trakitOnlyNumber [allowPeriod]="true" />
+                    <label class="floating-form-label">B&W
+                      <span class="asterisk">*</span>
+                    </label>
+                    <div ngxErrors="rates.bwTenantRate" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="required" [when]="['touched','dirty']">
+                        B&W is required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                    <input type="text" class="form-control" formControlName="scanTenantRate" floatingLabel
+                      trakitOnlyNumber [allowPeriod]="true" />
+                    <label class="floating-form-label">Scan
+                      <span class="asterisk">*</span>
+                    </label>
+                    <div ngxErrors="rates.scanTenantRate" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="required" [when]="['touched','dirty']">
+                        Scan is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+
+    </form>
+    <div class="d-flex align-items-center justify-content-between flex-shrink-0 border-top p-3">
+      <button type="button" class="btn btn-secondary d-flex align-items-center" (click)="cancel()" title="Cancel">
+        <span class="icon icon-times mr-2"></span>
+        <span>Cancel</span>
+      </button>
+      <button disableOnAjax *ngIf="!isArchived" type="button" class="btn btn-primary d-flex align-items-center"
+        (click)="saveAsset();" title="Submit">
+        <span class="icon icon-tick mr-2"></span>
+        <span>Submit</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="fleetTickets">
+  <app-asset-ticket-list-ui [baseResponse]="fleetTickets" [ticketStatus]="ticketStatus"
+    (getAssetTicket)="getAssetTickets($event)">
+  </app-asset-ticket-list-ui>
+</ng-container>

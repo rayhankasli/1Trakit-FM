@@ -1,0 +1,41 @@
+<trackit-page-actions>
+  <div class="ml-auto d-flex align-items-center">
+    <div class="form-group mb-0 d-flex align-items-center">
+      <label for="clients" class="text-gray-dark font-weight-medium mb-0 mr-2 flex-shrink-0">
+        Client:
+      </label>
+      <trakit-client-select [clients]="clients" [formControl]="clientFormControl"></trakit-client-select>
+    </div>
+  </div>
+
+</trackit-page-actions>
+
+<div class="tab-container mb-3 flex-shrink-0">
+  <ul class="nav nav-tabs px-3 report-nav">
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="timeliness">Timeliness</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="copy-center-imp-color">Copy Center Imp - Color</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="copy-center-imp-b-and-w">Copy Center Imp - B&W</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="copy-center-imp-scan">Copy Center Imp - Scan</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="total-copy-volume">Total Copy Volume</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="total-copy-jobs">Total Copy Jobs</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="cost-recovery">Cost Recovery</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="chargeback">Charge Back</a>
+    </li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

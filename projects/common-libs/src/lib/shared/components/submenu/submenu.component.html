@@ -1,0 +1,10 @@
+<ul [@bodyExpansion]="toggleState ? 'expanded' : 'collapsed'" class="sub-menu list-unstyled">
+  <li *ngFor="let subMenu of subMenuData; trackBy: trackBy " (click)="removeAttachmentOnClick()">
+    <a [routerLink]="subMenu.link" routerLinkActive="active" role="button" class="nav-link">
+      <span class="menu-icon icon {{ subMenu.icon }}"></span>
+      <div class="menu-label">
+        <span class="text-truncate">{{ subMenu.name }}</span>
+      </div>
+    </a>
+  </li>
+</ul>

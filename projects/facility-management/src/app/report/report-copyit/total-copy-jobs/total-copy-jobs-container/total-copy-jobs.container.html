@@ -1,0 +1,5 @@
+<app-total-copy-jobs-ui class="d-flex flex-column w-100 overflow-hidden" 
+    [clientMaster]="clientMaster$ | async" 
+    [totalCopyJobsList]="totalCopyJobsList$ | async"
+    (totalCopyJob)="totalCopyJob($event)">
+</app-total-copy-jobs-ui>

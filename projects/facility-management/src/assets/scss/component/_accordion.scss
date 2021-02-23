@@ -1,0 +1,156 @@
+// Accordion
+.accordion {
+  >.card {
+    margin-bottom: 0.8rem;
+    &:not(:first-of-type) {
+      &:not(:last-of-type) {
+        border-bottom: $card-border-width solid $card-border-color;
+        @include border-radius($card-border-radius);
+      }
+    }
+
+    &:first-of-type {
+      border-bottom: $card-border-width solid $card-border-color;
+      @include border-radius($card-border-radius);
+    }
+
+    &:last-of-type {
+      @include border-top-radius($card-border-radius);
+    }
+
+    // Customization for Accordion head
+    .card-header {
+      font-weight: $accordion-head-font-weight;
+
+      // If Accordion header background color is enabled
+      @if $enable-accordion-head-color {
+        background-color: $accordion-head-bg;
+        color: color-yiq($accordion-head-bg);
+
+        button {
+          color: color-yiq($accordion-head-bg);
+        }
+      }
+
+      @else {
+        background-color: $accordion-bg;
+      }
+
+      // If Accordion padding is enabled
+      @if $enable-accordion-padding {
+        padding: $accordion-head-padding;
+        
+        @include media-breakpoint-down('xl') {
+          padding: $accordion-head-padding-sm;
+        }
+      }
+
+
+      // If Accordion font-size is enabled
+      @if $accordion-font-size {
+        .accordion-header {
+          font-size: $accordion-head-font-size;
+        }
+      }
+
+      // If Accordion text transform uppercase is enabled
+      @if $accordion-text-uppercase {
+        text-transform: uppercase;
+      }
+
+      // Else Accordion text is set to lowercase
+      @else {
+        text-transform: lowercase;
+      }
+
+      // If Accordion border is enabled for Head
+      @if $enable-accordion-header-border {
+        border: $accordion-border-width solid $accordion-head-border-color;
+      }
+
+      // Else Accordion border is none
+      @else {
+        border: none;
+      }
+
+      // Add .bg-primary-color class besides card-header in html for Active Accordion
+      &.bg-primary-color {
+        background-color: $accordion-head-bg;
+        color: $accordion-active;
+
+        .accordion-header {
+          color: $accordion-active;
+        }
+
+        button {
+          color: $accordion-color;
+        }
+      }
+    }
+
+
+    // Customization for Accordion body
+    .card-body {
+
+      // If Accordion body background color is enabled
+      @if $enable-accordion-body-color {
+        background-color: $accordion-body-bg;
+        color: if($accordion-body-bg == $white, $body-color, color-yiq($accordion-body-bg));
+      }
+
+      // If Accordion body padding is enabled
+      @if $enable-accordion-padding {
+        padding: $accordion-body-padding
+      }
+
+      // If Accordion body font-size is enabled
+      @if $accordion-font-size {
+        font-size: $accordion-body-font-size;
+      }
+
+      // If Accordion border is enabled for Body
+      @if $enable-accordion-body-border {
+        border-top: $accordion-border-width solid $accordion-body-border-color;
+      }
+      @else {
+        border: none;
+      }
+    }
+
+    // If Whole Accordion container border is enabled
+    @if $enable-accordion-border {
+      border: $accordion-border-width solid $accordion-border-color;
+
+      .card-header {
+
+        // If Accordion border is also enabled for Head
+        @if $enable-accordion-header-border and $enable-accordion-border !=false {
+          border-top: none;
+        }
+      }
+
+      // If Accordion border is also enabled for Body
+      .card-body {
+        @if $enable-accordion-body-border and $enable-accordion-border !=false {
+          border-bottom: none;
+        }
+      }
+    }
+
+    // else there will be no border for Whole container(".accordion .card")
+    @else {
+      border: none;
+    }
+
+  }
+
+  &-header {
+    .icon {
+      font-size: $font-size-base * 1.2;
+    }
+  }
+
+  .disabled {
+    color: $text-muted;
+  }
+}

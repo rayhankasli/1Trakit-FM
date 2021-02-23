@@ -1,0 +1,92 @@
+<div ngbDropdown container="body" class="multiselect" #dropdownMenu="ngbDropdown">
+  <button type="button" #dropdownButton
+    class="d-flex position-relative form-control justify-content-between align-items-center" [id]="id" ngbDropdownAnchor
+    (click)="$event.stopPropagation(); openDropdownMenu(dropdownMenu)">
+    <span class="sr-only"></span>
+  </button>
+  <div #dropdownPanel id="dropdown-basic" class="shadow-sm multiselect-dropdown border mt-0" ngbDropdownMenu
+    aria-labelledby="dropdownMenu-1">
+    <div class="multiselect-search border-bottom">
+      <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+        <input type="text" class="form-control border-0 pr-0" #searchElement placeholder="Search" aria-label="Search"
+          aria-describedby="button-addon" (input)="search($event.target.value)">
+        <div class="input-group-append">
+          <button class="btn bg-transparent text-gray" type="button">
+            <span class="icon icon-search"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <ul class="px-3 list-unstyled mb-0 multiselect-dropdown-list">
+      <ng-container *ngIf="(itemsList | textSearch : searchText : 'paperSize') as results;">
+        <!-- else is for cases where search:Search term is undefined or null  -->
+        <li class="py-xl-2 py-1 multiselect-dropdown-item" *ngFor="let item of results;trackBy:trackBy.bind(this,'bindPrimaryKeyField'); let index=index; ">
+          <div class="custom-control flex-grow-1 custom-radio cursor-pointer" (click)="onItemChange(item)">
+            <input type="radio" [checked]="item.selected" id="{{id}}-item-{{ item.paperSizeId }}-{{index}}"
+              class="custom-control-input" />
+            <label class="form-check-label ml-2 custom-control-label">{{item.paperSize }}</label>
+          </div>
+          <ng-container *ngIf="item.selected && item.label !== 'N/A' && !item.isOther && item.subItem">
+            <div class="d-flex mt-2 font-weight-normal">
+              <div class="d-flex flex-column border rounded py-2 flex-grow-1 mr-2">
+                <ng-container *ngFor="let paperColor of item.subItem.paperColors;trackBy:trackBy.bind(this,'bindPrimaryKeyField')">
+                  <div class="custom-control custom-radio" (click)="onColorChange(item, paperColor)">
+                    <input type="radio" [checked]="paperColor.selected"
+                      id="{{id}}-color-{{ item.paperSizeId }}-{{ paperColor.paperColorId}}-{{index}}"
+                      class="custom-control-input" />
+                    <label class="form-check-label ml-2 custom-control-label">{{paperColor.paperColor}}</label>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="d-flex flex-column border rounded py-2 flex-grow-1">
+                <ng-container *ngFor="let sideItem of item.subItem.paperSides;trackBy:trackBy.bind(this,'bindPrimaryKeyField')">
+                  <div class="custom-control custom-radio" (click)="onSidesChange(item, sideItem)">
+                    <input type="radio" [checked]="sideItem.selected"
+                      id="{{id}}-side-{{ item.paperSizeId }}-{{ sideItem.paperSideId}}-{{index}}"
+                      class="custom-control-input" />
+                    <label class="form-check-label ml-2 custom-control-label">{{sideItem.paperSide}}</label>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="item.selected && item.isOther">
+            <div class="form-group mb-0 mt-2">
+              <input placeholder="" class="form-control" [value]="item.instruction ? item.instruction : ''"
+                (input)="onOtherInput(item, $event.target.value)" />
+            </div>
+          </ng-container>
+        </li>
+        <div *ngIf="!results.length">No data found</div>
+      </ng-container>
+    </ul>
+
+  </div>
+  <ng-container>
+    <ul class="d-flex flex-wrap p-0 mb-0 mt-1 list-unstyled">
+      <li class="selected-option" *ngFor="let item of selectedDataItems;trackBy:trackBy.bind(this,'bindPrimaryKeyField')">
+        <ng-container
+          [ngTemplateOutlet]="item.subItem && item.paperSize && item.paperColorType && item.paperSideType ? sizeWithColorAndSide : singleSize"
+          [ngTemplateOutletContext]="{item:item}">
+        </ng-container>
+        <ng-container *ngIf="!isDisabled">
+          <button type="button" tabindex="-1" (click)="clearItem(item)"
+            class="btn btn-link btn-sm rounded-circle cancel-btn flex-shrink-0 d-flex align-items-center h-100 px-1 py-0">
+            <span class="icon icon-close text-gray-dark" aria-hidden="true"></span>
+          </button>
+        </ng-container>
+      </li>
+      <ng-template #sizeWithColorAndSide let-item="item">
+        <span class="value-label">
+          {{item.paperSize}} ({{ item.paperColorType + '-' + item.paperSideType }})
+          {{item?.isOther && item?.instruction?('-'+item?.instruction):''}}
+        </span>
+      </ng-template>
+      <ng-template #singleSize let-item="item">
+        <span class="value-label">
+          {{item.paperSize}} {{item.isOther && item?.instruction?('-'+item?.instruction):''}}
+        </span>
+      </ng-template>
+    </ul>
+  </ng-container>
+</div>

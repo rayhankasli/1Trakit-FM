@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<controller name="TaskReport">
+    <actions>
+        <action verb="Get" name="getTaskReports" route="task">
+                <response type="List" typeOf="TaskReport" />
+        </action>
+    </actions>
+</controller>

@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<controller name="ChargeBackList">
+    <actions>
+        <action verb="Get" name="GetChargeBackList" route="chargeback">
+                <response type="List" typeOf="ChargeBackResponse" />
+        </action>
+    </actions>
+</controller>

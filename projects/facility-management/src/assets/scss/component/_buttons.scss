@@ -1,0 +1,114 @@
+.btn {
+  padding: $input-btn-padding-y-sm $input-btn-padding-x-sm;
+  font-size: $input-btn-font-size-sm;
+  letter-spacing: 0.7px;
+  font-weight: $font-weight-semibold;
+  @include media-breakpoint-up("xxl") {
+    padding: $input-btn-padding-y $input-btn-padding-x;
+    font-size: $input-btn-font-size;
+  }
+  @if $btn-text-uppercase {
+    text-transform: uppercase;
+  }
+}
+@each $color, $value in $theme-colors {
+  .btn-flat-#{$color} {
+    border-color: transparent;
+    background: transparent;
+    color: $value;
+    &:hover {
+      background: rgba($value, 0.3);
+      color: $value;
+    }
+    &:focus {
+      background: rgba($value, 0.4);
+      color: $value;
+    }
+  }
+}
+
+.rounded-btn {
+  width: $rounded-btn-size;
+  height: $rounded-btn-size;
+  @if $enable-rounded {
+    border-radius: 50%;
+  } @else {
+    border-radius: 0;
+  }
+}
+
+.btn-icon {
+  min-width: $btn-icon-size-sm;
+  height: $btn-icon-size-sm;
+  padding: 0;
+  
+  @include media-breakpoint-up("xxl") {
+    min-width: $btn-icon-size;
+    height: $btn-icon-size;
+  }
+}
+
+// Repeat On Btn
+.btn-repeat-on {
+  position: relative;
+  text-transform: capitalize;
+  font-weight: $font-weight-normal;
+  height: $input-height-sm;
+  text-align: left;
+  max-width: 210px;
+
+  @include media-breakpoint-up("xxl") {
+    height: $input-height;
+  }
+
+  &.dropdown-toggle {
+    &::after {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $gray;
+      font-size: $font-size-base * 1.2;
+    }
+  }
+
+  .repeat-on-lg & {
+    max-width: 100%;
+  }
+}
+
+// Close btn
+button {
+  &.close {
+    .icon {
+      font-size: inherit;
+    }
+  }
+}
+
+// Filter Button and Notification button
+.filter-btn,
+.notification-btn {
+  position: relative;
+  .badge {
+    top: -5px;
+    right: -5px;
+    border: 2px solid $white;
+    padding: 0;
+    box-sizing: content-box;
+  }
+}
+
+// Camera button in report
+.btn-camera {
+  letter-spacing: normal;
+
+  .task-image,
+  .workflow-image {
+    overflow: hidden;
+    border: 1px solid $border-color;
+    height: 35px;
+    width: 35px;
+    padding: 2px;
+  }
+}

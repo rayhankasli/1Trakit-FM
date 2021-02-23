@@ -1,0 +1,22 @@
+{
+    "lblUserName": "Nom d'utilisateur",
+    "lblDescription": "La description",
+    "lblIsAdmin": "Est administrateur",
+    "lblCity": "Liste déroulante à sélection unique",
+    "lblMultiCity": "Liste de sélection multiple",
+    "lblDOB": "Date de naissance",
+    "lblUploadDile": "Liste déroulante à sélection unique",
+    "lblState": "Rechercher un état",
+    "userName": "Saisissez votre nom d'utilisateur",
+    "description": "Entrez la description",
+    "singleCity": "Sélectionnez la ville actuelle",
+    "multiCity": "Sélectionnez une ville",
+    "birthDate": "Entrer date de naissance",
+    "state": "Entrer l'état",
+    "btnSave": "enregistrer",
+    "lblOrderTime": "Heure de naissance",
+    "orderTime":"Entrer l'heure de la commande",
+    "btnCancel": "Annuler",
+    "contactNumber":"Entrez le numéro de contact",
+    "lblContactNumber": "Numéro de contact"
+}

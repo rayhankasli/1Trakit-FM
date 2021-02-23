@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="cost-recovery" module="cost-recovery" breadcrumbKey="cost-recovery"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrakIt-config/Reports/shared/models/cost-recovery-list-model.xml" />
+    <xi:include href="./1TrakIt-config/Reports/shared/controllers/cost-recovery-list-controller.xml" />
+
+    <table responseModel="CostRecoveryResponse" controller="CostRecovery" isCheckable="false"
+    isAddable="false" hasBreadcrumb="false" hasFilters="false" hasSorting="false"
+    hasPagination="true" hasActions="false" hasGlobalSearch="false">
+        <columns>
+            <column isFilterable="false" isSortable="false" class="align-center">id</column>
+            <column isFilterable="false" isSortable="false" class="align-center">date</column>
+            <column isFilterable="false" isSortable="false" class="align-center">requestorName</column>
+            <column isFilterable="false" isSortable="false" class="align-center">description</column>
+            <column isFilterable="false" isSortable="false" class="align-center">accountBiling</column>
+        </columns> 
+    </table>
+</component>

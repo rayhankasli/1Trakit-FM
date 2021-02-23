@@ -1,0 +1,59 @@
+<button #printBtn hidden type="button" class="btn btn-outline-light" [useExistingCss]="true" printSectionId="printable"
+  ngxPrint printTitle="1TrakIt-FM | Calendar" title="Print">
+  <span class="icon icon-print icon-1x text-gray-dark"></span>
+</button>
+<section id="printable">
+  <ng-container *ngIf="calendarFilterItems">
+    <div class="p-3 print-area">
+      <div class="border-bottom mb-3 pb-3">
+        <img [src]="host+'/assets/img/1TRAKIT.png'" alt="1Trakit Logo">
+      </div>
+      <h4 class="mb-3 title text-center">Calendar</h4>
+      <div class="card mb-3" *ngFor="let day of calendarFilterItems;trackBy:trackBy.bind(this,'date'); let idx = index">
+        <div class="card-header p-3 font-weight-medium">
+          {{ day.date | date:'fullDate' }}
+        </div>
+        <div class="card-body p-3">
+          <div class="row {{idx >= 1 ? 'border-top pt-4 mt-3' : ''}}" *ngFor="let item of day.events;trackBy:trackBy.bind(this,'bookItId'); let idx = index">
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Event Name:</label>
+                <span class="small">{{item.eventName || '-'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Event Time:</label>
+                <span class="small">{{ item.timeFrom | timeFormat: item.timeFrom }} - {{ item.timeTo | timeFormat: item.timeTo}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Room Name:</label>
+                <span class="small">{{item.room}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Room Layout:</label>
+                <span class="small">{{item.roomLayout}}</span>
+              </div>
+            </div>
+            <ng-container *ngIf="item.amenities.length > 0">
+              <div class="col-12 mb-2">
+                <div class="d-flex align-items-baseline">
+                  <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Amenities & Quantities:</label>
+                  <div class="d-flex align-items-center">
+                    <ng-container *ngFor="let amenity of item.amenities;trackBy:trackBy.bind(this,'amenityId')">
+                      <span class="small mr-4">{{amenity.amenity}} ({{amenity.quantity}})</span>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>

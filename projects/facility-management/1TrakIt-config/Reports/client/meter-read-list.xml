@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="ReportMeterRead" module="ReportMeterRead" breadcrumbKey="MeterRead"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrakIt-config/Reports/shared/models/meter-read-model.xml" />
+    <xi:include href="./1TrakIt-config/Reports/shared/controllers/meter-read-controller.xml" />
+    <table responseModel="MeterRead" controller="MeterRead" isCheckable="false"
+        isAddable="false" hasBreadcrumb="false" hasFilters="false" hasSorting="true"
+        hasPagination="true" hasActions="false" hasGlobalSearch="false">
+    <columns>
+        <column isFilterable="false" isSortable="true" class="align-center">floorLocation</column>
+        <column isFilterable="false" isSortable="true" class="align-center">department</column>
+        <column isFilterable="false" isSortable="true" class="align-center">model</column>
+        <column isFilterable="false" isSortable="true" class="align-center">serialNumber</column>
+        <column isFilterable="false" isSortable="true" class="align-center">id</column>
+        <column isFilterable="false" isSortable="true" class="align-center">meter</column>
+        <column isFilterable="false" isSortable="true" class="align-center">begin</column>
+        <column isFilterable="false" isSortable="true" class="align-center">end</column>
+        <column isFilterable="false" isSortable="true" class="align-center">copies</column>
+        <column isFilterable="false" isSortable="true" class="align-center">cost</column>
+    </columns>
+    </table>
+</component>    

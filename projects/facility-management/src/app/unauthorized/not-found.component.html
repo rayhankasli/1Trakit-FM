@@ -1,0 +1,14 @@
+<div class="d-flex flex-column error-page align-items-center h-100 px-3 justify-content-center">
+  <h1 class="error-404">{{detail?.bg}}</h1>
+  <h2 class="error-404-text mb-3 text-center">{{detail?.title}} </h2>
+  <p class="error-404-msg mb-3 text-center text-muted">{{detail?.description}} </p>
+  <button *ngIf="detail?.showLogoutButton; else showGoBack" type="button" class="btn btn-primary px-3"
+    (click)="logout()">
+    Logout
+  </button>
+</div>
+<ng-template #showGoBack>
+  <button type="button" class="btn btn-primary px-3" (click)="goBack()">
+    Go Back
+  </button>
+</ng-template>

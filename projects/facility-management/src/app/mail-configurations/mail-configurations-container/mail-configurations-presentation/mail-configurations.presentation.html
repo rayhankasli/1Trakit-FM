@@ -1,0 +1,69 @@
+<ngb-accordion #accordion="ngbAccordion" [activeIds]="activeIds" [closeOthers]="true"
+  (panelChange)="toggleAccordion($event)">
+  <ngb-panel id="0">
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button type="button" ngbPanelToggle class="m-0 mr-2 h5 flex-grow-1 btn text-left accordion-header">SLOTS
+          {{ slotsCount ? '('+ slotsCount +')' : ''}}</button>
+        <button type="button" ngbPanelToggle class="btn bg-transparent flex-shrink-0 p-0 btn-icon">
+          <span [class]="opened ? 'icon icon-minus' : 'icon icon-add'"></span>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <div class="row">
+        <div class="col-12">
+          <app-slots-list-ui [isDeleted]="isSlotsDeleted" [baseResponse]="slotss" (deleteSlots)="deleteSlots($event)"
+            (newSlotData)="addSlots($event)" (updateSlotData)="updateSlots($event)" [masterData]="masterData"
+            (getSlots) = "getSlotss($event)"
+            (setSlotStatus)= "toggleSlotStatus($event)"
+            [lastSlot]="lastSlot"></app-slots-list-ui>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel *hasPermission="reasonEnum.view" id="1">
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button type="button" ngbPanelToggle class="m-0 mr-2 h5 flex-grow-1 btn text-left accordion-header">REASONS -
+          NOT DELIVERED {{reasonsNotDeliveredCount ? '('+ reasonsNotDeliveredCount +')' : ''}}</button>
+        <button type="button" ngbPanelToggle class="btn bg-transparent flex-shrink-0 p-0 btn-icon">
+          <span [class]="opened ? 'icon icon-minus' : 'icon icon-add'"></span>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <div class="row">
+        <div class="col-12">
+          <app-reasons-list-ui [permissions]="reasonPermissions" [showAddNewBtn]="true" [isDeleted]="isReasonsDeleted"
+            [lastReasonNotDelivered]="lastReasonNotDelivered" [baseResponse]="reasonsNotDeliveredList"
+            (getReasons)="getReasonsNotDelivereds($event)" (deleteReasons)="deleteReasonsNotDelivered($event)"
+            (saveReason)="addReasonsNotDelivered($event)" (updateReason)="updateReasonsNotDelivered($event)">
+          </app-reasons-list-ui>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-panel>
+  <ngb-panel *hasPermission="reasonEnum.view" id="2">
+    <ng-template ngbPanelHeader let-opened="opened">
+      <div class="d-flex align-items-center justify-content-between">
+        <button type="button" ngbPanelToggle class="m-0 mr-2 h5 flex-grow-1 btn text-left accordion-header">REASONS -
+          NOT PICKED {{reasonsNotPickeCount ? '('+ reasonsNotPickeCount +')' : ''}}</button>
+        <button type="button" ngbPanelToggle class="btn bg-transparent flex-shrink-0 p-0 btn-icon">
+          <span [class]="opened ? 'icon icon-minus' : 'icon icon-add'"></span>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <div class="row">
+        <div class="col-12">
+          <app-reasons-list-ui [permissions]="reasonPermissions" [showAddNewBtn]="true" [isDeleted]="isReasonsDeleted"
+            [lastReasonNotPicked]="lastReasonNotPicked" [baseResponse]="reasonsNotPickedList"
+            (getReasons)="getReasonsNotPickeds($event)" (deleteReasons)="deleteReasonsNotPicked($event)"
+            (saveReason)="addReasonsNotPicked($event)" (updateReason)="updateReasonsNotPicked($event)">
+          </app-reasons-list-ui>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

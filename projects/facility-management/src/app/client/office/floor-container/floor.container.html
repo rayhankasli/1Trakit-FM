@@ -1,0 +1,8 @@
+<div class="px-3">
+    <app-floor-list-ui [floors]="floors$ | async" [rooms]="rooms$ | async" [roomTypes]="roomTypes$ | async"
+        [roomLayouts]="roomLayouts$ | async" (getFloors)="getFloors($event)" (deleteFloor)="deleteFloor($event)"
+        (addFloor)="addFloor($event)" (updateFloor)="updateFloor($event)" (getRoomTypes)="getRoomTypes()"
+        (deleteRoom)="deleteRoom($event)" (addRoom)="addRoom($event)" (addRoomType)="addRoomType($event)"
+        (updateRoom)="updateRoom($event)" (toggleFloorStatus)="onToggleFloorStatus($event)">
+    </app-floor-list-ui>
+</div>

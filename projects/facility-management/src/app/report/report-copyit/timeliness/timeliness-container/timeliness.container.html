@@ -1,0 +1,5 @@
+<app-timeliness-ui class="d-flex flex-column w-100 overflow-hidden"
+    [clientMaster]="clientMaster$ | async" 
+    [timelinessList]="timelinessList$ | async"
+    (timeliness)="timelinessList($event)">
+</app-timeliness-ui>

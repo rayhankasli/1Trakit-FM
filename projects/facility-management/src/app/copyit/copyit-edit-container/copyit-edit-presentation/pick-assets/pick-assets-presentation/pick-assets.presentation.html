@@ -1,0 +1,308 @@
+<label for="frontAndBackCover" class="small mt-0 mb-2 font-weight-semibold">
+  PICK ASSETS:
+</label>
+<div class="card">
+  <div class="card-body floating-form p-3">
+    <div class="row">
+      <div class="form-group col-12 my-0">
+        <ng-select #assetTag [clearable]="false" [searchable]="false" [multiple]="true" [closeOnSelect]="true"
+          [hideSelected]="false" appendTo="body" class="form-control ng-select-lg float-outline p-0"
+          bindLabel="assetTag" bindValue="assetId" [items]="assetList" [formControl]="assetListControl"
+          [searchFn]="customSearchFn">
+          <ng-template ng-label-tmp></ng-template>
+          <ng-template ng-header-tmp>
+            <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+              <input type="text" autoFocus class="form-control border-0 pr-0"
+                (input)="assetTag.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                aria-describedby="button-addon">
+              <div class="input-group-append">
+                <button class="btn bg-transparent text-gray" type="button">
+                  <span class="icon icon-search"></span>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+            <div class="custom-control flex-shrink-0 custom-checkbox">
+              <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+              <label class="form-check-label ml-2 custom-control-label">
+                <span class="mr-2">{{item?.manufacturer}}</span>
+                <span class="mr-2">{{item?.assetNo}}</span> |
+                <span class="ml-2 mr-2">{{item?.modelNo}}</span>
+              </label>
+            </div>
+          </ng-template>
+        </ng-select>
+        <label class="text-uppercase d-flex floating-form-label multiple-select-dropdown">
+          Assets
+        </label>
+        <!-- selected assets -->
+        <ul class="d-flex flex-wrap p-0 mb-0 mt-xxl-2 mt-1 list-unstyled">
+          <ng-container [ngTemplateOutlet]="assetListControl.enabled ? editMode : readOnly"
+            [ngTemplateOutletContext]="{list:selectedAssetList}">
+          </ng-container>
+        </ul>
+      </div>
+
+      <div *ngIf="copyItAssetFormArray?.controls?.length" class="table-responsive col-12">
+        <table class="table data-tbl w-100 mb-0">
+          <colgroup>
+            <col style="width: 30px;">
+            <col style="width: 80px;">
+            <col style="width: 80px;">
+            <col style="width: 160px;">
+            <col style="width: 140px;">
+            <col style="width: 150px;">
+            <col style="width: 131px;">
+            <col style="width: 148px;">
+            <col style="width: 135px;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Manufacturer</th>
+              <th scope="col">Asset No</th>
+              <th scope="col">Model No</th>
+              <th scope="col">Previous color read</th>
+              <th scope="col">Ending color read</th>
+              <th scope="col">Previous B & W read</th>
+              <th scope="col">Ending B & W read</th>
+              <th scope="col">Previous scan read</th>
+              <th scope="col">Ending scan read</th>
+            </tr>
+          </thead>
+          <tbody focusInvalidInput [forceCheck]="isNext" [formGroup]="copyItAssetsForm">
+            <ng-container *ngFor="let asset of copyItAssetFormArray.controls;let i=index;trackBy:trackBy.bind(this,'')">
+              <!-- Meter read form -->
+              <tr [formGroup]="asset">
+                <td>{{asset.value.manufacturer}}</td>
+                <td>{{asset.value.assetNo}}</td>
+                <td>{{asset.value.modelNo}}</td>
+                <td>
+                  <div class="mb-2">
+                    <input type="number" min="0" trakitOnlyNumber formControlName="previousColorRead"
+                      class="form-control" name="previous-color-read">
+                    <div ngxErrors="previousColorRead" #myError1="ngxErrors" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="min" [when]="['touched','dirty']">
+                        Allowed {{myError1.getError('min')?.min }} or more
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <ng-select [clearable]="true" [searchable]="false" appendTo="body" selectFloatingLabel
+                      class="form-control float-outline p-0" placeholder="Select Paper Size"
+                      [items]="colorPaperSizeList" bindValue="clientConfigureDefaultId"
+                      formControlName="colorClientConfigureDefaultId">
+                      <ng-template ng-label-tmp let-item="item">
+                        {{item.paperSizeOptionDetail}}
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item">
+                        {{item.paperSizeOptionDetail}}
+                      </ng-template>
+                    </ng-select>
+                    <label for="" title="Select Paper Size" class="floating-form-label paper-size-label">
+                      Select Paper Size
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <div class="mb-2">
+                    <input type="number" min="0" trakitOnlyNumber formControlName="currentColorRead"
+                      class="form-control" name="currentColorRead">
+                    <div ngxErrors="currentColorRead" #myError2="ngxErrors" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="min" [when]="['touched','dirty']">
+                        Allowed {{myError2.getError('min')?.min }} or more
+                      </div>
+                    </div>
+                  </div>
+                  <span *ngIf="!isRateTypeTenant;else colorTenantRate">
+                    Client Color Rate: {{readOnlyAssetArray[i]?.colorRate}}
+                  </span>
+                  <ng-template #colorTenantRate>
+                    <span>Tenant Color Rate: {{readOnlyAssetArray[i]?.colorTenantRate}}</span>
+                  </ng-template>
+                </td>
+                <td>
+                  <div class="mb-2">
+                    <input type="number" min="0" trakitOnlyNumber formControlName="previousBWRead" class="form-control"
+                      name="previous-B&W-read">
+                    <div ngxErrors="previousBWRead" #myError3="ngxErrors" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="min" [when]="['touched','dirty']">
+                        Allowed {{myError3.getError('min')?.min }} or more
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <ng-select [clearable]="true" [searchable]="false" appendTo="body" selectFloatingLabel
+                      class="form-control float-outline p-0" placeholder="Select Paper Size" [items]="bWPaperSizeList"
+                      bindValue="clientConfigureDefaultId" formControlName="bWClientConfigureDefaultId">
+                      <ng-template ng-label-tmp let-item="item">
+                        {{item.paperSizeOptionDetail}}
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item">
+                        {{item.paperSizeOptionDetail}}
+                      </ng-template>
+                    </ng-select>
+                    <label for="" title="Select Paper Size" class="floating-form-label paper-size-label">
+                      Select Paper Size
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <div class="mb-2">
+                    <input type="number" min="0" trakitOnlyNumber formControlName="currentBWRead" class="form-control"
+                      name="currentBWRead">
+                    <div ngxErrors="currentBWRead" #myError4="ngxErrors" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="min" [when]="['touched','dirty']">
+                        Allowed {{myError4.getError('min')?.min }} or more
+                      </div>
+                    </div>
+                  </div>
+                  <span *ngIf="!isRateTypeTenant;else tenantBWRate">
+                    Client B & W Rate: {{readOnlyAssetArray[i]?.bWRate}}
+                  </span>
+                  <ng-template #tenantBWRate>
+                    <span>Tenant B & W Rate: {{readOnlyAssetArray[i]?.bWTenantRate}}</span>
+                  </ng-template>
+                </td>
+                <td>
+                  <input type="number" min="0" trakitOnlyNumber formControlName="previousScanRead" class="form-control"
+                    name="previous-scan-read">
+                  <div ngxErrors="previousScanRead" #myError5="ngxErrors" [isFormSubmitted]="isFormSubmitted">
+                    <div ngxError="min" [when]="['touched','dirty']">
+                      Allowed {{myError5.getError('min')?.min }} or more
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="mb-2">
+                    <input type="number" min="0" trakitOnlyNumber formControlName="currentScanRead" class="form-control"
+                      name="previous-scan-read">
+                    <div ngxErrors="currentScanRead" #myError6="ngxErrors" [isFormSubmitted]="isFormSubmitted">
+                      <div ngxError="min" [when]="['touched','dirty']">
+                        Allowed {{myError6.getError('min')?.min }} or more
+                      </div>
+                    </div>
+                  </div>
+                  <span *ngIf="!isRateTypeTenant;else scanTenantRate">
+                    Client Scan Rate: {{readOnlyAssetArray[i]?.scanRate}}
+                  </span>
+                  <ng-template #scanTenantRate>
+                    <span>Tenant Scan Rate: {{readOnlyAssetArray[i]?.scanTenantRate}}</span>
+                  </ng-template>
+                </td>
+              </tr>
+
+              <!-- Historical data -->
+              <ng-container *ngIf="copyItHistoricalAsset(asset.value.assetId) as historyList">
+                <ng-container *ngIf="historyList.length">
+                  <tr class="historical-read-data">
+                    <td class="pb-0" colspan="3"></td>
+                    <td class="pb-0">
+                      <div class="font-weight-semibold text-right">
+                        Historical Reads
+                      </div>
+                    </td>
+                    <td class="pb-0">
+                      <div class="font-weight-semibold invisible">
+                        Historical Reads
+                      </div>
+                    </td>
+                    <td class="pb-0">
+                      <div class="font-weight-semibold text-right">
+                        Historical Reads
+                      </div>
+                    </td>
+                    <td class="pb-0">
+                      <div class="font-weight-semibold invisible">
+                        Historical Reads
+                      </div>
+                    </td>
+                    <td class="pb-0" colspan="2"></td>
+                  </tr>
+                  <tr class="historical-read-data">
+                    <td class="pb-0" colspan="3"></td>
+                    <td class="pb-0">
+                      <div class="title font-weight-medium text-gray text-right">
+                        Meter Reads
+                      </div>
+                    </td>
+                    <td class="pb-0">
+                      <div class="title font-weight-medium text-gray">
+                        Paper Sizes
+                      </div>
+                    </td>
+                    <td class="pb-0">
+                      <div class="title font-weight-medium text-gray text-right">
+                        Meter Reads
+                      </div>
+                    </td>
+                    <td class="pb-0">
+                      <div class="title font-weight-medium text-gray">
+                        Paper Sizes
+                      </div>
+                    </td>
+                    <td class="pb-0" colspan="2"></td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngFor="let history of historyList;trackBy:trackBy.bind(this,'copyItAssetMeterId')">
+                  <tr class="historical-read-data">
+                    <td colspan="3"></td>
+                    <td>
+                      <div class="meter-read-item text-right text-truncate" title="Previous read - Ending read">
+                        {{history?.previousColorRead}}-{{history.currentColorRead}}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="paper-size-item text-truncate" title="Selected paper size">
+                        {{history?.colorClientConfigureDefault || '-'}}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="meter-read-item text-right text-truncate" title="Previous read - Ending read">
+                        {{history?.previousBWRead}}-{{history.currentBWRead}}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="paper-size-item text-truncate" title="Selected paper size">
+                        {{history?.bWClientConfigureDefault || '-'}}
+                      </div>
+                    </td>
+                    <td colspan="2"></td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #editMode let-list="list">
+  <ul class="p-0 m-0 d-flex flex-wrap align-items-center">
+    <li class="selected-option" *ngFor="let item of list;let i=index;trackBy:trackBy.bind(this,'copyItAssetMeterId')">
+      <span class="value-label">
+        <span class="mr-1">{{item?.manufacturer}}</span>
+        <span class="mr-1">{{item?.assetNo}}</span> |
+        <span class="ml-1 mr-1">{{item?.modelNo}}</span>
+      </span>
+      <button type="button" tabindex="-1" (click)="removeAsset(item)"
+        class="btn btn-link btn-sm rounded-circle cancel-btn flex-shrink-0 d-flex align-items-center h-100 p-1">
+        <span class="icon icon-close text-gray-dark" aria-hidden="true"></span>
+      </button>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #readOnly let-list="list">
+  <ul class="p-0 m-0 d-flex flex-wrap align-items-center">
+    <li class="selected-option" *ngFor="let item of list;let i=index;trackBy:trackBy.bind(this,'copyItAssetMeterId')">
+      <span class="value-label">
+        <span class="mr-1">{{item?.manufacturer}}</span>
+        <span class="mr-1">{{item?.assetNo}}</span> |
+        <span class="ml-1 mr-1">{{item?.modelNo}}</span>
+      </span>
+    </li>
+  </ul>
+</ng-template>

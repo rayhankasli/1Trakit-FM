@@ -1,0 +1,130 @@
+<div class="d-flex justify-content-between align-items-center mb-3 mt-4">
+  <span class="breadcrumb-item active">Asset Tickets</span>
+  <div class="ml-auto d-flex align-items-center">
+    <div class="form-group mb-0 d-flex align-items-center mr-2">
+      <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Filter By
+        Status:</label>
+      <ng-select appendTo="body" [items]="ticketStatus" bindLabel="assetTicketStatus" bindValue="assetTicketStatusId"
+        [clearable]="false" [(ngModel)]="ticketStatusId" floatingLabel
+        class="form-control ng-select-sm float-outline p-0 text-capitalize" [searchable]="false"
+        (change)="onStatusChange($event)">
+      </ng-select>
+    </div>
+    <trackit-search class="mr-n2" (searchText)="onSearch($event)"></trackit-search>
+  </div>
+</div>
+<!-- Data-table mobile view or desktop view -->
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3 table-max-height">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 40px" />
+      <col style="width: 40px" />
+      <col style="width: 60px" />
+      <col style="width: 60px" />
+      <col style="width: 80px" />
+      <col style="width: 60px" />
+      <col style="width: 60px" />
+      <col style="width: 40px" />
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th>
+          <span>No</span>
+        </th>
+        <th>
+          <span>Id</span>
+        </th>
+        <th>
+          <span>Date</span>
+        </th>
+        <th>
+          <span>Time</span>
+        </th>
+        <th>
+          <span>Category</span>
+        </th>
+        <th>
+          <span>Priority</span>
+        </th>
+        <th>
+          <span>Status</span>
+        </th>
+        <th class="text-center">
+          <span>actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let assetTicket of baseResponse?.assetTickets;trackBy: trackBy.bind(this,'id');let i= index">
+        <td>{{ ticketId + i }}</td>
+        <td>{{assetTicket.id}}</td>
+        <td>{{assetTicket.ticketDate | date:dateFormat}}</td>
+        <td>{{assetTicket.ticketTime | ngbTimePicker }}</td>
+        <td>{{assetTicket.assetTicketCategory}}</td>
+        <td>{{assetTicket.priority}}</td>
+        <td>{{assetTicket.status}}</td>
+        <td class="text-center">
+          <div ngbDropdown container="body" class="data-tbl-dropdown">
+            <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+              <span class="icon icon-more"></span>
+            </button>
+            <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu">
+              <ng-container [ngTemplateOutlet]="!(isArchived$ | async) ? actions : views"
+                [ngTemplateOutletContext]="{assetTicket:assetTicket}"></ng-container>
+            </ul>
+          </div>
+        </td>
+      </tr>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="!baseResponse?.assetTickets || baseResponse?.assetTickets?.length === 0 ">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Data-table footer area -->
+<div *ngIf="baseResponse?.assetTickets?.length > 0 || tableProperty.pageNumber >= 1"
+  class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <!-- Data-table total entry status -->
+  <div class="data-tbl-status text-muted">
+    Showing {{tableProperty?.start}} to {{tableProperty?.end}} of {{baseResponse?.total}} entries
+  </div>
+  <!-- Data-table pagination -->
+  <div class="data-tbl-pagination ml-auto d-flex">
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon"
+      [disabled]="tableProperty.pageNumber === 0" type="button" (click)="onPageChange(tableProperty.pageNumber - 1)">
+      <span class="icon icon-arrow-prev"></span>
+    </button>
+    <button class="btn btn-outline-gray d-flex align-items-center justify-content-center btn-icon ml-2"
+      [disabled]="tableProperty?.end >= baseResponse?.total" type="button"
+      (click)="onPageChange(tableProperty.pageNumber + 1)">
+      <span class="icon icon-arrow-next"></span>
+    </button>
+    <!-- Data-table total entry display length -->
+    <select name="tbl-length" id="tbl-length" class="ml-2 form-control"
+      (change)="onPageSizeChange($event.target.value)">
+      <ng-container *ngFor="let item of pageSize;trackBy:trackBy.bind(this,'')">
+        <option [selected]='(tableProperty?.pageLimit===item)' value="{{item}}">
+          {{item}}
+        </option>
+      </ng-container>
+    </select>
+  </div>
+</div>
+
+<ng-template #actions let-assetTicket="assetTicket">
+  <button type="button" class="dropdown-item" ngbDropdownItem routerLink="ticket/{{assetTicket.id}}">
+    <span class="icon icon-edit mr-2"></span>
+    <span>Edit</span>
+  </button>
+</ng-template>
+
+<ng-template #views let-assetTicket="assetTicket">
+  <button type="button" class="dropdown-item" ngbDropdownItem routerLink="ticket/{{assetTicket.id}}">
+    <span class="icon icon-preview mr-2"></span>
+    <span>View</span>
+  </button>
+</ng-template>

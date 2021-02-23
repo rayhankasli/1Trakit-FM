@@ -1,0 +1,12 @@
+<app-copyit-edit-ui [copyItId]="copyItId" [copyItDetailBase]="copyItDetail$ | async" [statusList]="status$ | async"
+    [assignToList]="assignTo$ | async" [conversationResponse]="conversationResponse$ | async"
+    [clientsList]="clientsList$ | async" [usersListAndConfiguration]="usersListAndConfiguration$ | async"
+    [userDetails]="userDetails$ | async" [assetList]="assetList$ | async" [updatedStatus]="updatedStatus$ | async"
+    [requestorDetail]="requestorInfo$ | async" [updateAssignTo]="updateAssignTo$ | async"
+    [chatMessageSend]="chatMessageSend$ | async" (userIdChange)="onUserIdChange($event)"
+    (clientIdChange)="onClientIdChange($event)" (loadConversation)="loadConversation($event)"
+    (sendMessage)="sendMessage($event)" (setAssignTo)="setAssignTo($event)" (setStatus)="setStatus($event)"
+    (updateCopyItDetail)="updateCopyItDetail($event)" (exportToPDF)="exportToPDF($event)"
+    (printCopyItPDF)="printCopyItPDF($event)" (navigateBack)="navigateBack($event)"
+    (downloadAttachedFile)="downloadAttachedFile($event)" (loadCopyItDetail)="getCopyItDetail()">
+</app-copyit-edit-ui>

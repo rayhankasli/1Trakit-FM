@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<models>
+    <model name="MailReport" group="MailReport">
+        <properties>
+            <property name="ScanId" jsonProperty="scanId" type="number" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="CourierCompany" jsonProperty="courierCompany" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="ScannedBy" jsonProperty="scannedBy" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="DeliveredTo" jsonProperty="deliveredTo" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="DateTime" jsonProperty="dateTime" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="ReceivingType" jsonProperty="receivingType" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="Status" jsonProperty="status" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="Attempts" jsonProperty="attempts" type="number" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+        </properties>
+    </model>
+</models>

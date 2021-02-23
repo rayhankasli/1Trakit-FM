@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="Fleet" module="fleet" breadcrumbKey="BREADCRUMB.FLEET"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrakIt-config/Fleet/shared/Controllers/fleet-list-controller.xml" />
+    <xi:include href="./1TrakIt-config/Fleet/shared/Models/fleet-list-model.xml" />
+    <table responseModel="FleetResponseModel" controller="Fleet" isCheckable="false"
+    isAddable="true" hasBreadcrumb="true" hasFilters="false" hasSorting="false"
+    hasPagination="true" hasActions="true" hasGlobalSearch="true">
+        <action>
+            <edit enabled="true" labelKey="EDIT"></edit>
+            <delete enabled="true" labelKey="DELETE"></delete>
+        </action>
+        <columns>
+            <column class="align-left">assetNumber</column>
+            <column class="align-left">assetNo</column>
+            <column class="align-left">companyName</column>
+            <column class="align-left">assetType</column>
+            <column class="align-left">manufacturer</column>
+            <column class="align-left">modelNo</column>
+            <column class="align-left">serialNo</column>
+            <column class="align-left">serviceTagNo</column>
+            <column class="align-left">location</column>
+            <column class="align-left">openTicket</column>
+        </columns>
+    </table>
+
+</component>

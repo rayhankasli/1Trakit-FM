@@ -1,0 +1,102 @@
+
+<models>
+<model name="RequestInformationRequest" group="RequestInformationDetails">
+			<properties>
+
+
+	                  <property name="clientName" jsonProperty="clientName" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="CLIENTNAME"  >
+					<validations>
+						<validation type="Required" labelKey="CLIENTNAME.REQUIRED" />
+
+					</validations>
+				</property>
+
+                  <property name="userName" jsonProperty="userName" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="USERNAME"  >
+					<validations>
+						<validation type="Required" labelKey="USERNAME.REQUIRED" />
+
+					</validations>
+				</property>
+
+             <property name="emailAddress" jsonProperty="emailAddress" type="string" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="EMAIL"  >
+					<validations>
+						<validation type="Required" labelKey="EMAIL.REQUIRED" />
+						<validation type="email" labelKey="EMAIL.INVALID" />
+					</validations>
+				</property>
+
+
+                <property name="phoneNumber" jsonProperty="phoneNumber" type="integer" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="PHONENUMBER"  >
+					<validations>
+						<validation type="Required" labelKey="PHONENUMBER.REQUIRED" />
+						<validation type="maxlength" labelKey="PHONENO.MAXLENGTH" >
+							<param>10</param>
+              </validation>
+					</validations>
+				</property>
+
+                 <property name="projectCode" jsonProperty="projectCode" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="PROJECTCODE"  >
+					<validations>
+						<validation type="Required" labelKey="PROJECTCODE.REQUIRED" />
+
+					</validations>
+				</property>
+
+                 <property name="department" jsonProperty="department" type="string" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="DEPARTMENT"  >
+					<validations>
+						<validation type="Required" labelKey="DEPARTMENT.REQUIRED" />
+
+					</validations>
+				</property>
+
+                 <property name="jobName" jsonProperty="jobName" type="string" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="JOBNAME"  >
+					<validations>
+						<validation type="Required" labelKey="JOBNAME.REQUIRED" />
+
+					</validations>
+				</property>
+
+                 <property name="priceQuote" jsonProperty="priceQuote" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="PRICEQUOTE"  >
+					<validations>
+						<validation type="Required" labelKey="PRICEQUOTE.REQUIRED" />
+
+					</validations>
+				</property>
+
+                <property name="proof" jsonProperty="proof" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="PROOF"  >
+					<validations>
+						<validation type="Required" labelKey="PROOF.REQUIRED" />
+
+					</validations>
+				</property>
+
+                 <property name="uploadFiles" jsonProperty="uploadFiles" type="string" typeOf=""  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="FILES"  >
+					<validations>
+						<validation type="Required" labelKey="FILES.REQUIRED" />
+
+					</validations>
+				</property>
+</properties>
+						</model>
+
+
+<model name="RequestInformationResponse" group="RequestInformationDetails">
+			<properties>
+
+                      <property name="clientName" jsonProperty="clientName" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="CLIENTNAME"  >
+					<validations>
+						<validation type="Required" labelKey="CLIENTNAME.REQUIRED" />
+
+					</validations>
+				</property>
+
+                  <property name="userName" jsonProperty="userName" type="list" typeOf="string"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="USERNAME"  >
+					<validations>
+						<validation type="Required" labelKey="USERNAME.REQUIRED" />
+
+					</validations>
+				</property>
+                </properties>
+
+		</model>
+        </models>

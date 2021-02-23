@@ -1,0 +1,100 @@
+<div class="chat-box d-flex bg-white flex-column shadow-sm overflow-hidden">
+  <!-- Chat Header -->
+  <div class="py-2 px-3 d-flex align-items-center border-bottom justify-content-between flex-shrink-0">
+    <h5 class="mb-0 font-weight-semibold">1Chat</h5>
+    <div>
+      <button type="button" class="btn btn-icon d-flex align-items-center justify-content-center">
+        <span class="icon icon-refresh text-gray icon-2x" (click)="refreshChat()"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Chat Body -->
+  <div class="chat-area d-flex flex-column flex-grow-1 p-3 overflow-auto" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <ul class="p-0 m-0 list-unstyled">
+      <ng-container *ngFor="let message of conversation;trackBy:trackBy.bind(this,'moduleConversationId')">
+        <li class="mb-4">
+          <ng-container *ngTemplateOutlet="message?.userId === activeUserId ? even: odd; context:{message:message}">
+          </ng-container>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+
+  <!-- Chat Footer -->
+  <div class="chat-footer flex-shrink-0">
+    <form [formGroup]="messageForm">
+      <div class="input-group mb-0">
+        <input autocomplete="off" autoFocus trakcitTrim class="form-control"
+          [ngClass]="{'border-danger':isFormSubmitted && messageForm.invalid}" placeholder="Type Your Message..."
+          type="text" formControlName="message" id="message">
+        <div class="input-group-append">
+          <button class="btn btn-primary rounded-0 btn-icon d-flex align-items-center justify-content-center"
+            [disabled]="messageForm.disabled" (click)="sendMessage()">
+            <span class="icon icon-send icon-2x"></span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Even Chat Content -->
+<ng-template #even let-message="message">
+  <div class="even">
+    <div class="d-flex align-items-end">
+      <div
+        class="user-initial order-2 flex-shrink-0 d-flex align-items-center justify-content-center bg-light text-gray-dark font-weight-medium text-uppercase rounded-circle">
+        {{message.fullName|initials}}
+      </div>
+      <div class="d-flex flex-column mr-2 flex-grow-1">
+        <ul class="m-0 p-0 message-area list-unstyled d-flex flex-column align-items-end">
+          <li class="message-box border px-2 py-1">
+            <div class="d-flex align-items-center justify-content-between my-1">
+              <h6 class="username font-weight-semibold mb-0 text-uppercase">
+                {{message.fullName}}
+              </h6>
+              <div class="time text-gray font-weight-medium ml-2">{{message.createdDate | date : timeFormat}}</div>
+            </div>
+            <span class="message">
+              {{message?.message}}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="date text-right mr-2 text-gray mt-1">
+      {{message.createdDate | date : dateFormat}}
+    </div>
+  </div>
+</ng-template>
+
+<!-- Odd Chat Content -->
+<ng-template #odd let-message="message">
+  <div class="odd">
+    <div class="d-flex align-items-end">
+      <div
+        class="user-initial flex-shrink-0 d-flex align-items-center justify-content-center text-gray-dark font-weight-medium text-uppercase border rounded-circle">
+        {{message.fullName|initials}}
+      </div>
+      <div class="d-flex flex-column ml-2 flex-grow-1">
+        <ul class="m-0 p-0 message-area list-unstyled">
+          <li class="message-box border px-2 py-1">
+            <div class="d-flex align-items-center justify-content-between my-1">
+              <h6 class="username font-weight-semibold mb-0 text-uppercase">
+                {{message.fullName}}
+              </h6>
+              <div class="time text-gray font-weight-medium ml-2">{{message.createdDate | date : timeFormat}}</div>
+            </div>
+            <span class="message">
+              {{message?.message}}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="date text-left text-gray mt-1 ml-2">
+      {{message.createdDate | date : dateFormat}}
+    </div>
+  </div>
+</ng-template>

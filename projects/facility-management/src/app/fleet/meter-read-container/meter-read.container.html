@@ -1,0 +1,16 @@
+<div class="px-3">
+  <app-meter-read-list-ui [baseResponse]="meterReads$ | async" [assetRecord]="assetRecord"
+    [resetList]="resetList$|async" [onDeleteSuccess]="onDeleteSuccess$|async" (getMeterRead)="getMeterReads($event)" (addMeterRead)="onAddMeterRead()"
+    (addNewReader)="addNewReader($event)" (addMissingMeterRead)="addMissingMeterRead($event)"
+    (exportPDF)="onExportAsPDF()" (exportExcel)="onExportAsExcel()" (printDetails)="onPrintDetails($event)"
+    (deleteSlots)="deleteMeterRead($event)">
+  </app-meter-read-list-ui>
+
+  <div class="card mb-3">
+    <div class="card-body p-3">
+      <app-meter-read-form-ui [meterRead]="meterRead$ | async" [isaddNewReader]="isaddNewReader"
+        [missingEntry]="missingEntry" (add)="addMeterRead($event)">
+      </app-meter-read-form-ui>
+    </div>
+  </div>
+</div>

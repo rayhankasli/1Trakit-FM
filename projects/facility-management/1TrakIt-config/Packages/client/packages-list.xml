@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="Packages" module="Packages" breadcrumbKey="Packages"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrakIt-config/Packages/shared/models/packages-model.xml" />
+    <xi:include href="./1TrakIt-config/Packages/shared/controllers/packages-controller.xml" />
+    <table responseModel="Packages" controller="Packages" isCheckable="false"
+        isAddable="true" hasBreadcrumb="true" hasFilters="false" hasSorting="true"
+        hasPagination="true" hasActions="true" hasGlobalSearch="false">
+        <action>
+            <edit enabled="true" labelKey="Edit"></edit>
+            <delete enabled="true" labelKey="Delete"></delete>
+        </action>
+        <columns>
+            <column isFilterable="false" isSortable="true" class="align-center">upiNumber</column>
+            <column isFilterable="false" isSortable="true" class="align-center">toUserName</column>
+            <column isFilterable="false" isSortable="true" class="align-center">packageFrom</column>
+            <column isFilterable="false" isSortable="true" class="align-center">deliveryServiceName</column>
+            <column isFilterable="false" isSortable="true" class="align-center">building</column>
+            <column isFilterable="false" isSortable="true" class="align-center">floor</column>
+            <column isFilterable="false" isSortable="true" class="align-center">desktopLocation</column>
+            <column isFilterable="false" isSortable="true" class="align-center">slotId</column>
+            <column isFilterable="false" isSortable="true" class="align-center">status</column>
+        </columns>
+    </table>
+</component>

@@ -1,0 +1,295 @@
+<form class="floating-form" [formGroup]="meterReadFormGroup">
+  <div class="row" formGroupName="assetMeter">
+    <div class="col-12">
+      <label class="small my-2 font-weight-semibold">
+        Meter Read:
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-3 col-xxl-3" *ngIf="isTenants">
+      <ng-select appendTo="body" [items]="requestType" bindLabel="requestType" bindValue="requestType"
+        [clearable]="false" formControlName="requestType" floatingLabel class="form-control float-outline p-0"
+        [searchable]="false">
+      </ng-select>
+      <label for="" class="floating-form-label">Request Type
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-3 col-xxl-3">
+      <input type="text" autocomplete="off" class="form-control" #dp="bsDatepicker" bsDatepicker formControlName="readingDate"
+        [bsConfig]="bsConfig" placement="bottom" id="date" calendarFlotingLabel preventText>
+      <label class="floating-form-label">
+        Date
+      </label>
+      <label class="icon icon-calendar date-picker-label text-gray mb-0" for="date"></label>
+    </div>
+
+    <div class="col-12">
+      <div class="row">
+        <!-- Previous Reading -->
+        <div class="col-6 mb-3">
+          <div class="card h-100">
+            <div class="card-header p-3 text-dark small font-weight-medium">
+              Previous Reading
+            </div>
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                  <input type="text" class="form-control" formControlName="previousColorRead" floatingLabel
+                    trakitOnlyNumber />
+                  <label class="floating-form-label">Color
+                    <span class="asterisk">*</span>
+                  </label>
+                  <div ngxErrors="assetMeter.previousColorRead" [isFormSubmitted]="isFormSubmitted">
+                    <div ngxError="required" [when]="['touched','dirty']">
+                      Color is required
+                    </div>
+                    <div ngxError="min" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'Color read must be between ' + missingEntry[0]?.currentColorRead + ' to ' + missingEntry[1]?.previousColorRead : 'Color read is greater or equal to ' + meterRead?.assetMeter?.previousColorRead}}
+                    </div>
+                    <div ngxError="max" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'Color read must be between ' + missingEntry[0]?.currentColorRead + ' to ' + missingEntry[1]?.previousColorRead : ''}}
+                    </div>
+                    <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                      Color Read can not be allow more than 9 digits
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                  <input type="text" class="form-control" formControlName="previousBwRead" floatingLabel
+                    trakitOnlyNumber />
+                  <label class="floating-form-label">B&W
+                    <span class="asterisk">*</span>
+                  </label>
+                  <div ngxErrors="assetMeter.previousBwRead" [isFormSubmitted]="isFormSubmitted">
+                    <div ngxError="required" [when]="['touched','dirty']">
+                      B&W is required
+                    </div>
+                    <div ngxError="min" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'B&W read must be between ' + missingEntry[0]?.currentBwRead + ' to ' + missingEntry[1]?.previousBwRead : 'B&W read is greater or equal to ' + meterRead?.assetMeter?.previousBwRead}}
+                    </div>
+                    <div ngxError="max" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'B&W read must be between ' + missingEntry[0]?.currentBwRead + ' to ' + missingEntry[1]?.previousBwRead : ''}}
+                    </div>
+                    <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                      B&W Read can not be allow more than 9 digits
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                  <input type="text" class="form-control" formControlName="previousScanRead" floatingLabel
+                    trakitOnlyNumber />
+                  <label class="floating-form-label">Scan
+                    <span class="asterisk">*</span>
+                  </label>
+                  <div ngxErrors="assetMeter.previousScanRead" [isFormSubmitted]="isFormSubmitted">
+                    <div ngxError="required" [when]="['touched','dirty']">
+                      Scan is required
+                    </div>
+                    <div ngxError="min" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'Scan read must be between ' + missingEntry[0]?.currentScanRead + ' to ' + missingEntry[1]?.previousScanRead : 'Scan read is greater or equal to ' + meterRead?.assetMeter?.previousScanRead}}
+                    </div>
+                    <div ngxError="max" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'Scan read must be between ' + missingEntry[0]?.currentScanRead + ' to ' + missingEntry[1]?.previousScanRead : ''}}
+                    </div>
+                    <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                      Scan Read can not be allow more than 9 digits
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Current Reading -->
+        <div class="col-6 mb-3">
+          <div class="card h-100">
+            <div class="card-header p-3 text-dark small font-weight-medium">
+              Current Reading
+            </div>
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                  <input type="text" class="form-control" formControlName="currentColorRead" floatingLabel
+                    #currentColorRead trakitOnlyNumber />
+                  <label class="floating-form-label">Color
+
+                  </label>
+                  <div ngxErrors="assetMeter.currentColorRead" [isFormSubmitted]="isFormSubmitted">
+                    <div ngxError="required" [when]="['touched','dirty']">
+                      Color is required
+                    </div>
+                    <div ngxError="min" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'Color read must be between ' + meterReadFormGroup.value?.assetMeter?.previousColorRead + ' to ' + missingEntry[1]?.previousColorRead : 'Color read is greater or equal to ' + meterReadFormGroup.value?.assetMeter?.previousColorRead}}
+                    </div>
+                    <div ngxError="max" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'Color read must be between ' + meterReadFormGroup.value?.assetMeter?.previousColorRead + ' to ' + missingEntry[1]?.previousColorRead : ''}}
+                    </div>
+                    <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                      Current Color Read can not be allow more than 9 digits
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                  <input type="text" class="form-control" formControlName="currentBwRead" floatingLabel
+                    trakitOnlyNumber />
+                  <label class="floating-form-label">B&W
+
+                  </label>
+                  <div ngxErrors="assetMeter.currentBwRead" [isFormSubmitted]="isFormSubmitted">
+                    <div ngxError="required" [when]="['touched','dirty']">
+                      B&W is required
+                    </div>
+                    <div ngxError="min" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'B&W read must be between ' + meterReadFormGroup.value?.assetMeter?.previousBwRead + ' to ' + missingEntry[1]?.previousBwRead : 'B&W read is greater or equal to ' + meterReadFormGroup.value?.assetMeter?.previousBwRead }}
+                    </div>
+                    <div ngxError="max" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'B&W read must be between ' + meterReadFormGroup.value?.assetMeter?.previousBwRead + ' to ' + missingEntry[1]?.previousBwRead : ''}}
+                    </div>
+                    <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                      Current B&W Read can not be allow more than 9 digits
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+                  <input type="text" class="form-control" formControlName="currentScanRead" floatingLabel
+                    trakitOnlyNumber />
+                  <label class="floating-form-label">Scan
+
+                  </label>
+                  <div ngxErrors="assetMeter.currentScanRead" [isFormSubmitted]="isFormSubmitted">
+                    <div ngxError="required" [when]="['touched','dirty']">
+                      Scan is required
+                    </div>
+                    <div ngxError="min" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'Scan read must be between ' + meterReadFormGroup.value?.assetMeter?.previousScanRead + ' to ' + missingEntry[1]?.previousScanRead : 'Scan read is greater or equal to ' + meterReadFormGroup.value?.assetMeter?.previousScanRead}}
+                    </div>
+                    <div ngxError="max" [when]="['touched','dirty']">
+                      {{(isMissingEntry)? 'Scan read must be between ' + meterReadFormGroup.value?.assetMeter?.previousScanRead + ' to ' + missingEntry[1]?.previousScanRead : ''}}
+                    </div>
+                    <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                      Current Scan Read can not be allow more than 9 digits
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center" ngxErrors="assetMeter.currentColorRead" [isFormSubmitted]="isFormSubmitted">
+                  <div ngxError="ValidateForm" [when]="['touched','dirty']">
+                    Please enter any current reading
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" formGroupName="rates">
+    <!-- Client Rates -->
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body p-3">
+          <label class="small mb-3 font-weight-semibold">
+            Client Rates:
+          </label>
+          <div class="row">
+            <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+              <input type="text" class="form-control" formControlName="colorRate" floatingLabel trakitOnlyNumber
+                [allowPeriod]="true" />
+              <label class="floating-form-label">Color
+                <span class="asterisk">*</span>
+              </label>
+              <div ngxErrors="rates.colorRate" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  Color is required
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+              <input type="text" class="form-control" formControlName="bwRate" floatingLabel trakitOnlyNumber
+                [allowPeriod]="true" />
+              <label class="floating-form-label">B&W
+                <span class="asterisk">*</span>
+              </label>
+              <div ngxErrors="rates.bwRate" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  BandW is required
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+              <input type="text" class="form-control" formControlName="scanRate" floatingLabel trakitOnlyNumber
+                [allowPeriod]="true" />
+              <label class="floating-form-label">Scan
+                <span class="asterisk">*</span>
+              </label>
+              <div ngxErrors="rates.scanRate" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  Scan is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Tenant Rates -->
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body p-3">
+          <label class="small mb-3 font-weight-semibold">
+            Tenant Rates:
+          </label>
+          <div class="row">
+            <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+              <input type="text" class="form-control" formControlName="colorTenantRate" floatingLabel trakitOnlyNumber
+                [allowPeriod]="true" />
+              <label class="floating-form-label">Color
+                <span class="asterisk">*</span>
+              </label>
+              <div ngxErrors="rates.colorTenantRate" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  Color is required
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+              <input type="text" class="form-control" formControlName="bwTenantRate" floatingLabel trakitOnlyNumber
+                [allowPeriod]="true" />
+              <label class="floating-form-label">B&W
+                <span class="asterisk">*</span>
+              </label>
+              <div ngxErrors="rates.bwTenantRate" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  BandW is required
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-12 col-lg-4 mb-0">
+              <input type="text" class="form-control" formControlName="scanTenantRate" floatingLabel trakitOnlyNumber
+                [allowPeriod]="true" />
+              <label class="floating-form-label">Scan
+                <span class="asterisk">*</span>
+              </label>
+              <div ngxErrors="rates.scanTenantRate" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  Scan is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-between flex-shrink-0 border-top pt-3 mt-3">
+    <button type="button" class="btn btn-secondary d-flex align-items-center" [routerLink]="['','asset']"
+      title="Cancel">
+      <span class="icon icon-times mr-2"></span>
+      <span>Cancel</span>
+    </button>
+    <button disableOnAjax *ngIf="!isArchived" type="button" class="btn btn-primary d-flex align-items-center" (click)="saveMeterRead();" title="Submit">
+      <span class="icon icon-tick mr-2"></span>
+      <span>Submit</span>
+    </button>
+  </div>
+</form>

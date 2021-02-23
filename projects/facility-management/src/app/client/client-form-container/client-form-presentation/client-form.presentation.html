@@ -1,0 +1,381 @@
+<form class="floating-form h-100 overflow-hidden d-flex flex-column justify-content-between"
+  [formGroup]="clientFormGroup">
+  <div class="flex-grow-1 overflow-auto p-3">
+    <div class="row">
+      <div class="col-12">
+        <label for="frontAndBackCover" class="small mt-0 mb-2 font-weight-semibold">
+          Client Information:
+        </label>
+      </div>
+      <!-- Company name -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" class="form-control" formControlName="companyName" floatingLabel autoFocus trakcitTrim />
+        <label class="floating-form-label">
+          Company Name
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="companyName" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Company Name is required
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            Company Name should not be greater than 30 characters
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Person -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" class="form-control" formControlName="contactPerson" floatingLabel trakcitTrim />
+        <label class="floating-form-label">
+          Contact Person
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="contactPerson" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Contact Person is required
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            Contact Person should not be greater than 30 characters
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Number -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <input [textMask]="{mask: mask}" type="text" class="form-control" formControlName="contactNumber"
+          floatingLabel />
+        <label class="floating-form-label">
+          Contact No.
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="contactNumber" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Contact Number is required
+          </div>
+          <div ngxError="pattern" [when]="['touched','dirty']">
+            Contact Number is invalid
+          </div>
+        </div>
+      </div>
+
+      <!-- Email Address -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" class="form-control" formControlName="emailAddress" floatingLabel trakcitTrim />
+        <label class="floating-form-label">
+          Email Address
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="emailAddress" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Email Address is required
+          </div>
+          <div ngxError="pattern" [when]="['touched','dirty']">
+            Email Address is invalid
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            Email Address should not be greater than 50 characters
+          </div>
+        </div>
+      </div>
+
+      <!-- Website -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" class="form-control" formControlName="website" floatingLabel trakcitTrim />
+        <label class="floating-form-label">Website</label>
+        <div ngxErrors="website" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="pattern" [when]="['touched','dirty']">
+            Website is invalid
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            Website should not be greater than 50 characters
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label for="frontAndBackCover" class="small mt-0 mb-2 font-weight-semibold">
+          Email Template Information:
+        </label>
+      </div>
+      <!-- Template Contact Number -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <input [textMask]="{mask: mask}" type="text" class="form-control" formControlName="contactPhoneNumber"
+          floatingLabel />
+        <label class="floating-form-label">
+          Template Contact No.
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="contactPhoneNumber" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Template Contact Number is required
+          </div>
+          <div ngxError="pattern" [when]="['touched','dirty']">
+            Template Contact Number is invalid
+          </div>
+        </div>
+      </div>
+
+      <!-- Template Contact Email Address -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" class="form-control" formControlName="contactEmail" floatingLabel trakcitTrim />
+        <label class="floating-form-label">
+          Template Email Address
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="contactEmail" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Template Email Address is required
+          </div>
+          <div ngxError="pattern" [when]="['touched','dirty']">
+            Template Email Address is invalid
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            Template Email Address should not be greater than 50 characters
+          </div>
+        </div>
+      </div>
+
+      <!-- Blank separator -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3"></div>
+
+      <ng-container *hasPermission="clientsEnum.updateLicensing">
+        <div class="col-12">
+          <label for="frontAndBackCover" class="small my-2 font-weight-semibold">
+            Product Licensing:
+          </label>
+        </div>
+
+        <!-- Product Licensing -->
+        <div class="form-group col-12">
+          <div class="flex-grow-1 d-flex flex-wrap">
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" formControlName="bookIt" class="custom-control-input" id="bookIt" floatingLabel>
+              <label class="custom-control-label" for="bookIt">Book It</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" formControlName="copyIt" class="custom-control-input" id="copyIt" floatingLabel>
+              <label class="custom-control-label" for="copyIt">Copy It</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" formControlName="mail" class="custom-control-input" id="mail" floatingLabel>
+              <label class="custom-control-label" for="mail">Mail</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" formControlName="workflow" class="custom-control-input" id="workflow"
+                floatingLabel>
+              <label class="custom-control-label" for="workflow">Workflow</label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" formControlName="visitorLog" class="custom-control-input" id="visitorLog"
+                floatingLabel>
+              <label class="custom-control-label" for="visitorLog">Visitor Log</label>
+            </div>
+          </div>
+          <ng-container [ngTemplateOutlet]="err" [ngTemplateOutletContext]="{ctrl:clientFormGroup.controls}">
+          </ng-container>
+        </div>
+
+        <div class="col-12">
+          <div class="row">
+            <!-- Book it SLA time limit -->
+            <div [hidden]="clientFormGroup.controls.bookItSlaTimeLimit.disabled"
+              class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3 mt-2">
+              <app-time-picker formControlName="bookItSlaTimeLimit" [meridian]="false">
+                <label ctrlLabel class="floating-form-label">
+                  Book It SLA Time Limit [HH:MM]
+                  <span class="asterisk">*</span>
+                </label>
+                <label ctrlLabel for="bookItSlaTimeLimit"
+                  class="icon icon-clock time-picker-label text-gray mb-0"></label>
+              </app-time-picker>
+              <div ngxErrors="bookItSlaTimeLimit" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  Book It SLA Time Limit is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Copy it SLA time limit -->
+            <div [hidden]="clientFormGroup.controls.copyItSlaTimeLimit.disabled"
+              class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3 mt-2">
+              <app-time-picker formControlName="copyItSlaTimeLimit" [meridian]="false">
+                <label ctrlLabel class="floating-form-label">
+                  Copy It SLA Time Limit [HH:MM]
+                  <span class="asterisk">*</span>
+                </label>
+                <label ctrlLabel for="copyItSlaTimeLimit"
+                  class="icon icon-clock time-picker-label text-gray mb-0"></label>
+              </app-time-picker>
+              <div ngxErrors="copyItSlaTimeLimit" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  Copy It SLA Time Limit is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Fleet SLA time limit -->
+            <div [hidden]="clientFormGroup.controls.fleetItSlaTimeLimit.disabled"
+              class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3 mt-2">
+              <app-time-picker formControlName="fleetItSlaTimeLimit" [meridian]="false">
+                <label ctrlLabel class="floating-form-label">
+                  Fleet SLA Time Limit [HH:MM]
+                  <span class="asterisk">*</span>
+                </label>
+                <label ctrlLabel for="fleetItSlaTimeLimit"
+                  class="icon icon-clock time-picker-label text-gray mb-0"></label>
+              </app-time-picker>
+              <div ngxErrors="fleetItSlaTimeLimit" [isFormSubmitted]="isFormSubmitted">
+                <div ngxError="required" [when]="['touched','dirty']">
+                  Fleet SLA Time Limit is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Email Notifications -->
+        <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+          <div class="d-flex align-items-center">
+            <label class="mb-0 flex-shrink-0 mr-3">
+              Email Notifications
+              <span class="asterisk">*</span>
+            </label>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="notifications1" formControlName="notifications"
+                [value]="true" />
+              <label class="custom-control-label" for="notifications1">On</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="notifications2" formControlName="notifications"
+                [value]="false" />
+              <label class="custom-control-label" for="notifications2">Off</label>
+            </div>
+          </div>
+          <div ngxErrors="notifications" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Email Notifications is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Prepopulated Account No -->
+        <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+          <div class="d-flex align-items-center">
+            <label class="mb-0 flex-shrink-0 mr-3">
+              Prepopulate Account No.
+              <span class="asterisk">*</span>
+            </label>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="accountNumber1" formControlName="accountNumber"
+                [value]="true" />
+              <label class="custom-control-label" for="accountNumber1">On</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="accountNumber2" formControlName="accountNumber"
+                [value]="false" />
+              <label class="custom-control-label" for="accountNumber2">Off</label>
+            </div>
+          </div>
+          <div ngxErrors="accountNumber" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Prepopulate Account No. is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Tenants -->
+        <div [hidden]="clientFormGroup.controls.tenants.disabled" class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+          <div class="d-flex align-items-center">
+            <label class="mb-0 flex-shrink-0 mr-3">
+              Tenants
+              <span class="asterisk">*</span>
+            </label>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="TenantsOption1" formControlName="tenants"
+                [value]="true" />
+              <label class="custom-control-label" for="TenantsOption1">On</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="TenantsOption2" formControlName="tenants"
+                [value]="false" />
+              <label class="custom-control-label" for="TenantsOption2">Off</label>
+            </div>
+          </div>
+          <div ngxErrors="tenants" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Tenants is required
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="col-12">
+        <label for="frontAndBackCover" class="small mt-3 mb-2 font-weight-semibold">
+          Client Logo:
+        </label>
+      </div>
+
+      <!-- Client Logo Small -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <lib-file-upload id="_logoFileNameSmall" accept="image/png, image/jpeg" [isDelete]="true"
+          [thumbnailType]="'small'" [fileLabel]="'Client Logo Small'"
+          [fileName]="clientFormGroup.value.originalLogoSmall" [filePath]="clientFormGroup.value._logoSmall"
+          formControlName="_logoFileNameSmall"></lib-file-upload>
+        <div ngxErrors="_logoFileNameSmall" [isFormSubmitted]="true">
+          <div ngxError="maxFileSize" [when]="['touched','dirty']">
+            Client Logo Small should not be larger than 2mb
+          </div>
+          <div ngxError="requiredFileType" [when]="['touched','dirty']">
+            Supported file formats are png, jpg and jpeg only
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Logo Large -->
+      <div class="form-group col-lg-6 col-12 col-xl-4 col-xxl-3">
+        <lib-file-upload id="_logoFileNameLarge" accept="image/png, image/jpeg" [isDelete]="true"
+          [thumbnailType]="'large'" [fileLabel]="'Client Logo Large'"
+          [fileName]="clientFormGroup.value.originalLogoLarge" [filePath]="clientFormGroup.value._logoLarge"
+          formControlName="_logoFileNameLarge"></lib-file-upload>
+        <div ngxErrors="_logoFileNameLarge" [isFormSubmitted]="true">
+          <div ngxError="maxFileSize" [when]="['touched','dirty']">
+            Client Logo Large should not be larger than 2mb
+          </div>
+          <div ngxError="requiredFileType" [when]="['touched','dirty']">
+            Supported file formats are png, jpg and jpeg only
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-between flex-shrink-0 border-top p-3">
+    <button type="button" class="btn btn-secondary d-flex align-items-center" (click)="cancelChanges();">
+      <span class="icon icon-times mr-2"></span>
+      <span>Cancel</span>
+    </button>
+    <button disableOnAjax *ngIf="!isSaveAndContinue; else saveContinue" type="button"
+      class="btn btn-primary d-flex align-items-center" (click)="saveClient();">
+      <span class="icon icon-tick mr-2"></span>
+      <span>Submit</span>
+    </button>
+  </div>
+</form>
+
+<ng-template #saveContinue>
+  <button type="button" class="btn btn-primary d-flex align-items-center" (click)="saveClient(true);">
+    <span class="icon icon-check-circle mr-2"></span>
+    <span>Save & Continue</span>
+  </button>
+</ng-template>
+
+<ng-template #err let-ctrl="ctrl">
+  <div *ngIf="(isFormSubmitted || ctrl.copyIt.dirty|| ctrl.mail.dirty || ctrl.workflow.dirty|| ctrl.bookIt.dirty) 
+  && clientFormGroup.errors">
+    <div class="invalid-feedback d-block">
+      Product Licensing is required
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,58 @@
+<!-- Data-table Filter area  -->
+<div class="data-tbl-filter d-flex bg-white flex-column shadow-sm rounded">
+  <div class="filter-header p-3 d-flex align-items-center border-bottom justify-content-between">
+    <h3 class="mb-0 filter-title">Filter</h3>
+    <div>
+      <button type="button" class="btn btn-outline-primary mr-2" (click)="onClearFilter()" *ngIf="isFilterApply">
+        <span>Clear Filter</span>
+      </button>
+      <button type="button" class="btn btn-icon" (click)="dismiss()">
+        <span class="icon icon-times"></span>
+      </button>
+    </div>
+  </div>
+  <div class="filter-body d-flex flex-column">
+    <div class="filter-content p-3 h-100">
+      <form class="floating-form" [formGroup]="workflowTaskFilterFormGroup">
+        <div class="row">
+          <div class="form-group col-md-6 col-12 col-lg-12">
+            <ng-select appendTo="body" [items]="floorsFilter" bindLabel="nickName" bindValue="floorId" [clearable]="false"
+              formControlName="floorId" floatingLabel class="form-control float-outline p-0"
+              (change)="onRoomChange($event)">
+              <ng-template ng-label-tmp let-item="item">
+                {{item?.floorId === -1 ? item?.nickName : item?.floor+' '+item?.nickName}}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                {{item?.floorId === -1 ? item?.nickName : item?.floor+' '+item?.nickName}}
+              </ng-template>
+            </ng-select>
+            <label class="floating-form-label">Floor
+            </label>
+          </div>
+          <div class="form-group col-md-6 col-12 col-lg-12">
+            <ng-select appendTo="body" [items]="filterRooms" bindLabel="location" bindValue="floorRoomId" [clearable]="false"
+              formControlName="floorRoomId" floatingLabel class="form-control float-outline p-0">
+              <ng-template ng-label-tmp let-item="item">
+                {{item?.name}} - {{item?.location}}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                {{item?.name}} - {{item?.location}}
+              </ng-template>
+            </ng-select>
+            <label class="floating-form-label">Location
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="filter-footer border-top d-flex align-items-center justify-content-between p-3">
+    <button class="btn btn-outline-secondary px-3" (click)="onReset()">
+      Reset
+    </button>
+    <button class="btn btn-primary px-3" [disabled]="!workflowTaskFilterFormGroup.valid || workflowTaskFilterFormGroup.pristine"
+      (click)="onApplyFilter()">
+      Apply
+    </button>
+  </div>
+</div>

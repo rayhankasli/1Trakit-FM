@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<models>
+    <model name="MeterRead" group="MeterReadReport">
+        <properties>
+            <property name="FloorLocation" jsonProperty="floorLocation" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Floor/Location"></property>
+            <property name="Department" jsonProperty="department" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Department"></property>
+            <property name="Model" jsonProperty="model" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Model"></property>
+            <property name="SerialNumber" jsonProperty="serialNumber" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="S/N"></property>
+            <property name="Id" jsonProperty="id" type="number" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ID"></property>
+            <property name="Meter" jsonProperty="meter" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Meter"></property>
+            <property name="Begin" jsonProperty="begin" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Begin"></property>
+            <property name="End" jsonProperty="end" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="End"></property>
+            <property name="Copies" jsonProperty="copies" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Copies"></property>
+            <property name="Cost" jsonProperty="cost" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Cost"></property>
+        </properties>
+    </model>
+</models>

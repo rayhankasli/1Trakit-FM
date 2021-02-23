@@ -1,0 +1,37 @@
+{
+    
+    "CURRENT_PASSWORD": {
+        "LABEL": "Current Password_sw",
+        "PLACEHOLDER": "Current Password_sw",
+        "REQUIRED": "Current Password is required."
+    },
+    
+    "NEW_PASSWORD": {
+        "LABEL": "New Password_sw",
+        "PLACEHOLDER": "New Password_sw",
+        "REQUIRED": "New Password is required._sw",
+        "REGEX": "enter strong password"
+    },
+    "CONFIRM_PASSWORD": {
+        "LABEL": "Confirm Password_sw",
+        "PLACEHOLDER": "Confirm Password_sw",
+        "REQUIRED": "Confirm Password is required._sw",
+        "REGEX": "enter same password "
+    },
+    "displayMessage":"You will soon be redirected to login page_sw",
+    "okAction":"OK_sw",
+    "cancelAction":"CANCEL_sw",
+    "PasswordLength": "Minimum Password Length Required is {0}_sw",
+
+    "PasswordLowercase": "Password must have atleast one lowercase character_sw.",
+
+    "PasswordUppercase": "Password must have atleast one uppercase character_sw.",
+
+    "PasswordDigit": "Password must have atleast one number character_sw.",
+
+    "PasswordSymbol": "Password must have atleast one special character_sw.",
+
+    "PasswordSameChar": "Passwords cannot be all the same character_sw.",
+
+    "PasswordOldSame": "Can not reuse old password_sw."
+}

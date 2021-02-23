@@ -1,0 +1,8 @@
+<div class="px-3 flex-grow-1 mb-3">
+    <div class="card h-100 w-100">
+        <div class="card-body p-0 overflow-hidden">
+            <app-asset-ticket-form-ui [assetTicket]="assetTicket$ | async" [masterData]="masterData$ | async"
+                (add)="addAssetTicket($event)" (update)="updateAssetTicket($event)"></app-asset-ticket-form-ui>
+        </div>
+    </div>
+</div>

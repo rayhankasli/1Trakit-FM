@@ -1,0 +1,14 @@
+<div class="bg-white {{ !showDescription ? 'notification-body' : '' }}">
+  <a *ngFor="let notification of notifications; trackBy: trackBy " role="button"
+    class="notification-list d-flex align-items-start {{ !notification.isRead ? 'active' : '' }}"
+    (click)="modifyNotification(notification)">
+    <div class="flex-grow-1">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1 notification-title">{{ notification.result?.title }}</h5>
+        <small class="flex-shrink-0">{{ notification.createdAt | elapsedTime }}</small>
+      </div>
+      <small>{{ notification.publishedOn | elapsedTime }} at {{ notification.publishedOn }}</small>
+      <p *ngIf="showDescription" class="my-1">{{ notification.result?.description }}</p>
+    </div>
+  </a>
+</div>

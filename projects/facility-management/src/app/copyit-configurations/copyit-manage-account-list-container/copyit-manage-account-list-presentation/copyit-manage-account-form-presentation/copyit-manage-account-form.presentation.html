@@ -1,0 +1,106 @@
+<ng-container class="floating-form" [formGroup]="copyitManageAccountFormGroup">
+  <td class="form-group mb-0">
+    <label class="py-2 px-1 mb-0">{{copyitManageAccount?.clientAccountId}}</label>
+  </td>
+  <td class="form-group mb-0 ">
+    <input type="text" class="form-control" formControlName="departmentName" floatingLabel />
+    <div ngxErrors="departmentName" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Department Name is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0 ">
+    <input type="text" class="form-control" formControlName="accountNo" floatingLabel />
+    <div ngxErrors="accountNo" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Account Number is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0">
+    <ng-select [items]="status" bindLabel="name" bindValue="value" [searchable]="false" [clearable]="false" formControlName="isActive"
+      floatingLabel appendTo="body" class="form-control float-outline p-0">
+    </ng-select>
+    <div ngxErrors="isActive" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Type is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0">
+    <ng-select #requestor [items]="assignToRequestor" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
+      [searchable]="false" bindLabel="userName" bindValue="userId" appendTo="body" formControlName="assignToRequestors"
+      floatingLabel class="form-control float-outline p-0">
+      <ng-template ng-header-tmp>
+        <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+          <input type="text" autoFocus class="form-control border-0 pr-0"
+            (input)="requestor.filter($event.target.value)" placeholder="Search" aria-label="Search"
+            aria-describedby="button-addon">
+          <div class="input-group-append">
+            <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+              <span class="icon icon-search"></span>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+        <div class="custom-control flex-shrink-0 custom-checkbox">
+          <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+          <label class="form-check-label ml-2 custom-control-label">{{item.userName}}</label>
+        </div>
+      </ng-template>
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'userName')">
+          <span class="ng-value-label">{{item.userName}}</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 1">
+          <span class="ng-value-label">+{{items.length - 1}}</span>
+        </div>
+      </ng-template>
+    </ng-select>
+  </td>
+  <td class="form-group mb-0">
+    <ng-select #associate [items]="assignToAssociate" [multiple]="true" [clearable]="false" [closeOnSelect]="false"
+      [searchable]="false" bindLabel="userName" bindValue="userId" appendTo="body" formControlName="assignToAssociates"
+      floatingLabel class="form-control float-outline p-0">
+      <ng-template ng-header-tmp>
+        <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+          <input type="text" autoFocus class="form-control border-0 pr-0"
+            (input)="associate.filter($event.target.value)" placeholder="Search" aria-label="Search"
+            aria-describedby="button-addon">
+          <div class="input-group-append">
+            <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+              <span class="icon icon-search"></span>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+        <div class="custom-control flex-shrink-0 custom-checkbox">
+          <input type="checkbox" [checked]="item$.selected" id="item-{{index}}" class="custom-control-input" />
+          <label class="form-check-label ml-2 custom-control-label">{{item.userName}}</label>
+        </div>
+      </ng-template>
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of items | slice:0:1;trackBy:trackBy.bind(this,'userName')">
+          <span class="ng-value-label">{{item.userName}}</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 1">
+          <span class="ng-value-label">+{{items.length - 1}}</span>
+        </div>
+      </ng-template>
+    </ng-select>
+  </td>
+
+  <td class="d-flex align-items-center justify-content-center">
+    <button type="button" title="Save"
+      class="btn btn-primary btn-icon d-flex align-items-center justify-content-center mr-1" (click)="onSave();">
+      <span class="icon icon-save"></span>
+    </button>
+    <button *ngIf="copyitManageAccount" type="button" title="Cancel" (click)="onCancel()"
+      class="btn btn-gray-dark btn-icon d-flex align-items-center justify-content-center">
+      <span class="icon icon-times"></span>
+    </button>
+  </td>
+</ng-container>

@@ -1,0 +1,201 @@
+.arrow-up {
+  position: absolute;
+  right: 8px;
+  top: -12px;
+  transform: rotate(180deg);
+}
+
+.data-tbl-dropdown {
+  .icon-more {
+    color: $gray-600;
+  }
+
+  &.show {
+    .icon-more {
+      color: $primary;
+    }
+  }
+
+  .dropdown-toggle {
+    &:after {
+      display: none;
+    }
+  }
+}
+.dropdown-menu {
+  border: 0;
+}
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.7px;
+  &:not(:last-child) {
+    border-bottom: 1px solid $border-color;
+  }
+
+  @include media-breakpoint-down("xl") {
+    padding: $dropdown-item-padding-y-sm $dropdown-item-padding-x-sm;
+    font-size: $dropdown-item-font-size-sm;
+  }
+
+  @include hover-focus-active() {
+    background-color: $gray-100;
+    color: color-yiq($gray-100);
+  }
+
+  button {
+    &:active {
+      background-color: $gray-100;
+    }
+  }
+
+  .icon {
+    min-width: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.add-floor-dropdown {
+  width: $floor-dropdown-width;
+  max-width: $floor-dropdown-width;
+}
+
+.nested-dropdown {
+  &.show {
+    .dropdown-icon,
+    .dropdown-text {
+      color: $primary;
+    }
+  }
+}
+
+.list-dropdown {
+  .dropdown-item {
+    position: relative;
+    &::before {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      height: 3px;
+      width: 3px;
+      background-color: $gray-dark;
+      content: "";
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.dropdown-toggle-split {
+  border-left-color: $primary-dark;
+  &::after {
+    vertical-align: middle;
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.7;
+    box-shadow: inherit;
+    cursor: not-allowed;
+  }
+}
+
+// Status Dropdown
+.status-dropdown {
+  min-width: 10rem;
+
+  .status-btn {
+    position: relative;
+    text-transform: capitalize;
+    font-weight: $font-weight-normal;
+    height: $input-height-sm;
+    text-align: left;
+
+    @include media-breakpoint-up("xxl") {
+      height: $input-height;
+    }
+
+    &.dropdown-toggle {
+      &::after {
+        position: absolute;
+        right: 7px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $gray;
+        font-size: $font-size-base * 1.2;
+      }
+    }
+
+    &:disabled,
+    &.disabled {
+      background-color: $input-disabled-bg;
+      color: $input-disabled-color;
+      opacity: 1;
+    }
+
+    label {
+      max-width: 115px;
+      @include text-truncate;
+      font-size: $font-size-base * 0.8;
+      color: inherit;
+    }
+
+    .badge {
+      top: auto;
+    }
+  }
+}
+
+bs-dropdown-container {
+  z-index: 1040;
+}
+
+// BS Datepicker
+bs-datepicker-navigation-view {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Copy-it Legend
+.legend-dropdown {
+  .legend-btn {
+    width: 35px;
+    padding: 5px 4px;
+    &::after {
+      display: none;
+    }
+    .color-indication {
+      width: 9px;
+      height: 9px;
+      border-radius: $border-radius;
+      margin: 0px 1px;
+    }
+  }
+}
+.color-indication {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: $border-radius;
+  @each $name, $value in $status-bg {
+    &.bg-#{$name} {
+      @if $name == 'due-in' {
+        background-color: rgba($value, 0.57);
+      }
+      @else {
+        background-color: rgba($value, 0.25);
+      }
+    }
+  }
+}
+
+.repeats-on-dropdown {
+  .btn-repeat-on {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+}

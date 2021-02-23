@@ -1,0 +1,7 @@
+<div class="px-3 h-100 overflow-hidden">
+    <app-office-list-ui [baseResponse]="offices$ | async" [lastOffice]="lastOffice$ | async" [states]="states$ | async" [cites]="cites$ | async"
+        (getOffice)="getOffices($event)" (deleteOffice)="deleteOffice($event)" (add)="addOffice($event)"
+        (getStates)="getStates()" (getCites)="getCites($event)" (update)="updateOffice($event)"
+        (toggleOfficeStatus)="onToggleOfficeStatus($event)">
+    </app-office-list-ui>
+</div>

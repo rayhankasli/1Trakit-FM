@@ -1,0 +1,214 @@
+<form focusInvalidInput [forceCheck]="isNext" class="floating-form flex-grow-1 {{isEditForm ? 'px-1 overflow-hidden' : 'p-3 overflow-auto'}}"
+  [formGroup]="requestInformationDetailsFormGroup">
+  <div class="row">
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3" *ngIf="isSuperUser || isManager">
+      <ng-select #client [items]="clients" appendTo="body" bindLabel="companyName" bindValue="clientId" [clearable]="false"
+        (change)="onChangeClient($event)" formControlName="clientId" [searchable]="false" selectFloatingLabel autoFocus
+        class="form-control float-outline p-0">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="client.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label for="clientName" class="floating-form-label">
+        Client Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="clientId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Client Name is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3" *ngIf="!isRequestor">
+      <ng-select #requestorUser [items]="usersList" bindLabel="fullName" bindValue="userId" [clearable]="false" [searchable]="false"
+        groupBy="user" formControlName="requestForId" selectFloatingLabel (change)="onchangeUser($event)"
+        class="form-control float-outline p-0" appendTo="body">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="requestorUser.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ng-optgroup-tmp let-item="item">
+          <strong>{{item.roleName}}</strong>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          {{item.fullName}}
+        </ng-template>
+      </ng-select>
+      <label for="userName" class="floating-form-label">
+        User Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="requestForId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          User Name is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <input type="text" class="form-control" formControlName="emailAddress" floatingLabel trakcitTrim />
+      <label for="emailAddress" class="floating-form-label">
+        Email Address
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="emailAddress" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Email Address is required
+        </div>
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Email Address is invalid
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <input type="text" [textMask]="{mask: mask}" class="form-control" formControlName="phoneNumber" floatingLabel />
+      <label for="phoneNumber" class="floating-form-label">
+        Phone Number
+      </label>
+      <div ngxErrors="phoneNumber" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="pattern" [when]="['touched','dirty']">
+          Enter valid phone number
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3" *ngIf="isAccountNumber">
+      <ng-select [items]="projectCodeList" bindLabel="accountNo" bindValue="clientAccountId"
+        (change)="onChangeProjectCode($event)" [clearable]="false" formControlName="clientAccountId"
+        [searchable]="false" selectFloatingLabel appendTo="body" class="form-control float-outline p-0">
+      </ng-select>
+      <label for="projectCode" class="floating-form-label">
+        Project Code
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3" *ngIf="!isAccountNumber">
+      <input type="text" class="form-control" formControlName="accountNo" floatingLabel trakcitTrim />
+      <label for="projectCode" class="floating-form-label">
+        Project Code
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <input type="text" class="form-control" formControlName="departmentName" floatingLabel trakcitTrim />
+      <label for="department" class="floating-form-label">
+        Department
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <input type="text" class="form-control" formControlName="jobname" floatingLabel trakcitTrim />
+      <label for="jobName" class="floating-form-label">
+        Job Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="jobname" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Job Name is required
+        </div>
+        <div ngxError="maxlength" [when]="['touched','dirty']">
+          Job Name should not be greater than 100 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <ng-select [items]="isPriceQuoteList" bindLabel="label" bindValue="value" [clearable]="false"
+        formControlName="isPriceQuote" [searchable]="false" class="form-control float-outline p-0" selectFloatingLabel>
+      </ng-select>
+      <label for="priceQuote" class="floating-form-label">
+        Price Quote
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="isPriceQuote" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Price Quote is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <ng-select [items]="isProofList" bindLabel="label" bindValue="value" [clearable]="false" formControlName="isProof"
+        [searchable]="false" selectFloatingLabel class="form-control float-outline p-0">
+      </ng-select>
+      <label for="proof" class="floating-form-label">
+        Proof
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="isProof" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Proof is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3" *ngIf="isEditMode">
+      <input type="text" class="form-control" formControlName="copyItNumber" floatingLabel trakcitTrim />
+      <label for="department" class="floating-form-label">
+        Copy It Number
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3" *ngIf="isTenants">
+      <ng-select [items]="tenantList" bindLabel="label" bindValue="id" [clearable]="false" appendTo="body"
+        formControlName="rateRequestTypeId" [searchable]="false" selectFloatingLabel (change)="onRateRequestTypeChange($event)"
+        class="form-control float-outline p-0">
+      </ng-select>
+      <label for="retaRequestType" class="floating-form-label">
+        Rate Request Type
+      </label>
+    </div>
+    <div class="col-12">
+      <hr class="mt-2">
+    </div>
+    <div *ngIf="!isEditForm" class="form-group col-md-6 col-12 col-lg-4 col-xxl-3">
+      <ng-select [items]="fileUploadList" appendTo="body" bindLabel="label" bindValue="id" [clearable]="false"
+        formControlName="fileOptionId" (change)="onChangeFile($event)" [searchable]="false" selectFloatingLabel
+        class="form-control float-outline p-0">
+      </ng-select>
+      <label for="files" class="floating-form-label">
+        Files
+      </label>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3 copy-it-upload-files" *ngIf="readOnlyCopyItDetail.fileOptionId===1">
+      <lib-file-upload [isDelete]="true" [disabled]="requestInformationDetailsFormGroup.controls.files.disabled"
+        [fileLabel]="'Upload Files'" accept="*" [multiple]="true" [fileName]="readOnlyCopyItDetail.fileName"
+        formControlName="files">
+      </lib-file-upload>
+      <div ngxErrors="files" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="maxFileSize" [when]="['touched','dirty']">
+          File should not be larger than 50MB
+        </div>
+      </div>
+      <div class="d-flex flex-column mt-1" *ngIf="isEditForm && copyItInfo?.uploadedFiles?.length">
+        <label class="small text-dark my-1 font-weight-semibold" for="uploaded file">Uploaded file:</label>
+        <ol class="pl-4 mb-0 text-gray">
+          <ng-container *ngFor="let file of copyItInfo?.uploadedFiles;trackBy:trackBy.bind(this,'')">
+            <li class="pl-1 text-gray small">
+              <a class="text-gray cursor-pointer" (click)="download(file)">
+                {{file?.actualFileName}}
+              </a>
+            </li>
+          </ng-container>
+        </ol>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3" *ngIf="readOnlyCopyItDetail.fileOptionId===2">
+      <input type="text" class="form-control" formControlName="shareFilePath" id="shareFilePath" floatingLabel
+        trakcitTrim />
+      <label for="shareFilePath" class="floating-form-label">
+        Share File Path
+      </label>
+    </div>
+  </div>
+</form>

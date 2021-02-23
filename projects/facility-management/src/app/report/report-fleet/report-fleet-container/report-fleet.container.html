@@ -1,0 +1,9 @@
+<app-report-fleet-ui class="d-flex flex-column overflow-hidden flex-grow-1" 
+    [clients]="clients$ | async"
+    [fleetList]="fleetList$ | async" 
+    [years]="years$ | async" 
+    [fleetDetailList]="fleetDetailList$ | async" 
+    (getFleetDetailById)="getFleetDetailById($event)" 
+    (getFleetTableByFilterData)="getFleetTableByFilterData($event)" 
+    (exportExcelFile)="exportExcelFile($event)">
+</app-report-fleet-ui>

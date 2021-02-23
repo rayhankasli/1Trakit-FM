@@ -1,0 +1,80 @@
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 50px">
+      <col style="width: 60px">
+      <col style="width: 60px">
+      <col style="width: 120px">
+      <col style="width: 120px">
+      <col style="width: 200px">
+      <col style="width: 70px">
+      <col style="width: 70px">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th colspan="8" class="text-center">Charge Back Report For
+          <span>{{startDate | date: monthYearFormat}} </span>
+          <span *ngIf="isMonthSame">To {{endDate | date: monthYearFormat}}</span>
+        </th>
+      </tr>
+      <tr class="table-sub-header">
+        <th>
+          <span>{{ 'Job' }}</span>
+        </th>
+        <th appSortingOrder [column]="'date'" (orderType)="onSortOrder('date',$event)" scope="col"
+          class="column-sort border-left">
+          <span>{{ 'Date' }}</span>
+        </th>
+        <th appSortingOrder [column]="'department'" (orderType)="onSortOrder('department',$event)" scope="col"
+          class="column-sort border-left">
+          <span>{{ 'Department' }}</span>
+        </th>
+        <th appSortingOrder [column]="'accountNumber'" (orderType)="onSortOrder('accountNo',$event)" scope="col"
+          class="column-sort border-left">
+          <span>{{ 'Account Number' }}</span>
+        </th>
+        <th appSortingOrder [column]="'requestor'" (orderType)="onSortOrder('requestorName',$event)" scope="col"
+          class="column-sort border-left">
+          <span>{{ 'Requestor' }}</span>
+        </th>
+        <th class="border-left">
+          <span>{{ 'Description' }}</span>
+        </th>
+        <th class="border-left">
+          <span>{{ 'Cost' }}</span>
+        </th>
+        <th class="border-left">
+          <span>{{ 'Total' }}</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let chargeBack of chargeBackLists?.chargeBackData;trackBy: trackBy.bind(this,'id');let i= index">
+        <td class="align-center">
+          {{chargeBack?.jobNo}}</td>
+        <td class="align-center">
+          {{chargeBack?.date | date:dateFormat}}</td>
+        <td class="align-center">
+          <span class="text-truncate department-name" ngbTooltip="{{chargeBack?.department}}">
+            {{(chargeBack?.department) ? (chargeBack?.department) : '-'}}
+          </span>
+        </td>
+        <td class="align-center">
+          {{(chargeBack?.accountNo) ? (chargeBack?.accountNo) : '-'}}</td>
+        <td class="align-center">
+          {{chargeBack?.requestorName}}</td>
+        <td class="align-center">
+          {{chargeBack?.description}}</td>
+        <td class="align-center">
+          {{ '$' + (chargeBack?.cost | number:decimal)}}</td>
+        <td class="align-center">
+          {{ '$' + (chargeBack?.total | number:decimal)}}</td>
+      </tr>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="!chargeBackLists?.chargeBackData || chargeBackLists?.chargeBackData?.length === 0">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

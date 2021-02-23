@@ -1,0 +1,12 @@
+{
+    "panel1Heading": "First panel",
+    "panel2Heading": "Second panel",
+    "panel3Heading": "Disabled panel",
+    "opened": "opened",
+    "collapsed": "collapsed",
+    "firstAccordionContent": "This is first accordion",
+    "secondAccordionContent": "This is second accordion",
+    "disabledAccordionContent": "This is disabled panel",
+    "save": "Save",
+    "cancel": "Cancel"
+}

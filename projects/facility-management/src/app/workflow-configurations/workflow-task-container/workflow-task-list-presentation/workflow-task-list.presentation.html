@@ -1,0 +1,146 @@
+<trackit-page-actions>
+  <div class="d-flex align-items-center">
+    <trackit-search [isDisabled]="isUpdateSequence" (searchText)="onSearch($event)"></trackit-search>
+    <button class="btn btn-outline-light d-flex align-items-center justify-content-center btn-icon mr-2 filter-btn"
+      [disabled]="isUpdateSequence" title="Filter" (click)="openFilter()" type="button">
+      <span class="icon icon icon-filter text-gray-dark"></span>
+      <ng-container *ngIf="isFilterApply">
+        <span class="badge badge-icon badge-primary rounded-circle position-absolute"></span>
+      </ng-container>
+    </button>
+    <button type="button" *hasPermission="taskEnum.add" [disabled]="isUpdateSequence"
+      class="btn {{ !formOpen ? 'btn-primary': 'btn-outline-secondary'}} d-flex align-items-center" (click)="addForm()"
+      title="{{!formOpen ? 'Add New Task' : 'Cancel' }}">
+      <span class="{{ !formOpen ? 'icon icon-add': 'icon icon-times'}} mr-2"></span>
+      <span>{{!formOpen ? "New Task" :"Cancel" }}</span>
+    </button>
+  </div>
+</trackit-page-actions>
+<!-- Data-table mobile view or desktop view -->
+<div class="d-flex flex-column h-100 overflow-hidden p-3">
+  <div class="note mb-3 d-flex">
+    <label for="note" class="mb-0 small font-weight-medium flex-shrink-0">Note:</label>
+    <div class="flex-grow-1 mx-2">
+      <p class="text-gray small mb-0">
+        - The order in which the tasks are arranged here will be the ordered in which the end user has to complete the
+        tasks.
+      </p>
+      <p class="text-gray small mb-0">
+        - The series of tasks that needs to be performed at the same location will be group together as a task category
+        for the user.
+      </p>
+      <p class="text-gray small mb-0" *ngIf="tableProperty.search || tableProperty.filter|| formOpen || isEditable">
+        - 'Re-arranging the tasks' feature is disabled while filters are applied and search results are displayed.
+      </p>
+    </div>
+    <div class="flex-shrink-0">
+      <button type="button" title="Rearrange Tasks" *hasPermission="taskEnum.updateSequence"
+        [disabled]="(tableProperty.search || tableProperty.filter|| formOpen || isEditable || (baseResponse && baseResponse.length <= 1))"
+        class="btn btn-outline-primary" (click)="rearrangeTask(isUpdateSequence)"
+        title="{{!isUpdateSequence ? 'Rearrange Tasks' : 'Save' }}">
+        <span>{{!isUpdateSequence ? "Rearrange Tasks" :"Save" }}</span>
+      </button>
+      <button type="button" title="Cancel" *ngIf="isUpdateSequence" class="btn btn-outline-secondary ml-2"
+        (click)="cancelRearrangeTask(isUpdateSequence)" >
+        <span>Cancel</span>
+      </button>
+    </div>
+  </div>
+  <div class="overflow-y-auto overflow-x-hidden border rounded">
+    <table class="table data-tbl w-100 position-relative mb-0 border-0">
+      <colgroup>
+        <col style="width: 120px">
+        <col style="width: 100px">
+        <col style="width: 120px">
+        <col style="width: 200px">
+        <col style="width: 200px">
+        <col style="width: 130px">
+        <col style="width: 40px">
+      </colgroup>
+      <thead class="sticky-table-header">
+        <tr>
+          <th scope="col">
+            <span>Task Name</span>
+          </th>
+          <th scope="col">
+            <span>Floor</span>
+          </th>
+          <th scope="col">
+            <span>Location</span>
+          </th>
+          <th scope="col">
+            <span>Repeats On</span>
+          </th>
+          <th scope="col">
+            <span>Description</span>
+          </th>
+          <th scope="col">
+            <span>Pictures Required</span>
+          </th>
+          <th class="text-center">
+            <span>action</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody cdkDropList cdkDragBoundary="table" (cdkDropListDropped)="drop($event)">
+        <tr app-workflow-task-form-ui class="table-inline-form" *ngIf="formOpen" style="display: contents;"
+          [weekDays]="weekDays" [floors]="floors" [rooms]="rooms" (add)="addWorkflowTask($event)"
+          (getRooms)="onGetRooms($event)">
+        </tr>
+        <ng-container *ngFor="let workflowTask of workFlowTaskListArray;trackBy: trackBy.bind(this,'workflowTaskConfigId');let i= index">
+          <tr *ngIf="!workflowTask.isEditable" cdkDragLockAxis="y" cdkDrag [cdkDragDisabled]="!isUpdateSequence"
+            class="{{(!isUpdateSequence)?'':'example-box'}}">
+            <td>{{workflowTask.taskName}}</td>
+            <td>{{workflowTask.nickName ? '['+workflowTask.floor+']'+'-'+ workflowTask.nickName : 'All'}}</td>
+            <td>{{workflowTask.floorRoomName}} - {{workflowTask.location}}</td>
+            <td>
+              <span
+                *ngFor="let repeat of workflowTask.repeatsOn.repeatsOnDay;trackBy: trackBy.bind(this,'');let i= index;let isLast=last">
+                {{ repeat.weekDay | repeatOnDays}}{{ isLast ? ' ' : ', ' }}
+              </span>
+            </td>
+            <td>{{workflowTask.description}}</td>
+            <td>{{workflowTask.isPictureRequired ? 'Yes' : 'No'}}</td>
+            <td class="text-center">
+              <div ngbDropdown container="body" class="data-tbl-dropdown">
+                <button type="button" class="btn bg-transparent m-0 py-0 px-2" [disabled]="isUpdateSequence"
+                  ngbDropdownToggle>
+                  <span class="icon icon-more"></span>
+                </button>
+                <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                  <button type="button" class="dropdown-item" *hasPermission="taskEnum.update" ngbDropdownItem
+                    [disabled]="isUpdateSequence" (click)="openEditForm(workflowTask)">
+                    <span class="icon icon-edit mr-2"></span>
+                    <span>Edit</span>
+                  </button>
+                  <button type="button" *hasPermission="taskEnum.delete" class="dropdown-item" ngbDropdownItem
+                    [disabled]="isUpdateSequence" (click)="openModal(workflowTask)">
+                    <span class="icon icon-delete mr-2"></span>
+                    <span>Delete</span>
+                  </button>
+                  <button type="button" class="dropdown-item" ngbDropdownItem (click)="onCreateCopy(workflowTask,i)"
+                    [disabled]="isUpdateSequence">
+                    <span class="icon icon-files mr-2"></span>
+                    <span>Create a new copy</span>
+                  </button>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <tr app-workflow-task-form-ui *ngIf="workflowTask.isEditable"
+            class="table-inline-form {{workflowTask.isEditable ? 'edit-form' : ''}} example-box"
+            [workflowTask]="workflowTask" [floors]="floors" [rooms]="rooms" [weekDays]="weekDays"
+            (update)="updateWorkflowTask($event)" (getRooms)="onGetRooms($event)" (add)="addWorkflowTask($event)"
+            (cancel)="closeEditForm()" style="display: contents;">
+          </tr>
+
+        </ng-container>
+
+        <!-- colspan base on total column -->
+        <tr *ngIf="(!baseResponse || baseResponse.length === 0) && !formOpen">
+          <td colspan="7" class="text-muted text-center">No Record Found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

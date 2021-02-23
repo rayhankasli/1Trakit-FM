@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="ReportMail" module="ReportMail" breadcrumbKey="Mail"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrakIt-config/Reports/shared/models/mail-model.xml" />
+    <xi:include href="./1TrakIt-config/Reports/shared/controllers/mail-controller.xml" />
+    <table responseModel="MailReport" controller="MailReport" isCheckable="false"
+    isAddable="false" hasBreadcrumb="false" hasFilters="true" hasSorting="true"
+    hasPagination="true" hasActions="false" hasGlobalSearch="false">
+    <columns>
+        <column isFilterable="false" isSortable="true" class="align-center">scanId</column>
+        <column isFilterable="false" isSortable="true" class="align-center">courierCompany</column>
+        <column isFilterable="false" isSortable="true" class="align-center">scannedBy</column>
+        <column isFilterable="false" isSortable="true" class="align-center">deliveredTo</column>
+        <column isFilterable="false" isSortable="true" class="align-center">dateTime</column>
+        <column isFilterable="false" isSortable="true" class="align-center">receivingType</column>
+        <column isFilterable="false" isSortable="true" class="align-center">status</column>
+        <column isFilterable="false" isSortable="true" class="align-center">attempts</column>
+    </columns>
+    </table>
+</component>    

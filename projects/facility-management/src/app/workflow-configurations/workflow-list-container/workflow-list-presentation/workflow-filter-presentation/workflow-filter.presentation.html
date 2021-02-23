@@ -1,0 +1,79 @@
+<!-- Data-table Filter area  -->
+<div class="data-tbl-filter d-flex bg-white flex-column shadow-sm rounded">
+  <div class="filter-header p-3 d-flex align-items-center border-bottom justify-content-between">
+    <h3 class="mb-0 font-weight-medium filter-title">{{'Filter'}}</h3>
+    <div>
+      <button type="button" class="btn btn-outline-primary mr-2" (click)="onClearFilter()" *ngIf="isFilterApply">
+        <span>{{'Clear Filter'}}</span>
+      </button>
+      <button type="button" class="btn btn-icon" (click)="dismiss()">
+        <span class="icon icon-times"></span>
+      </button>
+    </div>
+  </div>
+  <div class="filter-body d-flex flex-column p-3 h-100 overflow-auto">
+    <form class="floating-form h-100" [formGroup]="workflowFormGroup">
+      <div class="row">
+        <div class="form-group col-md-6 col-12 col-lg-12">
+          <ng-select #office [items]="offices" selectFloatingLabel bindLabel="office" bindValue="officeId"
+            [clearable]="false" formControlName="officeId" class="form-control float-outline p-0" appendTo="body"
+            [searchable]="false" (change)="changeOffice($event)">
+            <ng-template ng-header-tmp>
+              <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                <input type="text" autoFocus class="form-control border-0 pr-0"
+                  (input)="office.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                  aria-describedby="button-addon">
+                <div class="input-group-append">
+                  <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                    <span class="icon icon-search"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </ng-select>
+          <label for="officeId" class="floating-form-label">
+            Office
+          </label>
+        </div>
+        <div class="form-group col-md-6 col-12 col-lg-12">
+          <app-time-picker formControlName="workflowStartTime">
+            <label ctrlLabel class="floating-form-label">
+              Workflow Start Time
+            </label>
+            <label ctrlLabel for="workflowStartTime" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+          </app-time-picker>
+        </div>
+        <div class="form-group col-md-6 col-12 col-lg-12">
+          <ng-select #assigner [items]="assignerList" selectFloatingLabel bindLabel="assignTo" bindValue="assignedToId"
+            [clearable]="false" formControlName="assignToId" appendTo="body" class="form-control float-outline p-0"
+            [searchable]="false">
+            <ng-template ng-header-tmp>
+              <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                <input type="text" autoFocus class="form-control border-0 pr-0"
+                  (input)="assigner.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                  aria-describedby="button-addon">
+                <div class="input-group-append">
+                  <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                    <span class="icon icon-search"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </ng-select>
+          <label for="assignToId" class="floating-form-label">
+            Assign To
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="filter-footer border-top d-flex align-items-center justify-content-between p-3">
+    <button class="btn btn-outline-secondary px-3" (click)="onReset()">
+      {{'Reset'}}
+    </button>
+    <button class="btn btn-primary px-3" [disabled]="!workflowFormGroup.valid || workflowFormGroup.pristine"
+      (click)="onApplyFilter()">
+      {{'Apply'}}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="ReportTask" module="ReportTask" breadcrumbKey="Task"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:include href="./1TrakIt-config/Reports/shared/models/task-model.xml" />
+    <xi:include href="./1TrakIt-config/Reports/shared/controllers/task-controller.xml" />
+    <table responseModel="TaskReport" controller="TaskReport" isCheckable="false"
+    isAddable="false" hasBreadcrumb="false" hasFilters="false" hasSorting="true"
+    hasPagination="true" hasActions="false" hasGlobalSearch="false">
+    <columns>
+        <column isFilterable="false" isSortable="true" class="align-center">taskName</column>
+        <column isFilterable="false" isSortable="true" class="align-center">assignedTo</column>
+        <column isFilterable="false" isSortable="true" class="align-center">createdBy</column>
+        <column isFilterable="false" isSortable="true" class="align-center">location</column>
+        <column isFilterable="false" isSortable="true" class="align-center">dateTimeOfCompletion</column>
+        <column isFilterable="false" isSortable="true" class="align-center">timelineness</column>
+        <column isFilterable="false" isSortable="true" class="align-center">pictures</column>
+        <column isFilterable="false" isSortable="true" class="align-center">status</column>
+        <column isFilterable="false" isSortable="true" class="align-center">reasonNotCompleted</column>
+        <column isFilterable="false" isSortable="true" class="align-center">comments</column>
+    </columns>
+    </table>
+</component>    

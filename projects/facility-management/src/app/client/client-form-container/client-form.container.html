@@ -1,0 +1,7 @@
+<div class="card w-100">
+    <div class="card-body p-0 overflow-hidden">
+        <app-client-form-ui [client]="client$ | async" (add)="addClient($event)" (update)="updateClient($event)"
+            (cancel)="cancelChanges($event)" (saveAndContinue)="saveAndContinue($event)">
+        </app-client-form-ui>
+    </div>
+</div>

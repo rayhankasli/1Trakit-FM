@@ -1,0 +1,272 @@
+.nav-tabs {
+  flex-wrap: nowrap;
+  flex-grow: 1;
+  border-bottom: 1px solid $border-color;
+  
+  .nav-item {
+    flex-shrink: 0;
+
+    &:not(:first-child) {
+      margin-left: -1px;
+    }
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 10px 30px;
+    margin-bottom: 0;
+    border: 1px solid $border-color;
+    border-radius: 0;
+    background-color: $light;
+    color: $secondary-dark;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-base * 0.875;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background-color: $primary;
+      opacity: 0;
+    }
+
+    @include hover-focus() {
+      border-color: $border-color;
+    }
+    &.active,
+    &.show {
+      border-color: $border-color $border-color $white $border-color;
+      background:$white;
+      color: $primary;
+      &::before {
+        opacity: 1;
+      }
+    }
+
+  }
+
+  &.report-nav {
+    // overflow-x: auto;
+    // overflow-y: hidden;
+    .nav-link {
+      padding: 10px 5px;
+      font-size: $font-size-base * 0.7;
+      font-weight: $font-weight-normal;
+
+      @include media-breakpoint-up('xl') {
+        padding: 10px 8px;
+        font-size: $font-size-base * 0.8;
+      }
+    }
+  }
+}
+
+// Data-table Dropdown
+.data-tbl-dropdown {
+  .dropdown-toggle {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+
+// Tab as a stepper
+.stepper {
+  .nav-tabs {
+    max-width: 100%;
+    margin: auto;
+    counter-reset: nav-item;
+    justify-content: space-around;
+
+    @include media-breakpoint-up('xl') {
+      max-width: 80%;
+    }
+    .nav-item {
+      position: relative;
+      text-align: center;
+      flex-grow: 1;
+      width: 100px;
+      &::before {
+        content: "";
+        position: absolute;
+        top: calc((#{$stepper-indicator-size} - #{$stepper-border-height-sm}) / 2);
+        left: 50%;
+        background: $stepper-indicator-bg;
+        width: 100%;
+        height: $stepper-border-height-sm;
+
+        @include media-breakpoint-up('xl') {
+          top: calc((#{$stepper-indicator-size} - #{$stepper-border-height}) / 2);
+          height: $stepper-border-height;
+        }
+      }
+      &:last-child::before {
+        width: 0;
+        background: transparent;
+      }
+      .nav-link {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        border: 0;
+        padding: 0;
+        padding-top: $stepper-indicator-size + 10px;
+        color: $stepper-label-color;
+        font-size: $stepper-label-font-size-sm;
+        font-weight: $stepper-label-font-weight;
+        letter-spacing: $stepper-label-letter-spacing;
+        background: transparent;
+        z-index: 9;
+
+        @include media-breakpoint-up('xl') {
+          font-size: $stepper-label-font-size;
+        }
+        &::before {
+          counter-increment: nav-item;
+          content: counter(nav-item);
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          background: $stepper-indicator-bg;
+          height: $stepper-indicator-size;
+          width: $stepper-indicator-size;
+          margin: auto;
+          border-radius: $stepper-indicator-border-radius;
+          line-height: $stepper-indicator-size;
+          font-size: $stepper-indicator-font-size;
+          opacity: 1;
+        }
+      }
+      &.active,
+      &.show {
+        &::before {
+          background-color: $stepper-active-indicator-bg;
+        }
+        .nav-link {
+          color: $stepper-active-label-color;
+          &::before {
+            background: $stepper-active-indicator-bg;
+            color: color-yiq($stepper-active-indicator-bg);
+          }
+        }
+      }
+
+      &.success {
+        &::before {
+          background-color: $stepper-success-indicator-bg;
+        }
+        .nav-link {
+          color: $stepper-success-label-color;
+          &::before {
+            content: "\e906";
+            font-family: "app-icons";
+            font-weight: $font-weight-normal;
+            font-size: $font-size-base * 0.875;
+            background: $stepper-success-indicator-bg;
+            color: color-yiq($stepper-success-indicator-bg);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Tab as Wizard
+.wizard {
+  .nav-tabs {
+    background: $nav-divider-color;
+    .nav-item {
+      margin: 0;
+      &:hover {
+        .nav-link {
+          background: nth($nav-tabs-link-hover-border-color, 2);
+          &::after {
+            border-left-color: nth($nav-tabs-link-hover-border-color, 2);
+          }
+        }
+      }
+      &.active,
+      &.show {
+        .nav-link {
+          border: 0;
+          background: $nav-tabs-border-color;
+          &::after {
+            border-left-color: $nav-tabs-border-color;
+          }
+        }
+      }
+      &:not(:first-child) {
+        .nav-link {
+          padding-left: 40px;
+        }
+      }
+      
+      &:disabled, 
+      &.disabled {
+        &:hover {
+          .nav-link {
+            background-color: $nav-tabs-link-border-color;
+            cursor: no-drop;
+            pointer-events: none;
+            &::after {
+              border-left-color: $nav-tabs-link-border-color;
+            }
+          }
+        }
+      }
+    }
+    .nav-link {
+      position: relative;
+      border-radius: 0;
+      background: $nav-tabs-link-border-color;
+      &::after,
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        height: 100%;
+        content: "";
+        transform: translateY(-50%);
+      }
+      &::after {
+        border-top: ($wizard-pointer-size + 2px) solid transparent; // 27px
+        border-bottom: $wizard-pointer-size solid transparent; // 25px
+        border-left: (floor($wizard-pointer-size / 2) + 3px) solid $nav-tabs-link-border-color; // 15px
+        z-index: 2;
+      }
+      &::before {
+        border-top: ($wizard-pointer-before-size + 2px) solid transparent; // 32px
+        border-bottom: $wizard-pointer-before-size solid transparent; // 30px
+        border-left: (floor($wizard-pointer-before-size / 2) + 3px) solid $white; // 18px
+        z-index: 1;
+      }
+    }
+  }
+}
+
+// Common style for stepper and wizard
+.stepper,
+.wizard {
+  .nav-tabs {
+    border: none;
+    flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-grow: 0;
+    -ms-flex-positive: 0;
+  }
+  .tab-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    -ms-flex-positive: 1;
+    overflow: hidden;
+    > .tab-pane {
+      display: none;
+    }
+  }
+}

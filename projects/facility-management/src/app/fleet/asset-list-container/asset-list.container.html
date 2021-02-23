@@ -1,0 +1,4 @@
+<div class="px-3 h-100 overflow-hidden">
+    <app-asset-list-ui [clients]="clients$ | async" [baseResponse]="assets$ | async" (getAsset)="getAssets($event)"
+        (deleteAsset)="deleteAsset($event)" (setAssetStatus)="setAssetStatus($event)"></app-asset-list-ui>
+</div>

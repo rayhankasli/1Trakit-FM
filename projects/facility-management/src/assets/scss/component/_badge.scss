@@ -1,0 +1,31 @@
+// Badge
+.badge {
+  &.badge-icon {
+    display: inline-block;
+    height: $badge-icon-size;
+    width: $badge-icon-size;
+    padding: 0;
+  }
+}
+
+
+@each $color, $value in $colors {
+  .badge-#{$color} {
+    background-color: $value;
+    color: color-yiq($value);
+  }
+}
+
+@each $color, $value in $status {
+  .badge-#{$color} {
+    background-color: $value;
+    color: color-yiq($value);
+  }
+}
+
+@each $color, $value in $fleet-status {
+  .badge-#{$color} {
+    background-color: $value;
+    color: color-yiq($value);
+  }
+}

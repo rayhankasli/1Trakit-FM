@@ -1,0 +1,29 @@
+<!-- Right Sidebar -->
+<section id="right-sidebar" class="help-area bg-white shadow" [@slideInOut]="faqStatus ? 'expand' : 'collapsed' ">
+  <div class="card d-flex flex-column border-0 rounded-0 overflow-hidden h-100">
+    <div class="card-header bg-white flex-shrink-0">
+      <h5 class="m-0">Frequently Asked Questions</h5>
+    </div>
+    <div class="card-body flex-grow-1 overflow-auto">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" [(ngModel)]="searchFilter" id="search-faq"
+            placeholder="Search frequently asked questions">
+        </div>
+      </div>
+      <!-- Accordion for singleQuestions -->
+      <ngb-accordion activeIds="0">
+        <ngb-panel id="{{ i }}" title="{{helpContent.question}}"
+          *ngFor="let helpContent of helpContentData | search:searchFilter ; let i=index; trackBy: trackBy">
+          <ng-template ngbPanelContent>
+            {{ helpContent.answer }}
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+    <div class="card-footer bg-white flex-shrink-0">
+      <button type="button" class="btn btn-primary" (click)="deleteMe(); ">Close</button>
+    </div>
+  </div>
+</section>
+<!-- End: Right Sidebar -->

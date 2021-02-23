@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-Web_1920_1">
+      <rect width="32" height="32"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_1" data-name="Web 1920 – 1" clip-path="url(#clip-Web_1920_1)">
+    <g id="Logo" transform="translate(-45 -21.357)">
+      <g id="_1TrakIT" data-name="1TrakIT" transform="translate(45 28.357)">
+        <path id="_1TrakIT-2" data-name="1TrakIT" d="M2.531,6.511a8.515,8.515,0,0,0,0,12.123,8.745,8.745,0,0,0,12.258,0l.317-.315-1.872-1.851-.318.314a6.076,6.076,0,0,1-8.514,0,5.917,5.917,0,0,1,0-8.419,6.075,6.075,0,0,1,8.514,0l6.43,6.357,1.872-1.85L14.789,6.51a8.746,8.746,0,0,0-12.257,0Z" transform="translate(0.004 -4)" fill="#da2028" fill-rule="evenodd"/>
+        <path id="_1TrakIT_copy" data-name="1TrakIT copy" d="M33.915,6.505l-.3.3,1.875,1.848.3-.3a6.064,6.064,0,0,1,8.51,0,5.908,5.908,0,0,1,0,8.422,6.076,6.076,0,0,1-8.514,0L28.873,9.937,27,11.788l6.918,6.842a8.745,8.745,0,0,0,12.258,0,8.5,8.5,0,0,0,0-12.122,8.735,8.735,0,0,0-12.259,0Z" transform="translate(-16.713 -3.995)" fill="#b4bac9" fill-rule="evenodd"/>
+      </g>
+    </g>
+  </g>
+</svg>

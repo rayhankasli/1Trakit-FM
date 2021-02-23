@@ -1,0 +1,425 @@
+// Options
+$enable-flex: true;
+$enable-shadows: true;
+$enable-responsive-font-sizes: true;
+
+// Typography
+$font-family-sans-serif: "Poppins", sans-serif;
+
+/* ==============================
+   Variables
+============================== */
+
+// Typography
+$font-size-base: 1rem; // 16px - Body text
+$font-size-sm: 0.875rem; // 14px - Secondary body text, Buttons, Form labels
+$small-font-size: $font-size-sm; // 14px - Small text
+$small-uppercase-font-size: 0.625rem; // 10px - small all uppercase font.
+
+$line-height-base: 1.5;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$h1-font-size: $font-size-base * 3; // 48px - Big Title
+$h2-font-size: $font-size-base * 2.5; // 40px - Title
+$h3-font-size: $font-size-base * 2; // 32px - Heading
+$h4-font-size: $font-size-base * 1.5; // 24px - Heading 2
+$h5-font-size: $font-size-base * 1; // 16px - Subheading
+$h6-font-size: $font-size-sm; // 14px - Small heading
+
+// The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+$yiq-contrasted-threshold: 190;
+
+// Display fonts
+$display4-size: $font-size-base * 2;
+
+/* ==============================
+   End: Variables
+============================== */
+
+$grid-gutter-width: 14px;
+
+// Map: grid-breakpoint
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 769px,
+  lg: 1024px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+// Spacing
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: (
+    $spacer * 0.25,
+  ),
+  2: (
+    $spacer * 0.5,
+  ),
+  3: (
+    $spacer * 0.8,
+  ),
+  4: (
+    $spacer * 1.5,
+  ),
+  5: (
+    $spacer * 3,
+  ),
+);
+
+// Global Spacer
+$spacer: 1rem;
+
+// Global Border
+$border-width: 1px;
+
+// Sidebar
+$sidebar-expanded-width: 250px;
+$sidebar-collapsed-width: 80px;
+
+// Topbar
+$dashboard-topbar-height: 70px;
+$dashboard-topbar-height-sm: 60px;
+$notification-dropdown-width: 350px;
+$avatar-img-size: 40px;
+$topbar-height: 70px;
+$topbar-dropshadow: false;
+
+// Transition
+$transition-base: all 0.4s ease-in-out;
+
+// Card variables
+$card-status-icon-size: 70px;
+
+// Spinner
+$spinner-width: 4em;
+
+// Close button
+$close-font-size: $font-size-base * 1.2;
+// Rounded button
+$rounded-btn-size: 35px;
+
+/*********************************
+    Global Border Radius
+*********************************/
+$enable-rounded: true; // Enable/Disable border radius
+
+$border-radius: 4px; // Set Radius Value
+$custom-checkbox-indicator-border-radius: $border-radius; // Set Custom Checkbox border-radius
+
+@if $enable-rounded and ($border-radius > 5px) {
+  $custom-checkbox-indicator-border-radius: 5px;
+}
+
+/********************************
+    End  Global Border Radius
+*********************************/
+
+// Alert
+
+$alert-bg-level: -10 !default;
+$alert-border-level: -10 !default;
+$alert-color-level: 5 !default;
+
+// Button
+
+$btn-text-uppercase: true; // Button text uppercase or not.
+$btn-disabled-opacity: 0.4;
+$btn-font-size: $font-size-sm;
+
+// Dropdown
+$dropdown-font-size: $font-size-base * 0.875;
+
+$dropdown-box-shadow: 0 4px 8px rgba($black, 0.175);
+
+$dropdown-padding-y: 0;
+$dropdown-item-padding-y: 0.75rem;
+$dropdown-item-padding-x: 1rem;
+
+$dropdown-item-font-size-sm: 0.8rem;
+$dropdown-item-padding-y-sm: 0.5rem;
+$dropdown-item-padding-x-sm: 1rem;
+
+$floor-dropdown-width: 230px;
+
+// Caret
+$caret-width:                       5px;
+
+/***************************
+    => DATA TABLE
+***************************/
+
+$enable-row-spacing: false; // Enable row spacing (Table : border-spacing)
+$enable-table-head-color: true; // Enable/Disable Table Header Color
+$enable-table-border: true; // Enable full table border
+$enable-table-header-border: false; // Enable Table header border only
+$th-text-uppercase: true; // Enable/Disable Table Thead Text uppercase
+$enable-data-valign-center: false; // Vertically center Align of Tbody data
+$enable-table-row-box-shadow: false; // Enable/Disable Table row box-shadow
+$table-selected-row-filled: false; // Enable/Disable selected row fill color in Table Body
+
+$row-space: 0 0.5rem; // --> Row Spacing
+$table-border-width: 1px; // --> Table Border size
+$table-cell-padding: 0.75rem 0.5rem; // --> Cell Padding
+
+$table-font-size: 0.875rem; // --> Table Font size
+$th-font-size: $table-font-size; // --> Table TH font size
+$td-font-size: $table-font-size; // --> Table TD font size
+$th-font-weight: $font-weight-semibold; // --> Table Head Font Weight
+$table-filter-width: 340px; // --> Filter Box
+
+$table-max-height:       350px;
+$table-lg-max-height:    430px;
+
+/***************************
+    => END DATA TABLE
+***************************/
+
+/***************************
+=> Forms
+***************************/
+$input-btn-padding-y: 0.5rem;
+$input-btn-padding-x: 0.5rem;
+$input-btn-line-height: $line-height-base;
+$input-btn-font-size: $font-size-base;
+
+$input-btn-padding-y-sm: 0.5rem;
+$input-btn-padding-x-sm: 0.5rem;
+$input-btn-font-size-sm: $font-size-base * 0.8;
+$input-line-height-sm: 1.5;
+
+$label-text-uppercase: false; // Label Text Uppercase
+$label-text-capitalize: true; // Label Text Capitalize
+$enable-validation-icons: false; // Enable/Disable validation icons in form
+$enable-outline-form-control: true; // Enable/Disable form-control outline
+
+$label-font-size: $font-size-sm; // Label Font Size
+$label-font-weight: $font-weight-semibold; // Label Font Weight
+$input-btn-font-size: $font-size-base * 0.875; // --> Font Size
+
+$float-label-padding-x: 0.15rem; // Floating label padding
+$label-margin-bottom: 0.3rem; // --> Margin of Form Control Label
+
+$form-group-margin-bottom: 0.6rem; // Form-group bottom margin
+
+$input-border-width: 1px;
+
+$input-line-height: $input-btn-line-height;
+$input-padding-y: $input-btn-padding-y;
+$input-height-border: $input-border-width * 2;
+
+$input-padding-y-sm: $input-btn-padding-y-sm;
+
+$input-height: add(
+  $input-line-height * 1em,
+  add($input-padding-y * 2, $input-height-border, false)
+);
+$input-height-sm: add(
+  $input-line-height-sm * 1em,
+  add($input-padding-y-sm * 2, $input-height-border, false)
+);
+
+$btn-icon-size: $input-height;
+$btn-icon-size-sm: $input-height-sm;
+
+$custom-file-text: (
+  en: "Choose File",
+);
+
+$upload-file-image-thumbnail-size: 50px;
+$upload-file-image-thumbnail-size-lg: 100px;
+
+$date-time-icon-position: 11px;
+$date-time-icon-position-sm: 9px;
+
+// Form validation
+
+$form-feedback-font-size: $font-size-base * 0.75;
+
+// ng-select
+$ng-select-top-margin: 0;
+$ng-select-container-height: $input-height;
+$ng-select-container-height-sm: $input-height-sm;
+$ng-dropdown-max-height: 230px;
+$ng-select-width-sm: 100px;
+$ng-select-width-lg: 180px;
+$ng-select-width-xl: 300px;
+
+$type-name-form-width: 220px;
+
+// Repeats On Form
+$repeat-form-checkbox-size: 30px;
+
+/***************************
+    => ENd Forms
+***************************/
+
+/***************
+    Tabs
+***********/
+
+$disable-active-border-bottom: true; // Enable/Disable active tab bottom border
+
+$nav-link-padding-y: 0.5rem;
+$nav-link-padding-x: 1rem;
+
+$nav-tabs-border-width: 1px;
+$nav-tabs-link-border-width: 0;
+$nav-tabs-active-border-width: 2px;
+
+$nav-tabs-border-radius: $border-radius;
+$nav-pills-border-radius: $border-radius;
+
+/***************
+   End Tabs
+**************/
+
+/******************************
+    => Accordion
+*****************************/
+
+$enable-accordion-head-color: false; // Enable/Disable accordion Header Color
+$enable-accordion-body-color: true; // Enable/Disable accordion Body Color
+$enable-accordion-border: true; // Enable Accordion border
+$enable-accordion-header-border: false; // Enable Accordion Header border only
+$enable-accordion-body-border: true; // Enable Accordion Body border only
+$enable-accordion-padding: true; // Enable accordion overall padding
+$accordion-text-uppercase: true; // Enable/Disable Accordion Header Text uppercase
+$accordion-disabled: true; // Accordion when Disabled
+
+$accordion-border-width: 1px; // Accordion Border size
+$accordion-head-border-width: $accordion-border-width; // Accordion Head Border size
+$accordion-body-border-width: $accordion-border-width; // Accordion Body Border size
+
+$accordion-padding: 0.5rem; // Accordion Spacing
+$accordion-head-padding: $accordion-padding; // Accordion Head Spacing
+$accordion-body-padding: $accordion-padding; // Accordion Body Spacing
+
+$accordion-padding-sm: 0.25rem 0.5rem; // Accordion Spacing
+$accordion-head-padding-sm: $accordion-padding-sm; // Accordion Head Spacing
+$accordion-body-padding-sm: $accordion-padding-sm; // Accordion Body Spacing
+
+$accordion-font-size: $font-size-sm; // Accordion Font-size
+$accordion-head-font-size: $font-size-sm; // Accordion Head Font-size
+$accordion-body-font-size: $accordion-font-size; // Accordion Body Font-size
+$accordion-head-font-weight: $font-weight-semibold; // Accordion Head Font Weight
+
+/******************************
+    => End Accordion
+*****************************/
+
+// User profile
+$user-profile-image-size: 150px;
+$user-initial-size:       40px;
+
+/******************************
+    => Aside List
+*****************************/
+
+$aside-list-width: 250px;
+$aside-list-width-sm: 250px;
+
+/******************************
+    => End: Aside List
+*****************************/
+
+// Breadcrumb
+
+$breadcrumb-font-size:          $font-size-base * 1.2;   
+$breadcrumb-font-size-sm:       $font-size-base * 1.1;  
+$breadcrumb-item-padding-sm:    0.3rem; 
+
+/******************************
+    => Stepper
+*****************************/
+$stepper-border-height:             3px;
+$stepper-border-height-sm:          2px;
+$stepper-indicator-size:            30px;
+$stepper-indicator-font-size:       $font-size-base;
+$stepper-indicator-border-radius:   50%;
+
+$stepper-label-font-size:           $font-size-base * 0.8;
+$stepper-label-font-size-sm:        $font-size-base * 0.75;
+$stepper-label-font-weight:         $font-weight-semibold;
+$stepper-label-letter-spacing:      0.35px;
+
+/******************************
+    => Wizard
+*****************************/
+$wizard-pointer-size: 25px;
+$wizard-pointer-before-size: $wizard-pointer-size + 5px;
+
+/******************************
+    => Time slots
+*****************************/
+// Legend
+$timeslot-legend-indicator-width: 16px;
+$timeslot-legend-indicator-height: 16px;
+
+// Icon Map
+$icon-size: (
+    '1x':       $font-size-base,
+    '2x':       $font-size-base * 1.1,
+    '3x':       $font-size-base * 1.5,
+    '4x':       $font-size-base * 2,
+    '5x':       $font-size-base * 3,
+);
+
+// Chart
+$chart-legend-font-size:        $font-size-base * 0.8;
+$chart-body-area-max-height:    300px;
+
+// Multiselect Search 
+$multiselect-dropdown-width:            219px;
+$multiselect-dropdown-width-sm:         214px;
+
+$multiselect-selected-label-width:      110px;
+
+// Badge
+$badge-icon-size:                       8px;
+
+// Chat Box
+$chat-box-width:                        350px;
+
+$header-content-spacing:                map-get($spacers, 3);
+$chat-box-top-position:                 calc(#{$dashboard-topbar-height} + (2 * #{$header-content-spacing}) + 34px);
+$chat-box-top-position-sm:              calc(#{$dashboard-topbar-height-sm} + (2 * #{$header-content-spacing}) + 34px);
+
+$chat-user-initial-size:                40px;  
+
+// Progress bars
+
+$progress-height:                   0.5rem;
+$chart-progress-width:              200px;
+
+/******************************
+    => Notification List  
+*****************************/
+
+$notification-list-width:          350px;
+// Tooltip
+$tooltip-font-size:                 $font-size-base * 0.8;
+$tooltip-max-width:                 300px;
+$tooltip-padding-x:                 .25rem;
+
+// Full Calendar
+$month-week-btn-width:              110px;
+
+$current-date-border-height:        3px;
+
+$event-area-width:                  25%;
+$event-number-size:                 20px;
+$event-item-border-width:           4px;
+// Room
+$room-layout-img-height:             80px;
+
+// Report
+$report-data-table-width:           350px;
+$report-data-table-width-sm:        280px;

@@ -1,0 +1,71 @@
+<button #printBtn hidden type="button" class="btn btn-outline-light" [useExistingCss]="true" printSectionId="printable"
+  ngxPrint printTitle="1TrakIt-FM | Meter Read" title="Print">
+  <span class="icon icon-print icon-1x text-gray-dark"></span>
+</button>
+<section id="printable">
+  <div class="p-3 print-area">
+    <div class="border-bottom mb-3 pb-3">
+      <img [src]="host+'/assets/img/1TRAKIT.png'" alt="1Trakit Logo">
+    </div>
+    <h4 class="mb-3 title text-center">Meter Read</h4>
+    <div class="border rounded mb-3">
+      <div class="card-header p-3 fleet-model-title">
+        {{assetRecord?.assetType}} {{assetRecord?.manufacturer}} {{assetRecord?.modelNo}}
+      </div>
+      <div class="card-body p-3">
+        <table class="table data-tbl w-100 mb-0">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Date</th>
+              <th colspan="2" class="text-center">Color Reading</th>
+              <th colspan="2" class="text-center"> B&amp;W Reading </th>
+              <th colspan="2" class="text-center"> Scan Reading </th>
+              <th colspan="3" class="text-center">Rate</th>
+            </tr>
+            <tr class="table-sub-header">
+              <th></th>
+              <th></th>
+              <th class="text-center border-left">Previous</th>
+              <th class="text-center">Current</th>
+              <th class="text-center border-left">Previous</th>
+              <th class="text-center">Current</th>
+              <th class="text-center border-left">Previous</th>
+              <th class="text-center">Current</th>
+              <th class="text-center border-left">Color</th>
+              <th class="text-center">B&amp;W</th>
+              <th class="text-center">Scan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let meterRead of meterReads?.assetMeterList;trackBy:trackBy.bind(this,'assetMeterId');let i= index">
+              <ng-container *ngIf="meterRead.isMissingEntry">
+                <td class=" rounded-0">{{i+1}}</td>
+                <td class="text-center  rounded-0" colspan="10">
+                  <span>Missing meter read entry.</span>
+                  <span class="font-weight-medium"> Click to create.</span>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="!meterRead.isMissingEntry">
+                <td>{{i+1}}</td>
+                <td>{{meterRead?.readingDate | date:dateFormat}}</td>
+                <td class="text-center">{{meterRead?.previousColorRead}}</td>
+                <td class="text-center">{{meterRead?.currentColorRead}}</td>
+                <td class="text-center">{{meterRead?.previousBwRead}}</td>
+                <td class="text-center">{{meterRead?.currentBwRead}}</td>
+                <td class="text-center">{{meterRead?.previousScanRead}}</td>
+                <td class="text-center">{{meterRead?.currentScanRead}}</td>
+                <td class="text-center">{{meterRead?.colorRate}}</td>
+                <td class="text-center">{{meterRead?.bwRate}}</td>
+                <td class="text-center">{{meterRead?.scanRate}}</td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #assetNone>
+          None
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>

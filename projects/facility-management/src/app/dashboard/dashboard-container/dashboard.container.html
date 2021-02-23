@@ -1,0 +1,19 @@
+<div class="px-3">
+  <app-dashboard-presentation-ui [clients]="clientList$ | async" [chartStatusCopyIt]="getCopyItStatus"
+    [chartStatusBookIt]="getBookItStatus" [chartStatusFleet]="getFleetStatus"
+    [chartStatusClient]="getClientChartStatus" [chartStatusAssociate]="getAssociateChartStatus"
+    [chartStatusCopyItRequest]="getChartStatusCopyitRequest "
+    [chartStatusBookItRequest]="getChartStatusBookitRequest"
+    [chartStatusFleetRequest]="getChartStatusFleetRequest" [openRequest]="openRequest"
+    (copyItCombochartData)="getCopyItCombochartData($event)" (bookItCombochartData)="getbookItCombochartData($event)"
+    (fleetCombochartData)="getFleetCombochartData($event)"
+    (copyItCombochartDataDefault)="getCopyItCombochartData($event)"
+    (bookItCombochartDataDefault)="getbookItCombochartData($event)"
+    (fleetCombochartDataDefault)="getFleetCombochartData($event)" (getCopyItChartList)="getCopyItChartLists($event)"
+   
+     (getBookItChartList)="getBookItChartLists($event)" (getFleetChartList)="getFleetChartLists($event)"
+      (getClientStatus)="getClientStatus($event)" (getAssociateStatus)="getAssociateStatus($event)"
+    (getOpenRequests)="getOpenRequests($event)">
+  </app-dashboard-presentation-ui>
+</div>
+

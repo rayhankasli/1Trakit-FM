@@ -1,0 +1,11 @@
+<div class="tab-container mb-3 flex-shrink-0">
+  <ul class="nav nav-tabs px-3">
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" routerLink="detail">Details</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLinkActive="active" [ngClass]="{'disabled':!editMode}" routerLink="offices" *hasPermission="officeEnum.view">Offices</a>
+    </li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

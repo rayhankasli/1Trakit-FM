@@ -1,0 +1,162 @@
+<div class="flex-shrink-0 px-3 d-flex align-items-center" >
+  <div class="pt-1 pb-2 d-flex align-items-center flex-grow-1" [ngSwitch]="view">
+    <h5 class="mb-0" *ngSwitchCase="'month'" [hidden]="!isCalendarPeriod">Calendar Year {{ currentYear }}</h5>
+    <h5 class="mb-0" *ngSwitchCase="'week'">Week View</h5>
+    <div class="ml-auto d-flex align-items-center">
+      <!-- Month View -->
+      <div class="d-flex align-items-center mx-1" *ngSwitchCase="'month'">
+        <button *ngIf="isCalendarPeriod" [disabled]="preventPrevious" type="button" class="btn btn-icon" (click)="prevCall('month')">
+          <span class="icon icon-arrow-prev"></span>
+        </button>
+        <input *ngIf="isCalendarPeriod" class="form-control text-center" type="text" autocomplete="off" preventText #dp="bsDatepicker" id="monthFilterDate" bsDatepicker
+          [(bsValue)]="bsValue" [(ngModel)]="monthFilterDate" [minDate]="minDate" [maxDate]="maxDate"
+          (ngModelChange)="filterMonthItemChange($event)" [bsConfig]="bsConfig" placement="bottom" >
+        <button *ngIf="isCalendarPeriod" [disabled]="preventNext" type="button" class="btn btn-icon" (click)="nextCall('month')">
+          <span class="icon icon-arrow-next"></span>
+        </button>
+      </div>
+      <!-- Week View -->
+      <div *ngIf="isCalendarPeriod">
+      <div class="d-flex align-items-center mx-1" *ngSwitchCase="'week'" >
+        <button type="button" class="btn btn-icon" [disabled]="startWeek === 1" (click)="prevCall('week')">
+          <span class="icon icon-arrow-prev"></span>
+        </button>
+        <ng-select class="form-control ng-select-lg float-outline p-0" #searchSelect [items]="weekFilterItems" [(ngModel)]="filterValue" bindLabel="label"
+          bindValue="value" appendTo="body" [clearable]="false" [searchable]="false"
+          (change)="filterWeekItemChange($event)">
+          <ng-template ng-label-tmp let-item="item">
+            <span>{{ item.label + ' of ' + weekFilterItems.length }}</span>
+          </ng-template>
+          <ng-template ng-header-tmp>
+            <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+              <input type="text" autoFocus class="form-control border-0 pr-0"
+                (input)="searchSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                aria-describedby="button-addon">
+              <div class="input-group-append">
+                <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                  <span class="icon icon-search"></span>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ng-select>
+        <button type="button" class="btn btn-icon" [disabled]="startWeek === endWeek" (click)="nextCall('week')">
+          <span class="icon icon-arrow-next"></span>
+        </button>
+      </div>
+      </div>
+      <!-- All Room -->
+      <div class="floating-form" *ngIf="isCalendarPeriod">
+        <div class="form-group d-flex align-items-center mb-1 px-2">
+          <ng-select class="form-control ng-select-lg float-outline p-0" #searchSelect [items]="allRooms" [formControl]="weekFormControl" bindLabel="room"
+            bindValue="roomId" (clear)="reset()" [clearable]="true" [searchable]="false" selectFloatingLabel appendTo="body" (change)="allRoomItemChange($event)">
+            <ng-template ng-label-tmp let-item="item">
+              <span>{{ item.room }}</span>
+            </ng-template>
+            <ng-template ng-header-tmp>
+              <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                <input type="text" autoFocus class="form-control border-0 pr-0"
+                  (input)="searchSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                  aria-describedby="button-addon">
+                <div class="input-group-append">
+                  <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                    <span class="icon icon-search"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </ng-select>
+          <label for="roomId" class="floating-form-label">
+            All Rooms
+          </label>
+        </div>
+      </div>
+      <!-- Today -->
+      <div *ngIf="isCalendarPeriod">
+        <button class="btn btn-outline-secondary d-flex align-items-center mr-2" [disabled]="isTodayDateMatch" [hidden]="!isCalendarPeriod"
+          (click)="onTodayClick()">
+          <span class="icon icon-today icon-1x mr-2"></span>
+          <span>Today</span>   
+        </button>
+      </div>
+
+      <!-- Month/Week Dropdown -->
+      <div [hidden]="!isCalendarPeriod">
+        <button #buttonRef type="button" (click)="openOverlay()" [hidden]="!isCalendarPeriod"
+          class="btn d-flex align-items-center font-weight-medium btn-outline-secondary dropdown-toggle mr-2 month-week-btn">
+          <span #liRef class="icon icon-1x mr-2"></span>
+          <span>{{ view }}</span>
+        </button>
+      </div>
+      <!-- Print button -->
+      <div *ngIf="isCalendarPeriod">
+          <button type="button" class="btn btn-outline-light d-flex align-items-center justify-content-center btn-icon"
+          (click)="emitCalendarPrint()" title="Print" *hasPermission="calenderPermission.calendarPrint">
+          <span class="icon icon-print icon-1x text-gray-dark"></span>
+          </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="flex-grow-1 h-100 px-3 overflow-hidden">
+  <div class="d-flex h-100">
+    <div class="mb-2 calendar-area" #calenderElement>
+      <ng-container #containerRef></ng-container>
+    </div>
+    <ng-container [ngSwitch]="view" *ngIf="isCalendarPeriod">
+      <div class="mb-2 event-area" *ngSwitchCase="'month'">
+        <div class="d-flex flex-column border rounded-right overflow-hidden h-100">
+          <div class="event-header flex-shrink-0 p-2">
+            <span class="d-flex align-items-center font-weight-semibold">{{weekDay}}, {{ dateTime | date }}</span>
+          </div>
+          <div class="h-100 border-top overflow-auto">
+            <ul class="event-list list-unstyled mb-0">
+              <li class="event-item" *ngFor="let days of filterData;trackBy:trackBy.bind(this,'start'); let idx = index;">
+                <a (click)="navigateToBookItRequest(days.events.bookitId)"
+                  class="event-link cursor-pointer d-flex flex-wrap flex-column text-secondary text-decoration-none">
+                  <span class="event-name font-weight-semibold">{{ days.events.eventName }}</span>
+                  <span class="room-name">{{days.events.room}}</span>
+                  <span class="event-room-layout">{{ days.events.roomLayout }}</span>
+                  <!-- Amenities -->
+                  <div class="d-flex align-items-center flex-wrap" *ngIf="days.events.amenities">
+                    <ng-container *ngFor="let amenities of days.events.amenities;trackBy:trackBy.bind(this,'amenityId'); let idx = index;">
+                      <!-- Chair -->
+                      <div class="d-flex align-items-center smallest"
+                        *ngIf="amenities.amenity === 'Chair' || amenities.amenity === 'chair'">
+                        <span class="icon icon-chair mr-2 text-dark" title="Chair"></span>
+                        <span class="text-gray mr-4">{{ amenities.quantity }}</span>
+                      </div>
+                      <!-- Table -->
+                      <div class="d-flex align-items-center smallest"
+                        *ngIf="amenities.amenity === 'Table' || amenities.amenity === 'table'">
+                        <span class="icon icon-table mr-2 text-dark" title="Table"></span>
+                        <span class="text-gray mr-4">{{ amenities.quantity }}</span>
+                      </div>
+                      <!-- Linen Type -->
+                      <div class="d-flex align-items-center smallest"
+                        *ngIf="amenities.amenity === 'Linen Type' || amenities.amenity === 'linen type'">
+                        <span class="icon icon-linen mr-2 text-dark" title="Linen Type"></span>
+                        <span class="text-gray">{{ amenities.quantity }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <span class="icon icon-clock mr-2"></span>
+                    <span class="event-time">{{ days.events.timeFrom | timeFormat: days.events.timeFrom}} -
+                      {{ days.events.timeTo | timeFormat: days.events.timeTo }}</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <ng-container *ngIf="filterData && filterData.length === 0 || !filterData">
+              <div class="h-100 d-flex align-items-center justify-content-center text-muted small">
+                <span>No event found</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

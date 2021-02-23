@@ -1,0 +1,7 @@
+<app-calendar-ui class="d-flex flex-column w-100 overflow-hidden"
+[calendar]="calendar$ | async" 
+[calenderMasterData]="calenderMasterData$ | async"
+(getCalendar)="getCalendar($event)"
+(getCalendarPeriod)="getCalendarPeriod($event)"
+(generateCalendarPrint)="generateCalendarPrint()">
+</app-calendar-ui>

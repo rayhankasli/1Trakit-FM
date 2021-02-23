@@ -1,0 +1,23 @@
+<div class="chart-legend d-flex flex-xl-row flex-column align-items-center justify-content-center my-xl-3">
+  <div class="d-flex flex-column mx-xl-3 my-xl-0 my-3">
+    <div class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-gray flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-4 flex-grow-1">Received Request</span>
+        <span class="value h4 mb-0 flex-shrink-0">{{receivedData}}</span>
+      </label>
+    </div>
+    <ngb-progressbar type="gray" [max]="receivedData" [value]="receivedData"></ngb-progressbar>
+  </div>
+  
+  <div class="d-flex flex-column mx-xl-3 my-xl-0 my-3">
+    <div class="d-flex align-items-center mb-1">
+      <span class="badge badge-icon badge-danger flex-shrink-0 mr-2 p-0"></span>
+      <label class="d-flex flex-grow-1 justify-content-between align-items-center legend font-weight-medium mb-0">
+        <span class="mr-4 flex-grow-1">Completed Request</span>
+        <span class="value h4 mb-0 flex-shrink-0">{{completedData}}</span>
+      </label>
+    </div>
+    <ngb-progressbar type="danger" [max]="receivedData" [value]="completedData"></ngb-progressbar>
+  </div>
+</div>

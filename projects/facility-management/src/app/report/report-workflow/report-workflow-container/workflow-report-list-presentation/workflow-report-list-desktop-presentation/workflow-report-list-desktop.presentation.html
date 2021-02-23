@@ -1,0 +1,94 @@
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3 report-table-height">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 60px">
+      <col style="width: 50px">
+      <col style="width: 50px">
+      <col style="width: 130px">
+      <col style="width: 60px">
+      <col style="width: 60px">
+      <col style="width: 130px">
+      <col style="width: 60px">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th>
+          <span>Task Name</span>
+        </th>
+        <th appSortingOrder [column]="'assignedTo'" (orderType)="onSortOrder('assignedTo',$event)" scope="col"
+          class="column-sort">
+          <span>Assigned To</span>
+        </th>
+        <th>
+          <span>Location</span>
+        </th>
+        <th appSortingOrder [column]="'dateTimeOfCompletion'" (orderType)="onSortOrder('dateTimeOfCompletion',$event)"
+          scope="col" class="column-sort">
+          <span>Date & Time Of Completion</span>
+        </th>
+        <th appSortingOrder [column]="'status'" (orderType)="onSortOrder('status',$event)" scope="col"
+          class="column-sort">
+          <span>Status</span>
+        </th>
+        <th>
+          <span>Pictures</span>
+        </th>
+        <th appSortingOrder [column]="'reasonNotCompleted'" (orderType)="onSortOrder('reasonNotCompleted',$event)"
+          scope="col" class="column-sort">
+          <span>Reason Not Completed</span>
+        </th>
+        <th>
+          <span>Comments</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let workflowList of workflowReportList;trackBy: trackBy.bind(this,'taskName');let i= index">
+        <td class="align-center">
+          {{workflowList?.taskName || '-'}}
+        </td>
+        <td class="align-center">
+          {{workflowList?.assignedTo || '-'}}
+        </td>
+        <td class="align-center">
+          {{workflowList?.location || '-'}}
+        </td>
+        <td class="align-center">
+          {{workflowList?.dateTimeOfCompletion ? (workflowList?.dateTimeOfCompletion | date:dateTimeFormat) : '-'}}
+        </td>
+        <td class="align-center">
+          {{workflowList?.status || '-'}}
+        </td>
+        <td class="align-center">
+          <ng-container [ngTemplateOutlet]="workflowList?.pictures?.length ? imageBtn : dash"
+            [ngTemplateOutletContext]="{workflowList:workflowList}">
+          </ng-container>
+        </td>
+        <td class="align-center">
+          <span class="text-break">{{workflowList?.reasonNotCompleted ? workflowList?.reasonNotCompleted : '-'}}</span>
+        </td>
+        <td class="align-center">
+          <span class="text-break">{{workflowList?.comments ? workflowList?.comments : '-'}}</span>
+        </td>
+      </tr>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="!workflowReportList || workflowReportList?.length === 0">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #dash>
+  <span> - </span>
+</ng-template>
+<ng-template #imageBtn let-workflowList="workflowList">
+  <button class="btn btn-link text-decoration-none d-flex align-items-center justify-content-center p-0 btn-camera"
+    (click)="openGallery(workflowList?.pictures)">
+    <img [src]="workflowList?.pictures[0]?.systemImageName" alt="Task Image" class="workflow-image rounded-circle mr-1">
+    <ng-container *ngIf="workflowList?.pictures?.length > 1">
+      <span>+{{ workflowList?.pictures?.length - 1 }}</span>
+    </ng-container>
+  </button>
+</ng-template>

@@ -1,0 +1,137 @@
+<trackit-page-actions>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="ml-auto d-flex align-items-center">
+      <trackit-search [minSearchTextLength]="0" (searchText)="onSearch($event)"></trackit-search>
+
+      <!-- Print Button -->
+      <button type="button" class="btn btn-outline-light d-flex align-items-center justify-content-center btn-icon mr-2"
+        title="Print" (click)="onPrint()" *hasPermission="fleetMeterReadsEnum.print"
+        [disabled]="!(meterReads?.length > 0)">
+        <span class="icon icon-print icon-1x text-gray-dark"></span>
+      </button>
+
+      <!-- Export as Excel -->
+      <button type="button" class="btn btn-outline-primary d-flex align-items-center mr-2" title="Export as Excel"
+        (click)="onExportAsExcel()" *hasPermission="fleetMeterReadsEnum.exportAsPDF"
+        [disabled]="!(meterReads?.length > 0)">
+        <span class="icon icon-file-pdf icon-1x mr-2"></span>
+        <span>Export as Excel</span>
+      </button>
+
+      <!-- Export as PDF -->
+      <button type="button" class="btn btn-outline-primary d-flex align-items-center mr-2" title="Export as PDF"
+        (click)="onExportAsPDF()" *hasPermission="fleetMeterReadsEnum.exportAsExcel"
+        [disabled]="!(meterReads?.length > 0)">
+        <span class="icon icon-file-pdf icon-1x mr-2"></span>
+        <span>Export as PDF</span>
+      </button>
+
+      <ng-container *ngIf="!isArchived">
+        <button type="button" title="Add Meter Read" class="btn btn-primary d-flex align-items-center"
+          (click)="onAddMeterRead()" *hasPermission="fleetMeterReadsEnum.add">
+          <span class="icon icon-add mr-2"></span>
+          <span>Add Meter Read</span>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</trackit-page-actions>
+
+<!-- Data-table footer area -->
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <h4 class="mb-0 fleet-model-title">
+    {{assetRecord?.assetType}} {{assetRecord?.manufacturer}} {{assetRecord?.modelNo}} {{assetRecord?.serialNo}}
+  </h4>
+  <div class="data-tbl-status text-muted" *ngIf="meterReads?.length < totalRecord">
+    Scroll to load more records.
+  </div>
+</div>
+
+<div class="h-100 meter-read-tbl d-flex flex-column overflow-hidden border rounded mb-3">
+  <div class="table-header sticky-header flex-shrink-0">
+    <table class="table data-tbl mb-0 w-100 border-0">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Date</th>
+          <th colspan="2" class="text-center">Color Reading</th>
+          <th colspan="2" class="text-center"> B&amp;W Reading </th>
+          <th colspan="2" class="text-center"> Scan Reading </th>
+          <th colspan="3" class="text-center">Rate</th>
+          <th *ngIf="!isArchived && canDelete"></th>
+        </tr>
+        <tr class="table-sub-header">
+          <th></th>
+          <th></th>
+          <th class="text-center border-left">Previous</th>
+          <th class="text-center">Current</th>
+          <th class="text-center border-left">Previous</th>
+          <th class="text-center">Current</th>
+          <th class="text-center border-left">Previous</th>
+          <th class="text-center">Current</th>
+          <th class="text-center border-left">Color</th>
+          <th class="text-center">B&amp;W</th>
+          <th class="text-center">Scan</th>
+          <th *ngIf="!isArchived && canDelete"></th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="table-body flex-grow-1"
+    [style.height.px]="meterReads.length > 10 ? 450 : meterReads.length > 1 ? (46 * meterReads.length) : 46">
+    <cdk-virtual-scroll-viewport *ngIf="meterReads?.length; else default" class="h-100" [itemSize]="10">
+      <table class="table data-tbl mb-0 w-100 h-100 border-0">
+        <tbody>
+          <tr
+            *cdkVirtualFor="let meterRead of meterReads; templateCacheSize:0; trackBy: trackBy.bind(this,'assetMeterId');let i= index;let first=first">
+            <ng-container *ngIf="meterRead.isMissingEntry && !searchText; else metered">
+              <td class="alert alert-danger rounded-0">{{i+1}}</td>
+              <td class="text-center alert alert-danger rounded-0" colspan="12">
+                <span>Missing meter read entry.</span>
+                <a class="font-weight-medium alert-link cursor-pointer"
+                  (click)="onAddMissingEntry(meterReads[i+1],meterRead)" *hasPermission="fleetMeterReadsEnum.add">
+                  Click to create.
+                </a>
+              </td>
+            </ng-container>
+            <ng-template #metered>
+              <td>{{ i+1 }}</td>
+              <td>{{meterRead?.readingDate | date:dateFormat}}</td>
+              <td class="text-center">{{meterRead?.previousColorRead}}</td>
+              <td class="text-center">{{meterRead?.currentColorRead}}</td>
+              <td class="text-center">{{meterRead?.previousBwRead}}</td>
+              <td class="text-center">{{meterRead?.currentBwRead}}</td>
+              <td class="text-center">{{meterRead?.previousScanRead}}</td>
+              <td class="text-center">{{meterRead?.currentScanRead}}</td>
+              <td class="text-center">{{meterRead?.colorRate}}</td>
+              <td class="text-center">{{meterRead?.bwRate}}</td>
+              <td class="text-center">{{meterRead?.scanRate}}</td>
+              <td *ngIf="!isArchived && canDelete" class="text-center">
+                <ng-container *ngIf="first">
+                  <button type="button" (click)="deleteReading(meterRead)"
+                    class="btn btn-link d-flex align-items-center justify-content-center text-decoration-none p-0 mx-auto">
+                    <span class="icon icon-delete icon-1x text-gray-dark"></span>
+                  </button>
+                </ng-container>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
+    </cdk-virtual-scroll-viewport>
+    <!-- colspan base on total column -->
+    <ng-template #default>
+      <table class="table data-tbl mb-0 w-100 h-100 border-0">
+        <tbody>
+          <tr>
+            <td colspan="12" class="text-muted text-center">
+              <div class="d-flex align-items-center justify-content-center h-100">
+                No record found
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </div>
+</div>

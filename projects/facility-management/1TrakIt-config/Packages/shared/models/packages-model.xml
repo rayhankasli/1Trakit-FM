@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+<models>
+    <model name="Packages" group="Packages">
+        <properties>
+            <property name="PackageId" jsonProperty="packageId" type="number" gridVisibility="false" formVisibility="false" readOnly="true" labelKey=""></property>
+            <property name="ClientId" jsonProperty="clientId" type="number" gridVisibility="false" formVisibility="false" readOnly="true" labelKey=""></property>
+            <property name="ClientName" jsonProperty="clientName" type="string" gridVisibility="false" formVisibility="false" readOnly="true" labelKey=""></property>
+            <property name="UpiNumber" jsonProperty="upiNumber" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="UPI Number">
+                <validations>
+					<validation type="Required" labelKey="UPI Number is required"></validation> 
+				</validations>
+            </property>
+            <property name="Barcode" jsonProperty="barcode" type="string" gridVisibility="false" formVisibility="false" readOnly="false" labelKey="Bar Code">
+                <validations>
+					<validation type="Required" labelKey="Barcode is required"></validation> 
+				</validations>
+            </property>
+            <property name="ToUserId" jsonProperty="toUserId" type="number" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="To">
+            </property>
+            <property name="ToUserName" jsonProperty="toUserName" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="TO">
+                <validations>
+					<validation type="Required" labelKey="To username is required."></validation> 
+				</validations>
+            </property>
+            <property name="PackageFrom" jsonProperty="packageFrom" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="From">
+                <validations>
+					<validation type="Required" labelKey="From is required."></validation> 
+				</validations>
+            </property>
+            <property name="DeliveryServiceId" jsonProperty="deliveryServiceId" type="number" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Delivery Service Company">
+            </property>
+            <property name="DeliveryServiceName" jsonProperty="deliveryServiceName" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Delivery Service Company">
+                <validations>
+					<validation type="Required" labelKey="Delivery Service Company is required."></validation> 
+				</validations>
+            </property>
+            <property name="Building" jsonProperty="building" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Building">
+                <validations>
+					<validation type="Required" labelKey="Building is required."></validation> 
+				</validations>
+            </property>
+            <property name="Floor" jsonProperty="floor" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Floor">
+                <validations>
+					<validation type="Required" labelKey="Floor is required."></validation> 
+				</validations>
+            </property>
+            <property name="DesktopLocation" jsonProperty="desktopLocation" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Desktop Location">
+                <validations>
+					<validation type="Required" labelKey="Desktop Loaction is required."></validation> 
+				</validations>
+            </property>
+            <property name="SlotId" jsonProperty="slotId" type="number" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Slot">
+            </property>
+            <property name="SlotTime" jsonProperty="slotTime" type="string" gridVisibility="false" formVisibility="false" readOnly="false" labelKey="Slot">
+            </property>
+            <property name="SlotDate" jsonProperty="slotDate" type="string" gridVisibility="false" formVisibility="false" readOnly="false" labelKey="Slot">
+            </property>
+            <property name="DeliveryDate" jsonProperty="deliveryDate" type="string" gridVisibility="false" formVisibility="false" readOnly="false" labelKey="Slot">
+            </property>
+            <property name="Status" jsonProperty="status" type="string" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="Status">
+            </property>
+            <property name="Priority" jsonProperty="priority" type="string" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="ScanImage" jsonProperty="scanImage" type="string" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="ActualScanImageName" jsonProperty="actualScanImageName" type="string" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="ScanImageExtension" jsonProperty="scanImageExtension" type="string" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="ScanType" jsonProperty="scanType" type="number" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+        </properties>
+    </model>
+    <model name="PackagesRequest" group="Packages">
+        <properties>
+            <property name="ClientId" jsonProperty="clientId" type="number" gridVisibility="false" formVisibility="false" readOnly="true" labelKey=""></property>
+            <property name="UpiNumber" jsonProperty="upiNumber" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="UPI Number">
+                <validations>
+					<validation type="Required" labelKey="UPI Number is required"></validation> 
+				</validations>
+            </property>
+            <property name="Barcode" jsonProperty="barcode" type="string" gridVisibility="false" formVisibility="false" readOnly="false" labelKey="Bar Code">
+                <validations>
+					<validation type="Required" labelKey="Barcode is required"></validation> 
+				</validations>
+            </property>
+            <property name="ToUserId" jsonProperty="toUserId" type="number" gridVisibility="false" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="PackageFrom" jsonProperty="packageFrom" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="From">
+                <validations>
+					<validation type="Required" labelKey="From is required."></validation> 
+				</validations>
+            </property>
+            <property name="DeliveryServiceId" jsonProperty="deliveryServiceId" type="number" gridVisibility="false" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="DeliveryServiceFrom" jsonProperty="deliveryServiceFrom" type="string" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Delivery Service Company">
+                <validations>
+					<validation type="Required" labelKey="Delivery Service Company is required."></validation> 
+				</validations>
+            </property>
+            <property name="SlotId" jsonProperty="slotId" type="number" gridVisibility="false" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="DeliveryDate" jsonProperty="deliveryDate" type="string" gridVisibility="false" formVisibility="false" readOnly="false" labelKey="Slot">
+            </property>
+            <property name="ScanImage" jsonProperty="scanImage" type="string" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="ActualScanImageName" jsonProperty="actualScanImageName" type="string" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="ScanImageExtension" jsonProperty="scanImageExtension" type="string" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+            <property name="ScanType" jsonProperty="scanType" type="number" gridVisibility="true" formVisibility="false" readOnly="true" labelKey="">
+            </property>
+        </properties>
+    </model>
+</models>

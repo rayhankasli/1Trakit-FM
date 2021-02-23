@@ -1,0 +1,6 @@
+<div class="px-3 d-flex flex-column h-100">
+  <app-report-mail-ui [clients]="clients$ | async" [graphData]="graphData$|async" [baseResponse]="mailReports$ | async"
+    [yearList]="years$ | async" (getChartListDataByClient)="getChartListDataByClient($event)"
+    (filterMailReport)="filterMailReport($event)" (exportExcel)="exportExcelData($event)"
+    (loadYears)="loadYears($event)"></app-report-mail-ui>
+</div>

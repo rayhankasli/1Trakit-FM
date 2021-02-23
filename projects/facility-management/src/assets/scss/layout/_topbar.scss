@@ -1,0 +1,245 @@
+// Toggle menu style
+#toggle-menu {
+  display: none;
+
+  &:checked {
+    @media screen and (min-width: 1200px) {
+      +#primary-nav {
+        max-width: $sidebar-collapsed-width;
+        flex: 1 0 $sidebar-collapsed-width;
+
+        .logo {
+          padding-left: 0;
+          justify-content: center;
+
+          .large-logo {
+            display: none;
+          }
+
+          .small-logo {
+            display: block;
+            padding-left: 5px;
+          }
+        
+          .toggle-menu-icon {
+            font-size: 12px;
+            cursor: pointer;
+            padding-right: 5px;
+            padding-left: 5px;
+            transform: rotate(180deg);
+            transition: $transition-base;
+          }
+        }
+
+        .nav-link {
+          flex-direction: column;
+          margin-bottom: 0;
+          .menu-icon {
+            flex: 1 0 30px;
+          }
+          .menu-label {
+            margin: 0;
+            transform: none;
+            font-size: $font-size-base * 0.7;
+          }
+        }
+        
+      }
+    }
+ 
+    @media screen and (max-width: 991px) {
+      +#primary-nav {
+        transform: translateX(0);
+      }
+
+      ~#content-wrapper {
+        .content-overlay {
+          display: block;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+#topbar {
+  flex: 0 0 auto;
+  height: $dashboard-topbar-height-sm;
+  background-color: $topbar-bg;
+
+  @if $topbar-dropshadow {
+    box-shadow: $box-shadow-sm;
+    border: $border-width solid $border-color;
+  }
+
+  @include media-breakpoint-up('xxl') {
+    height: $dashboard-topbar-height;
+  }
+}
+
+.page-title {
+  color: $body-color;
+
+  @media screen and (max-width: 767px) {
+    font-size: 1rem;
+  }
+}
+
+.top-menu-item {
+  margin-right: 25px;
+  .top-menu-link {
+    display: flex;
+    align-items: center;
+    font-size: $font-size-base * 0.875;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    color: $gray;
+    border-bottom: 3px solid transparent;
+
+    &:hover,
+    &.active {
+      text-decoration: none;
+      color: $secondary-dark;
+      border-color: $primary;
+    }
+  }
+}
+
+.notification {
+  .icon {
+    font-size: 18px;
+    color: $gray-dark;
+  }
+
+  .badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    border: 2px solid $white;
+    @include border-radius(50%);
+    padding: 1px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  &-header {
+    color: color-yiq($primary);
+  }
+
+  &-body {
+    min-height: 200px;
+    max-height: 230px;
+    overflow-y: auto;
+  }
+
+  &-list {
+    display: block;
+    padding: 10px 15px;
+    font-size: 0.7rem;
+    color: $gray;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $border-color;
+    }
+
+    &:hover {
+      background: $list-group-hover-bg;
+      color: $gray;
+      text-decoration: none;
+    }
+
+    &.active {
+      background: $gray-200;
+      color: $gray-900;
+    }
+
+    .notify-icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &-title {
+    font-size: 12px;
+  }
+}
+
+.notification-dropdown {
+  &.dropdown-menu {
+    min-width: 290px;
+    @media screen and (min-width: map-get($grid-breakpoints , md)) {
+      min-width: $notification-dropdown-width;
+    }
+    .arrow-up {
+      @media screen and (max-width: map-get($grid-breakpoints , sm)) {
+        right: auto;
+        left: 50%;
+      }
+    }
+  }
+}
+
+.language {
+  .form-control {
+    border: 1px solid $gray;
+    background-color: $white;
+    height: auto;
+    color: $gray-dark;
+    font-size: 14px;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+
+    &:focus::-ms-value {
+      color: $gray;
+      background: $white;
+    }
+  }
+}
+
+.avatar-img {
+  width: $avatar-img-size;
+  height: $avatar-img-size;
+}
+
+.user-profile {
+  position: relative;
+
+  .btn-user {
+    font-size: 22px;
+    color: $gray-dark;
+  }
+
+  .avatar-img {
+    @include border-radius(4px 8px);
+  }
+
+  .user-initial {
+    height: $user-initial-size;
+    width: $user-initial-size;
+    font-size: $font-size-base;
+  }
+  
+  .btn {
+    font-size: $font-size-base * 0.875;
+    font-weight: $font-weight-normal;
+    text-transform: capitalize;
+    letter-spacing: 0.7px;
+    color: $gray;
+  }
+
+  .dropdown-toggle {
+    &::after {
+      content: "\e917";
+      font-family: "app-icons";
+      margin-left: 8px;
+      border: 0;
+      color: $gray;
+      @media screen and (min-width: map-get($grid-breakpoints , md)) {
+        display: inline-block;
+      }
+    }
+  }
+}

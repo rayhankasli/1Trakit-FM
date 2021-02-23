@@ -1,0 +1,113 @@
+<form class="floating-form h-100 overflow-hidden d-flex flex-column justify-content-between"
+  [formGroup]="userProfileForm">
+  <div class="flex-grow-1 overflow-auto p-3">
+    <div class="row">
+      <div class="col-12">
+        <label class="small mt-0 mb-3 font-weight-semibold">
+          User Information:
+        </label>
+      </div>
+      <div class="col-12">
+        <div class="row">
+          <!-- First Name -->
+          <div class="form-group col-12 col-lg-6 col-xl-4 col-xxl-3">
+            <input type="text" class="form-control" formControlName="firstName" floatingLabel autoFocus
+              trackitOnlyString trakcitTrim />
+            <label class="floating-form-label">
+              First Name
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="firstName" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                First Name is required
+              </div>
+              <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                First name can not be more than 30 characters
+              </div>
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="form-group col-12 col-lg-6 col-xl-4 col-xxl-3">
+            <input type="text" class="form-control" formControlName="lastName" floatingLabel trackitOnlyString
+              trakcitTrim />
+            <label class="floating-form-label">
+              Last Name
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="lastName" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                Last Name is required
+              </div>
+              <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+                Last name can not be more than 30 characters
+              </div>
+            </div>
+          </div>
+
+          <!-- User Name -->
+          <div class="form-group col-12 col-lg-6 col-xl-4 col-xxl-3">
+            <input type="text" class="form-control" formControlName="userName" floatingLabel trakcitTrim />
+            <label class="floating-form-label">
+              Username
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="userName" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                Username is required
+              </div>
+              <div ngxError="maxlength" [when]="['touched','dirty']">
+                Username should not be greater than 30 characters
+              </div>
+            </div>
+          </div>
+    
+          <!-- Email -->
+          <div class="form-group col-12 col-lg-6 col-xl-4 col-xxl-3">
+            <input type="text" class="form-control" formControlName="email" floatingLabel trakcitTrim />
+            <label class="floating-form-label">
+              Email
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="email" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                Email is required
+              </div>
+              <div ngxError="pattern" [when]="['touched','dirty']">
+                Email is not valid
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group col-12 col-lg-6 col-xl-4 col-xxl-3">
+            <input type="text" class="form-control" formControlName="primaryContactNumber" floatingLabel maxlength="28"
+              [textMask]="{mask: mask}" />
+            <label class="floating-form-label">
+              Primary Contact Number
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="primaryContactNumber" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                Primary Contact Number is required
+              </div>
+              <div ngxError="pattern" [when]="['touched','dirty']">
+                Primary Contact Number is invalid
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex align-items-center justify-content-between flex-shrink-0 p-3 border-top">
+    <button type="button" class="btn btn-secondary d-flex align-items-center" (click)="onCancel();">
+      <span class="icon icon-times mr-2"></span>
+      <span>Cancel</span>
+    </button>
+    <button disableOnAjax type="button" class="btn btn-primary d-flex align-items-center" (click)="saveUser();">
+      <span class="icon icon-tick mr-2"></span>
+      <span>Submit</span>
+    </button>
+  </div>
+</form>

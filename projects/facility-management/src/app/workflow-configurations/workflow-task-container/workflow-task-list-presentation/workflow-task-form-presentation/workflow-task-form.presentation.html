@@ -1,0 +1,95 @@
+<ng-container [formGroup]="workflowTaskFormGroup">
+  <td class="form-group mb-0 cal-md">
+    <input type="text" class="form-control" formControlName="taskName" floatingLabel autoFocus />
+    <div ngxErrors="taskName" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Task Name is required
+      </div>
+      <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+        Workflow reached maxLength
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0 cal-md">
+    <ng-select appendTo="body" [items]="floors" bindLabel="nickName" bindValue="floorId" [clearable]="false"
+      [searchable]="false" formControlName="floorId" floatingLabel class="form-control float-outline p-0"
+      (change)="onFloorChange($event)">
+      <ng-template ng-label-tmp let-item="item">
+        {{item?.floorId === -1 ? item?.nickName : '['+item?.floor+']'+'-'+item?.nickName}}
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item">
+        {{item?.floorId === -1 ? item?.nickName : '['+item?.floor+']'+'-'+item?.nickName}}
+      </ng-template>
+    </ng-select>
+    <div ngxErrors="floorId" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Floor is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0 cal-md">
+    <ng-select appendTo="body" [items]="rooms" bindLabel="location" bindValue="floorRoomId" [clearable]="false"
+      formControlName="floorRoomId" [searchable]="false" floatingLabel class="form-control float-outline p-0">
+      <ng-template ng-label-tmp let-item="item">
+        {{item?.name}}-{{item?.location}}
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item">
+        {{item?.name}}-{{item?.location}}
+      </ng-template>
+    </ng-select>
+    <div ngxErrors="floorRoomId" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Location is required
+      </div>
+      <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+        Location reached maxLength
+      </div>
+    </div>
+  </td>
+  <td>
+    <div ngbDropdown class="form-group mb-0 repeats-on-dropdown" #repeatRef="ngbDropdown" container="body">
+      <button class="btn btn-repeat-on text-truncate pr-4 border dropdown-toggle" type="button" ngbDropdownToggle>
+        <ng-container *ngFor="let day of selectedDayList;trackBy: trackBy.bind(this,'weekDayId');let i= index;let isLast=last">
+          <span for="days">{{day.weekDay | repeatOnDays}}{{ isLast ? ' ' : ', ' }}</span>
+        </ng-container>
+      </button>
+      <div ngbDropdownMenu>
+        <app-repeat-on-presentation [isWeekly]="isWeekly" [weekDays]="weekDays"
+         [repeatOn]="workflowTaskFormGroup.value.repeatsOn"
+          (save)="onRepeatOnSave($event);repeatRef.close()" (cancel)="repeatRef.close()">
+        </app-repeat-on-presentation>
+      </div>
+    </div>
+    <div ngxErrors="repeatsOn" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Repeats On is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0 cal-md">
+    <input type="text" class="form-control" formControlName="description" floatingLabel />
+    <div ngxErrors="description" [isFormSubmitted]="isFormSubmitted">
+      <div ngxError="required" [when]="['touched','dirty']">
+        Description is required
+      </div>
+    </div>
+  </td>
+  <td class="form-group mb-0 cal-md">
+    <ng-select appendTo="body" [items]="picturesRequired" bindLabel="picturesRequiredLabel"
+      bindValue="picturesRequiredValue" [clearable]="false" [searchable]="false" formControlName="isPictureRequired" floatingLabel
+      class="form-control float-outline p-0">
+    </ng-select>
+  </td>
+
+  <td class="d-flex align-it cal-mdems-center justify-content-center">
+    <button type="button" title="Save"
+      class="btn btn-primary btn-icon d-flex align-items-center justify-content-center mr-1"
+      (click)="saveWorkflowTask();">
+      <span class="icon icon-save"></span>
+    </button>
+    <button *ngIf="workflowTask" type="button" title="Cancel" (click)="onCancel()"
+      class="btn btn-gray-dark btn-icon d-flex align-items-center justify-content-center">
+      <span class="icon icon-times"></span>
+    </button>
+  </td>
+</ng-container>

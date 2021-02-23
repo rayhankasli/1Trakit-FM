@@ -1,0 +1,128 @@
+<trackit-page-actions>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="ml-auto d-flex align-items-center">
+      <div class="form-group mb-0 d-flex align-items-center mr-2">
+        <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Status:</label>
+        <ng-select appendTo="body" [items]="status" bindLabel="" bindValue="" [clearable]="false"
+          [(ngModel)]="officeStatus" floatingLabel class="form-control ng-select-sm float-outline p-0 text-capitalize"
+          [searchable]="false" (change)="onStatusChange($event)">
+        </ng-select>
+      </div>
+
+      <trackit-search (searchText)="onSearch($event)"></trackit-search>
+
+      <button type="button"
+        class="btn {{ !formOpen ? 'btn-primary': 'btn-outline-secondary'}} d-flex align-items-center"
+        (click)="addForm()" title="{{!formOpen ? 'Add New Office' : 'Cancel' }}" *hasPermission="officeEnum.add">
+        <span class="{{ !formOpen ? 'icon icon-add': 'icon icon-times'}} mr-2"></span>
+        <span>{{!formOpen ? "New Office" :"Cancel" }}</span>
+      </button>
+    </div>
+  </div>
+</trackit-page-actions>
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3 office-table-list">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 150px">
+      <col style="width: 150px">
+      <col style="width: 160px">
+      <col style="width: 160px">
+      <col style="width: 100px">
+      <col style="width: 100px">
+      <col style="width: 100px">
+      <col style="width: 40px">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th appSortingOrder [column]="'officeName'" (orderType)="onSortOrder('officeName',$event)" scope="col"
+          class="column-sort">
+          <span>
+            Office Name<br>
+            <small class="text-transform-none floor-count">(# No. of Floor)</small>
+          </span>
+        </th>
+        <th appSortingOrder [column]="'nickName'" (orderType)="onSortOrder('nickName',$event)" scope="col"
+          class="column-sort">
+          <span>Nickname</span>
+        </th>
+        <th appSortingOrder [column]="'address1'" (orderType)="onSortOrder('address1',$event)" scope="col"
+          class="column-sort">
+          <span>Address1</span>
+        </th>
+        <th appSortingOrder [column]="'address2'" (orderType)="onSortOrder('address2',$event)" scope="col"
+          class="column-sort">
+          <span>Address2</span>
+        </th>
+        <th scope="col">
+          <span>State</span>
+        </th>
+        <th scope="col">
+          <span>City</span>
+        </th>
+        <th appSortingOrder [column]="'zipcode'" (orderType)="onSortOrder('zipcode',$event)" scope="col"
+          class="column-sort">
+          <span>Zip</span>
+        </th>
+        <th class="text-center">
+          <span>actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr app-office-form-ui class="table-inline-form" *ngIf="formOpen" style="display: contents;"
+        [lastOffice]="lastOffice" [states]="states" [cites]="cites" (add)="addOffice($event)"
+        (getCites)="onGetCites($event)">
+      </tr>
+
+      <ng-container *ngFor="let office of baseResponse;trackBy: trackBy.bind(this,'officeId');let i= index">
+        <tr *ngIf="!office.isEditable;">
+          <td class="cursor-pointer" [routerLink]="[office.officeId,'floors']">{{office.officeName}}
+            ({{ office.floorCount}})</td>
+          <td class="cursor-pointer" [routerLink]="[office.officeId,'floors']">{{office.nickName}}</td>
+          <td class="cursor-pointer" [routerLink]="[office.officeId,'floors']">{{office.address1}}</td>
+          <td class="cursor-pointer" [routerLink]="[office.officeId,'floors']">{{office.address2}}</td>
+          <td class="cursor-pointer" [routerLink]="[office.officeId,'floors']">{{office.state}}</td>
+          <td class="cursor-pointer" [routerLink]="[office.officeId,'floors']">{{office.city}}</td>
+          <td class="cursor-pointer" [routerLink]="[office.officeId,'floors']">{{office.zipcode}}</td>
+          <td class="text-center">
+            <div ngbDropdown container="body" class="data-tbl-dropdown">
+              <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+                <span class="icon icon-more"></span>
+              </button>
+              <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                <button type="button" class="dropdown-item" ngbDropdownItem (click)="openEditForm(office)"
+                  *hasPermission="officeEnum.update">
+                  <span class="icon icon-edit mr-2"></span>
+                  <span>Edit</span>
+                </button>
+                <button type="button" [disabled]="officeStatus === 'active' ? true: false" class="dropdown-item"
+                  ngbDropdownItem (click)="openModal(office)" *hasPermission="officeEnum.delete">
+                  <span class="icon icon-delete mr-2"></span>
+                  <span>Delete</span>
+                </button>
+                <button type="button" class="dropdown-item" ngbDropdownItem (click)="onToggleStatus(office)"
+                  *hasPermission="officeEnum.changeStatus">
+                  <span class="icon {{officeStatus === 'active' ? 'icon-block': 'icon-check-circle' }} mr-2"></span>
+                  <span>{{officeStatus === 'active' ? 'Inactive': 'Active' }}</span>
+                </button>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr app-office-form-ui *ngIf="office.isEditable"
+          class="table-inline-form {{office.isEditable ? 'edit-form' : ''}}" style="display: contents;"
+          [office]="office" [states]="states" [cites]="cites" (add)="addOffice($event)" (update)="updateOffice($event)"
+          (getCites)="onGetCites($event)" (cancel)="closeEditForm()">
+        </tr>
+
+      </ng-container>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="(!baseResponse || baseResponse.length === 0 ) && !formOpen">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- Data-table footer area -->

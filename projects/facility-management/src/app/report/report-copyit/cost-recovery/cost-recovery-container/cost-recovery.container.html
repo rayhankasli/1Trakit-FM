@@ -1,0 +1,5 @@
+<app-cost-recovery-ui class="d-flex flex-column w-100 overflow-hidden" 
+    [costRecoverys]="costRecoverys$ | async"
+    (costRecovery)="costRecoverys($event)"
+    (costRecoveryExcel)="onExportAsExcel($event)">
+</app-cost-recovery-ui>

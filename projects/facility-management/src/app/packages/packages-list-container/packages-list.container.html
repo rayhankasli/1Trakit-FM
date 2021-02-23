@@ -1,0 +1,9 @@
+<div class="d-flex flex-column h-100">
+  <app-package-presentation-ui [clients]="clients$ | async" [userList]="users$ | async"
+    [baseResponse]="packagess$ | async" [userDetails]="userDetails$ | async"
+    [deliveryServiceList]="deliveryServiceList$ | async" [scanNew]="scanNew$ | async" [slots]="slots$ | async"
+    (getPackages)="getPackagess($event)" (deletePackage)="deletePackages($event)" (masterData)="getMasterData()"
+    (loadSlots)="getSlotsListByParams($event)" (add)="addPackages($event)"
+    (saveAndScanNew)="addPackages($event,true)" (update)="updatePackages($event)" (user)="getUser($event)">
+  </app-package-presentation-ui>
+</div>

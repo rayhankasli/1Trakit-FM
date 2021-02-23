@@ -1,0 +1,22 @@
+<div class="d-flex align-items-center justify-content-end mb-2">
+  <!-- Status dropdown -->
+  <div class="form-group mb-0 d-flex align-items-center mr-2">
+    <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Status:</label>
+    <ng-select (change)="onStatusChange($event)" appendTo="body" [(ngModel)]="statusOption" [items]="status"
+      [clearable]="false" [searchable]="false" [bindLabel]="'statusKey'" [bindValue]="'statusValue'" id="status"
+      class="text-capitalize form-control ng-select-sm p-0">
+    </ng-select>
+  </div>
+
+  <button type="button"
+    class="btn {{ !addSlotForm ? 'btn-outline-primary' : 'btn-outline-secondary-dark' }} d-flex align-items-center"
+    (click)="addNewSlot()" *hasPermission="slotsEnum.add">
+    <span class="{{ !addSlotForm ? 'icon icon-add' : 'icon icon-times' }} mr-2"></span>
+    <span>{{!addSlotForm ? "New Slot" : "Cancel" }}</span>
+  </button>
+</div>
+<!-- Data-table mobile view or desktop view -->
+<app-slots-list-desktop-presentation [addSlot]="addSlotForm" [slotss]="baseResponse"
+  (setSlotStatus)="toggleSlotStatus($event)" (closeSlotsForm)="closeSlotsForm($event)" (newSlotData)="saveSlots($event)"
+  (updateSlotData)="updateSlots($event)" [masterData]="masterData" [lastSlot]="lastSlot">
+</app-slots-list-desktop-presentation>

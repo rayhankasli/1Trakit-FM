@@ -1,0 +1,5 @@
+<app-facilities-assistants-ui class="d-flex flex-column w-100 overflow-hidden"
+    [facilitiesAssistantsList]="facilitiesAssistantsList$ | async" 
+    [clients]="clientMaster$ | async" 
+    (getListById)="getListById($event)">
+</app-facilities-assistants-ui>

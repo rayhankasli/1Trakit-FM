@@ -1,0 +1,103 @@
+<div class="d-flex align-items-center px-2 pb-2 pt-1">
+  <div class="ml-auto data-tbl-action">
+    <button type="button" title="{{ !formOpen ? 'Add New Room ': 'Cancel'}}"
+      class="btn {{ !formOpen ? 'btn-outline-primary ': 'btn-outline-secondary'}} d-flex align-items-center"
+      (click)="addForm()" *hasPermission="roomEnum.add">
+      <span class="{{ !formOpen ? 'icon icon-add ': 'icon icon-times'}} mr-2"></span>
+      <span>{{!formOpen ? "New Room" :"Cancel" }}</span>
+    </button>
+  </div>
+</div>
+<!-- Data-table mobile view or desktop view -->
+<div class="overflow-y-auto overflow-x-hidden border rounded table-max-height mx-2">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 150px">
+      <col style="width: 150px">
+      <col style="width: 150px">
+      <col style="width: 150px">
+      <col style="width: 150px">
+      <col style="width: 40px">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th scope="col">
+          <span>Room Type</span>
+        </th>
+        <th scope="col">
+          <span>Nickname</span>
+        </th>
+        <th scope="col">
+          <span>Email</span>
+        </th>
+        <th scope="col">
+          <span>Room Layout</span>
+        </th>
+        <th scope="col">
+          <span>Mail Stop/Location</span>
+        </th>
+        <th class="text-center">
+          <span>actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="formOpen">
+        <tr>
+          <td colspan="6">
+            <app-room-form-ui style="display: contents;" [roomLayouts]="roomLayouts" [roomTypes]="roomTypes"
+              (add)="add($event)" (addRoomType)="onAddRoomType($event)" (update)="update($event)"
+              (getRoomTypes)="onGetRoomTypes($event)">
+            </app-room-form-ui>
+          </td>
+        </tr>
+      </ng-container>
+
+      <ng-container *ngFor="let room of rooms;trackBy: trackBy.bind(this,'roomId');let i= index">
+        <tr *ngIf="!room.isEditable">
+          <td>{{room.roomType}}</td>
+          <td>{{room.name}}</td>
+          <td>{{room.email||'-'}}</td>
+          <td>{{getRoomLayoutLabel(room.roomLayouts)}}</td>
+          <td>{{room.location}}</td>
+          <td class="text-center">
+            <div ngbDropdown container="body" class="data-tbl-dropdown">
+              <button type="button" class="btn bg-transparent m-0 py-0 px-2" ngbDropdownToggle>
+                <span class="icon icon-more"></span>
+              </button>
+              <ul id="dropdown-basic" ngbDropdownMenu aria-labelledby="dropdownMenu">
+                <button type="button" class="dropdown-item" ngbDropdownItem (click)="openEditForm(room)"
+                  *hasPermission="roomEnum.update">
+                  <span class="icon icon-edit mr-2"></span>
+                  <span>Edit</span>
+                </button>
+                <button type="button" class="dropdown-item" ngbDropdownItem (click)="openModal(room)"
+                  *hasPermission="roomEnum.delete">
+                  <span class="icon icon-delete mr-2"></span>
+                  <span>Delete</span>
+                </button>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <ng-container *ngIf="room.isEditable">
+          <tr>
+            <td colspan="6">
+              <app-room-form-ui style="display: contents;" [roomLayouts]="roomLayouts" [room]="room"
+                [roomTypes]="roomTypes" (add)="add($event)" (addRoomType)="onAddRoomType($event)"
+                (update)="update($event)" (getRoomTypes)="onGetRoomTypes($event)" (cancel)="closeEditForm()">
+              </app-room-form-ui>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="(!rooms || rooms.length === 0) && !formOpen">
+        <td colspan="10" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Data-table footer area -->

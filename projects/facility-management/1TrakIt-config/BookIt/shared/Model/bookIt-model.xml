@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<models>
+
+
+	<model name="BookitRequest">
+		<properties>
+			<property name="bookitEventName" jsonProperty="bookitEventName" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Event Name">
+				<validations>
+					<validation type="Required" labelKey="Event Name is required"></validation>
+				</validations>
+			</property>
+			<property name="requestorName" jsonProperty="requestorName" type="string" gridVisibility="true" formVisibility="false"
+			 readOnly="false" labelKey="Name">
+				<validations>
+					<validation type="Required" labelKey="Name is required"></validation>
+				</validations>
+			</property>
+			<property name="bookingDate" jsonProperty="bookingDate" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Date">
+				<validations>
+					<validation type="Required" labelKey="Date is required"></validation>
+				</validations>
+			</property>
+			<property name="startTime" jsonProperty="startTime" type="String" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Start Time">
+				<validations>
+					<validation type="Required" labelKey="Start Time is required"></validation>
+				</validations>
+			</property>
+			<property name="endTime" jsonProperty="endTime" type="String" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="End Time">
+				<validations>
+					<validation type="Required" labelKey="RequestedBy.REQUIRED"></validation>
+				</validations>
+			</property>
+			<property name="isRecurring" jsonProperty="isRecurring" type="boolean" gridVisibility="true" formVisibility="true" readOnly="false" labelKey="Recurring">
+			</property>
+			<property name="setUpBufferTime" jsonProperty="setUpBufferTime" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Set Up Buffer[HH:MM]">
+			</property>
+			<property name="cleanUpBufferTime" jsonProperty="cleanUpBufferTime" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Clean Up Buffer[HH:MM]">
+			</property>
+			<property name="noOfPeopleAttending" jsonProperty="noOfPeopleAttending" type="int" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="No. of people attending">
+				<validations>
+					<validation type="Required" labelKey="No. of people attending is required"></validation>
+				</validations>
+			</property>
+			<property name="chargeTo" jsonProperty="chargeTo" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Charge To">
+				<validations>
+					<validation type="Required" labelKey="Charge To is required"></validation>
+				</validations>
+			</property>
+			<property name="description" jsonProperty="description" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Description">
+			</property>
+			<property name="clientId" jsonProperty="clientId" type="int" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Client">
+				<validations>
+					<validation type="Required" labelKey="Client is required"></validation>
+				</validations>
+			</property>
+			<property name="userId" jsonProperty="userId" type="int" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="User">
+				<validations>
+					<validation type="Required" labelKey="User is required"></validation>
+				</validations>
+			</property>
+			<property name="roomId" jsonProperty="roomId" type="int" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="User">
+				<validations>
+					<validation type="Required" labelKey="Room is required"></validation>
+				</validations>
+			</property>
+			<property name="roomLayoutId" jsonProperty="roomLayoutId" type="int" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Room Layout">
+				<validations>
+					<validation type="Required" labelKey="Room Layout is required"></validation>
+				</validations>
+			</property>
+			<property name="facilities" jsonProperty="facilities" type="int" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Facilities">
+				<validations>
+					<validation type="Required" labelKey="Facilities is required"></validation>
+				</validations>
+			</property>
+			<property name="amenities" jsonProperty="amenities" type="int" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Amenities">
+				<validations>
+					<validation type="Required" labelKey="Amenities is required"></validation>
+				</validations>
+			</property>
+			<property name="caterings" jsonProperty="caterings" type="int" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Caterings">
+				<validations>
+					<validation type="Required" labelKey="Caterings is required"></validation>
+				</validations>
+			</property>
+			<property name="cateringCompanyName" jsonProperty="cateringCompanyName" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Company Name">
+			</property>
+			<property name="cateringContactPersonName" jsonProperty="cateringContactPersonName" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Conatct Person Name">
+			</property>
+			<property name="cateringContactPhoneNumber" jsonProperty="cateringContactPhoneNumber" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Phone Number">
+			</property>
+			<property name="arrivalTime" jsonProperty="arrivalTime" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Arrival Time">
+			</property>
+			<property name="shareFilePath" jsonProperty="shareFilePath" type="boolean" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Share File Path">
+			</property>
+			<property name="fileTypeId" jsonProperty="fileTypeId" type="boolean" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="File Type">
+				<validations>
+					<validation type="Required" labelKey="File Type is required"></validation>
+				</validations>
+			</property>
+			<property name="files" jsonProperty="files" type="file" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Files">
+			</property>
+		</properties>
+	</model>
+</models>

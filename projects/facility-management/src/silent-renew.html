@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="assets/js/oidc-client.min.js"></script>
+    <script src="assets/js/polyfill.min.js"></script>
+</head>
+
+<body>
+    <h1 id="waiting">Waiting...</h1>
+    <div id="error"></div>
+   
+    <script>
+        var config = {
+            userStore: new WebStorageStateStore({ store: window.localStorage })
+        }
+        new UserManager(config).signinSilentCallback().catch(function (e) {
+            console.error(e);
+        });
+    </script>
+</body>
+
+</html>

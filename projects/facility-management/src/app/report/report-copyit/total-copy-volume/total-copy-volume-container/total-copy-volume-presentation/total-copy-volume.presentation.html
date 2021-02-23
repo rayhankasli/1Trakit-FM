@@ -1,0 +1,70 @@
+<trackit-page-actions>
+  <div class="d-flex order-2 align-items-center justify-content-end flex-shrink-0 ml-2">
+    <button type="button" class="btn btn-primary d-flex align-items-center" (click)="exportAsPDF()"
+      title="Export as PDF" *hasPermission="totalCopyVolumeEnum.totalCopyVolumeExportPdf"
+      [disabled]="totalCopyVolumeList?.length <= 0">
+      <span>Export as PDF</span>
+    </button>
+  </div>
+</trackit-page-actions>
+
+<div class="flex-grow-1 px-3 overflow-auto pb-3">
+  <div class="d-flex h-100 overflow-hidden">
+    <div class="report-data-table overflow-y-auto overflow-x-hidden border rounded mb-3 h-100">
+      <table class="table data-tbl w-100 position-relative mb-0 border-0">
+        <colgroup>
+          <col style="width: 80px;">
+          <col style="width: 80px;">
+          <col style="width: 80px;">
+          <col style="width: 80px;">
+        </colgroup>
+        <thead class="sticky-table-header">
+          <tr>
+            <th class="text-center" scope="col" *ngFor="let header of tableHeader;trackBy:trackBy.bind(this,'')">
+              <span>{{header}}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr [ngClass]="{'current-data-row': totalVolume?.month === (currentMonth | date:'MMM'), 
+              'quarter-data-row': totalVolume?.month === '1st Qtr' || totalVolume?.month === '2nd Qtr' || totalVolume?.month === '3rd Qtr' || totalVolume?.month === '4th Qtr', 
+              'ytd-data-row':  totalVolume?.month === 'YTD', 
+              'average-data-row': totalVolume?.month === 'Avg'}"
+            *ngFor="let totalVolume of totalCopyVolumeList;trackBy:trackBy.bind(this,'')">
+            <td class="text-center">{{totalVolume?.month}}</td>
+            <td class="text-center" *ngFor="let yearValue of totalVolume?.data;trackBy:trackBy.bind(this,'')">
+              {{(yearValue?.value !== null) ? (yearValue?.value | number:decimal) : '-'}}
+            </td>
+          </tr>
+
+          <!-- colspan base on total column -->
+          <tr *ngIf="!totalCopyVolumeList || totalCopyVolumeList.length === 0">
+            <td colspan="4" class="h-100">
+              <div class="text-muted  d-flex align-items-center justify-content-center h-100">
+                No record found
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col pr-0 overflow-hidden">
+      <div class="card h-100 overflow-hidden">
+        <!-- to add the chart (Google Chart) -->
+        <div class="h-100 w-100" #totalCopyVolume></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-body p-3">
+      <h5 class="text-center text-dark">YTD B/W & COLOR & SCAN COMPARISON {{currentMonth | date: 'yyyy'}}</h5>
+      <div *ngIf="isEmpty" class="d-flex align-items-center justify-content-center text-muted py-4">
+        No Data
+      </div>
+      <div class="w-50 mx-auto" #pieChartRef>
+      </div>
+    </div>
+  </div>
+</div>

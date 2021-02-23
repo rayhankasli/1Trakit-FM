@@ -1,0 +1,8 @@
+<div class="px-3 h-100 overflow-hidden">
+    <trackit-user-list-ui [baseResponse]="users$ | async" [clients]="clients$ | async"
+        [userMasterData]="userMasterData$ | async" [offices]="offices$ | async" [floors]="floors$ | async" [globalClientId]="globalClientId$ | async"
+        (getUser)="getUsers($event)" (deleteUser)="deleteUser($event)" (add)="addUser($event)"
+        (changeStatus)="onChangeStatus($event)" (update)="updateUser($event)" (getOffices)="getOffices($event)"
+        (getFloors)="getFloors($event)" (downloadSampleFile)="downloadSampleFile()" (bulkUploadUsers)="bulkUploadUsers($event)">
+    </trackit-user-list-ui>
+</div>

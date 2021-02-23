@@ -1,0 +1,100 @@
+<form class="floating-form h-100 overflow-hidden d-flex flex-column justify-content-between"
+  [formGroup]="assetTicketFormGroup">
+  <div class="flex-grow-1 overflow-auto p-3">
+    <div class="row">
+      <div class="col-12">
+        <label class="small my-2 font-weight-semibold">
+          Ticket Information:
+        </label>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" autocomplete="off" class="form-control" #dp="bsDatepicker" bsDatepicker
+          formControlName="ticketDate" [bsConfig]="bsConfig" placement="bottom" container="body" id="date"
+          calendarFlotingLabel preventText>
+        <label class="floating-form-label">Date <span class="asterisk">*</span></label>
+        <label class="icon icon-calendar date-picker-label text-gray mb-0" for="date"></label>
+        <div ngxErrors="ticketDate" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Date is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <app-time-picker formControlName="ticketTime">
+          <label ctrlLabel class="floating-form-label">
+            Time
+            <span class="asterisk">*</span>
+          </label>
+          <label ctrlLabel for="time" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+        </app-time-picker>
+        <div ngxErrors="ticketTime" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Time is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <ng-select appendTo="body" [items]="masterData?.ticketCategory" bindLabel="assetTicketCategory"
+          bindValue="assetTicketCategoryId" [clearable]="false" [searchable]="false"
+          formControlName="assetTicketCategoryId" floatingLabel class="form-control float-outline p-0">
+        </ng-select>
+        <label for="" class="floating-form-label">Category <span class="asterisk">*</span></label>
+        <div ngxErrors="assetTicketCategoryId" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Category is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <ng-select appendTo="body" [items]="masterData?.priority" bindLabel="priority" bindValue="priorityId"
+          [clearable]="false" [searchable]="false" formControlName="priorityId" floatingLabel
+          class="form-control float-outline p-0">
+        </ng-select>
+        <label for="" class="floating-form-label">Priority <span class="asterisk">*</span></label>
+        <div ngxErrors="priorityId" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Priority is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <ng-select appendTo="body" [items]="masterData?.ticketStatus" bindLabel="assetTicketStatus"
+          bindValue="assetTicketStatusId" [clearable]="false" [searchable]="false" formControlName="statusId"
+          floatingLabel class="form-control float-outline p-0">
+        </ng-select>
+        <label for="" class="floating-form-label">Status <span class="asterisk">*</span></label>
+        <div ngxErrors="statusId" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Status is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <textarea rows="5" cols="50" name="description" class="form-control" formControlName="description"
+          role="textarea" floatingLabel></textarea>
+        <label class="floating-form-label">Description <span class="asterisk">*</span></label>
+        <div ngxErrors="description" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Description is required
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-between flex-shrink-0 border-top p-3">
+    <button type="button" class="btn btn-secondary d-flex align-items-center" [routerLink]="['../../']" title="Cancel">
+      <span class="icon icon-times mr-2"></span>
+      <span>Cancel</span>
+    </button>
+    <ng-container *ngIf="!isArchived">
+      <button disableOnAjax *ngIf="assetTicket?.status !== 'Close'" type="button"
+        class="btn btn-primary d-flex align-items-center" (click)="saveAssetTicket();" title="Submit">
+        <span class="icon icon-tick mr-2"></span>
+        <span>Submit</span>
+      </button>
+    </ng-container>
+  </div>
+</form>

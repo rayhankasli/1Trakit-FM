@@ -1,0 +1,652 @@
+<trackit-page-actions *ngIf="bookit">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="ml-auto d-flex align-items-center">
+      <ng-container *ngIf="isEditmode$ | async">
+        <div *ngIf="filteredStatus|async as statusListF" class="form-group mb-0 d-flex align-items-center mr-2">
+          <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Status:</label>
+          <div class="status-dropdown d-flex mb-0" dropdown container="body"
+            [isDisabled]="disableStatus || !statusListF.length">
+            <button id="status-dropdown-btn" dropdownToggle type="button"
+              class="btn status-btn pr-4 pl-2 flex-grow-1 border dropdown-toggle text-truncate">
+              <app-status-badge [statusId]="status"></app-status-badge>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu status-dropdown-menu" role="menu"
+              aria-labelledby="status-dropdown-btn">
+              <ng-container *ngFor="let opt of statusListF;trackBy: trackBy.bind(this,'statusId')">
+                <button type="button" role="menuitem" class="dropdown-item pl-2" (click)="validateStatusChange(opt);">
+                  <app-status-badge [statusId]="opt.statusId"></app-status-badge>
+                </button>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group mb-0 d-flex align-items-center mr-2">
+          <label for="status" class="text-gray-dark font-weight-medium mb-0 flex-shrink-0 mr-2">Assign To:</label>
+          <ng-select #assignToUser [items]="assignToList" bindLabel="fullName" bindValue="userId" [clearable]="false"
+            [(ngModel)]="assignee" groupBy="roleName" [searchable]="false" [disabled]="disableAssignTo"
+            selectFloatingLabel (change)="onAssignToChange($event)" class="form-control float-outline p-0 ng-select-lg"
+            appendTo="body">
+            <ng-template ng-header-tmp>
+              <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                <input type="text" autoFocus class="form-control border-0 pr-0"
+                  (input)="assignToUser.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                  aria-describedby="button-addon">
+                <div class="input-group-append">
+                  <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                    <span class="icon icon-search"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template ng-optgroup-tmp let-item="item">
+              <strong>{{item.roleName}}</strong>
+            </ng-template>
+          </ng-select>
+        </div>
+      </ng-container>
+      <button *hasPermission="bookItPermissions.print" type="button"
+        class="btn btn-outline-light d-flex align-items-center justify-content-center btn-icon mr-2"
+        (click)="printCopyItDetail()" title="Print">
+        <span class="icon icon-print icon-1x text-gray-dark"></span>
+      </button>
+
+      <button *hasPermission="bookItPermissions.exportPdf" type="button"
+        class="btn btn-primary d-flex align-items-center mr-2" (click)="exportCopyItDetailToPDF()"
+        title="Export as PDF">
+        <span class="icon icon-file-pdf icon-1x mr-2"></span>
+        <span>EXPORT AS PDF</span>
+      </button>
+      <button type="button" class="btn d-flex align-items-center justify-content-center btn-icon"
+        [ngClass]="{'btn-secondary':isChatBoxOpen, 'btn-outline-secondary':!isChatBoxOpen}" (click)="openChatBox()"
+        title="Chat" *ngIf="(isEditmode$ | async) && !disableChatBox">
+        <span class="icon icon-chat-bubble icon-1x"></span>
+      </button>
+    </div>
+  </div>
+</trackit-page-actions>
+<form focusInvalidInput [forceCheck]="submitEvent"
+  class="floating-form flex-grow-1 h-100 overflow-hidden d-flex flex-column justify-content-between"
+  [formGroup]="bookitFormGroup">
+  <div class="flex-grow-1 overflow-auto p-3">
+    <ng-container *ngIf="!isRequestor">
+      <div class="row">
+        <div class="col-12">
+          <label for="frontAndBackCover" class="small my-2 font-weight-semibold">
+            Request For:
+          </label>
+        </div>
+        <ng-container *ngIf="!isAssociate">
+          <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+            <ng-select #client appendTo="body" selectFloatingLabel [items]="clients" bindLabel="client" autoFocus
+              bindValue="clientId" formControlName="clientId" class="form-control float-outline p-0"
+              (change)="onClientChange($event)" [searchable]="false" [clearable]="false">
+              <ng-template ng-header-tmp>
+                <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                  <input type="text" autoFocus class="form-control border-0 pr-0"
+                    (input)="client.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                    aria-describedby="button-addon">
+                  <div class="input-group-append">
+                    <button class="btn bg-transparent text-gray" type="button">
+                      <span class="icon icon-search"></span>
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+            </ng-select>
+            <label for="" class="floating-form-label">
+              Client
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="clientId" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                Client is required
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+          <ng-select #requestorUser [items]="userList" bindLabel="fullName" bindValue="userId" [searchable]="false"
+            [clearable]="false" groupBy="user" formControlName="userId" selectFloatingLabel
+            class="form-control float-outline p-0" appendTo="body">
+            <ng-template ng-header-tmp>
+              <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                <input type="text" autoFocus class="form-control border-0 pr-0"
+                  (input)="requestorUser.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                  aria-describedby="button-addon">
+                <div class="input-group-append">
+                  <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                    <span class="icon icon-search"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template ng-optgroup-tmp let-item="item">
+              {{item.roleName}}
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item">
+              {{item.fullName}}
+            </ng-template>
+          </ng-select>
+          <label for="userId" class="floating-form-label">
+            User Name
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="userId" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              User Name is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <div class="col-12">
+        <label for="frontAndBackCover" class="small mt-0 mb-2 font-weight-semibold">
+          Booking Information:
+        </label>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" class="form-control" formControlName="eventName" floatingLabel
+          [attr.autoFocus]="!isAssociate || !isRequestor" trakcitTrim />
+        <label class="floating-form-label">
+          Event Name
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="eventName" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Event Name is required
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            Event Name can not be more than 50 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" class="form-control" formControlName="name" floatingLabel trakcitTrim />
+        <label class="floating-form-label">
+          Name
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="name" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Name is required
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            Name can not be more than 30 characters
+          </div>
+        </div>
+      </div>
+      <!-- Force next columns to break to new line at md breakpoint and up -->
+      <div class="w-100 d-none d-xxl-block"></div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <input type="text" class="form-control" preventText #dp="bsDatepicker" id="date" bsDatepicker
+          formControlName="date" calendarFlotingLabel autocomplete="off">
+        <label class="floating-form-label">
+          Date
+          <span class="asterisk">*</span>
+        </label>
+        <label class="icon icon-calendar date-picker-label text-gray mb-0" for="date"></label>
+        <div ngxErrors="date" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Date is Required
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <app-time-picker formControlName="startTime" [minuteStep]="minuteStep">
+          <label ctrlLabel class="floating-form-label">
+            Start Time
+            <span class="asterisk">*</span>
+          </label>
+          <label ctrlLabel for="startTime" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+          <div ngxErrors="startTime" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Start Time is required
+            </div>
+          </div>
+        </app-time-picker>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <app-time-picker formControlName="endTime" [minuteStep]="minuteStep">
+          <label ctrlLabel class="floating-form-label">
+            End Time
+            <span class="asterisk">*</span>
+          </label>
+          <label ctrlLabel for="endTime" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+          <div ngxErrors="endTime" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              End Time is required
+            </div>
+          </div>
+          <div class="invalid-feedback d-block"
+            *ngIf="((formControls.startTime.dirty || formControls.startTime.touched) && isFormSubmitted) && bookitFormGroup.errors?.invalidTime">
+            End Time must be greater than start time
+          </div>
+        </app-time-picker>
+      </div>
+      <ng-container *ngIf="!bookit">
+        <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+          <div class="custom-control custom-checkbox mt-2">
+            <input type="checkbox" class="custom-control-input" id="isRecurring" formControlName="isRecurring"
+              floatingLabel>
+            <label class="custom-control-label" for="isRecurring">Recurring</label>
+          </div>
+        </div>
+        <ng-container *ngIf="showRepeatOnOptions && formValue.date">
+          <div class="col-12" formGroupName="repeatsOn">
+            <div class="row">
+              <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+                <ng-select #repeatsOnSelect appendTo="body" selectFloatingLabel [items]="bookitMasterData?.recurrings"
+                  bindLabel="recurringType" bindValue="recurringId" formControlName="recurringId"
+                  class="form-control float-outline p-0" [searchable]="false" [clearable]="false">
+                </ng-select>
+                <label class="floating-form-label">
+                  Repeats On
+                  <span class="asterisk">*</span>
+                </label>
+                <div *ngIf="repeatsOnControls.recurringId.errors && (repeatsOnControls.recurringId.touched
+              || repeatsOnControls.recurringId.dirty || isFormSubmitted)">
+                  <div class="invalid-feedback d-block" *ngIf="repeatsOnControls.recurringId.errors?.required">
+                    Repeats On is required
+                  </div>
+                </div>
+
+                <!-- Daily Checkboxes -->
+                <ng-container *ngIf="showDailyOptions$ | async">
+                  <ng-container formArrayName="repeatsOnDay">
+                    <div class="form-group mb-0">
+                      <div class="d-flex align-items-center flex-wrap">
+                        <div class="custom-control custom-checkbox mr-3"
+                          *ngFor="let control of repeatsOnFormGroup.get('repeatsOnDay')['controls']; let i=index;trackBy:trackBy.bind(this,'')">
+                          <input class="custom-control-input" type="checkbox" [formControlName]="i"
+                            [id]="weekDays[i].weekDayId" (change)="onRepeatsDayChange()">
+                          <label class="form-check-label custom-control-label"
+                            [for]="weekDays[i].weekDayId">{{weekDays[i].weekDay}}</label>
+                        </div>
+                      </div>
+                      <div *ngIf="repeatsOnControls.repeatsOnDay.errors && (repeatsOnControls.repeatsOnDay.touched
+                          || repeatsOnControls.repeatsOnDay.dirty || isFormSubmitted)">
+                        <div class="invalid-feedback d-block"
+                          *ngIf="repeatsOnControls.repeatsOnDay.errors?.requireOneCheckbox">
+                          Please select minimum one day otherwise it's consider as all day
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <!-- Monthly Options -->
+                <ng-container *ngIf="showMonthlyOptions$ | async">
+                  <div class="form-group mb-0">
+                    <div class="d-flex align-items-baseline mt-2">
+                      <label class="mb-0 flex-shrink-0 mr-3">
+                        Repeat By
+                        <span class="asterisk">*</span>
+                      </label>
+                      <div class="d-flex flex-column">
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" class="custom-control-input" id="repeatByOption1"
+                            formControlName="repeatBy" [value]="repeatByOptionEnum.DAY_OF_MONTH" />
+                          <label class="custom-control-label" for="repeatByOption1">Day Of The Month</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" class="custom-control-input" id="repeatByOption2"
+                            formControlName="repeatBy" [value]="repeatByOptionEnum.DAY_OF_WEEK" />
+                          <label class="custom-control-label" for="repeatByOption2">Day Of The Week</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="repeatsOnControls.repeatBy.errors && (repeatsOnControls.repeatBy.touched
+                  || repeatsOnControls.repeatBy.dirty || isFormSubmitted)">
+                      <div class="invalid-feedback d-block" *ngIf="repeatsOnControls.repeatBy.errors?.required">
+                        Repeat By is required
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3 float-above">
+                <input type="text" class="form-control" id="date" disabled="true"
+                  value="{{formValue.date | date: dateFormat}}">
+                <label class="floating-form-label">
+                  Starts On
+                </label>
+                <label class="icon icon-calendar date-picker-label text-gray mb-0" for="date"></label>
+                <div *ngIf="summaryLabel$ | async as summaryLabel" class="form-label small mt-1">
+                  {{ summaryLabel }}
+                </div>
+              </div>
+              <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+                <input type="text" class="form-control" id="endDate" preventText bsDatepicker formControlName="endDate"
+                  floatingLabel autocomplete="off">
+                <label class="floating-form-label">
+                  Ends
+                  <span class="asterisk">*</span>
+                </label>
+                <label class="icon icon-calendar date-picker-label text-gray mb-0" for="endDate"></label>
+                <div *ngIf="repeatsOnControls.endDate.errors && (repeatsOnControls.endDate.touched
+              || repeatsOnControls.endDate.dirty || isFormSubmitted)">
+                  <div class="invalid-feedback d-block" *ngIf="repeatsOnControls.endDate.errors?.required">
+                    End Date is Required
+                  </div>
+                </div>
+                <div class="invalid-feedback d-block"
+                  *ngIf="(repeatsOnControls.endDate.dirty || repeatsOnControls.endDate.touched) && repeatsOnFormGroup.errors?.dates">
+                  End date should be equal or greater than booking date</div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div class="w-100 d-none d-xxl-block"></div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <app-time-picker formControlName="setupBuffer" [meridian]="false">
+          <label class="floating-form-label">
+            Set Up Buffer[HH:MM]
+          </label>
+          <label for="setupBuffer" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+        </app-time-picker>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <app-time-picker formControlName="cleanupBuffer" [meridian]="false">
+          <label ctrlLabel class="floating-form-label">
+            Clean Up Buffer[HH:MM]
+          </label>
+          <label ctrlLabel for="cleanupBuffer" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+        </app-time-picker>
+      </div>
+
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <input type="number" class="form-control" formControlName="noOfPeople" floatingLabel trakitOnlyNumber
+          trakcitTrim min="1" />
+        <label class="floating-form-label">
+          No. Of People Attending
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="noOfPeople" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            No. Of People Attending is required
+          </div>
+          <div ngxError="min" [when]="['touched','dirty']">
+            No. Of People Attending should be greater than 0
+          </div>
+          <div ngxError="maxlength" [when]="['touched','dirty']">
+            No. Of People Attending can not be more than 10 digit
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="showAccountNumberDropdown">
+        <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+          <ng-select #accountNumberSelect appendTo="body" selectFloatingLabel [items]="accountNumbers"
+            bindLabel="accountNo" bindValue="clientAccountId" formControlName="clientAccountId"
+            class="form-control float-outline p-0" [searchable]="false" [clearable]="false"
+            (change)="setAccountNo($event)">
+            <ng-template ng-header-tmp>
+              <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                <input type="text" autoFocus class="form-control border-0 pr-0"
+                  (input)="accountNumberSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                  aria-describedby="button-addon">
+                <div class="input-group-append">
+                  <button class="btn bg-transparent text-gray" type="button">
+                    <span class="icon icon-search"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </ng-select>
+          <label class="floating-form-label">
+            Charge To
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="clientAccountId" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Charge To is required
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!showAccountNumberDropdown">
+        <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+          <input type="text" class="form-control" formControlName="clientAccount" floatingLabel trakcitTrim />
+          <label class="floating-form-label">
+            Charge To
+            <span class="asterisk">*</span>
+          </label>
+          <div ngxErrors="clientAccount" [isFormSubmitted]="isFormSubmitted">
+            <div ngxError="required" [when]="['touched','dirty']">
+              Charge To is required
+            </div>
+            <div ngxError="maxlength" [when]="['touched','dirty']">
+              Charge To can not be more than 30 characters
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="form-group col-12">
+        <textarea rows="4" class="form-control" formControlName="description" floatingLabel trakcitTrim></textarea>
+        <label class="floating-form-label">
+          Description
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <label for="frontAndBackCover" class="small my-2 font-weight-semibold">
+          Room Information:
+        </label>
+      </div>
+      <div class="col-md-6 col-12 col-xl-4 col-xxl-3">
+        <div class="row">
+          <div class="form-group col-12">
+            <ng-select #roomSelect appendTo="body" selectFloatingLabel [items]="rooms" bindLabel="room"
+              bindValue="roomId" formControlName="roomId" class="form-control float-outline p-0" [searchable]="false"
+              [clearable]="false" (change)="onRoomChange()">
+              <ng-template ng-header-tmp>
+                <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                  <input type="text" autoFocus class="form-control border-0 pr-0"
+                    (input)="roomSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                    aria-describedby="button-addon">
+                  <div class="input-group-append">
+                    <button class="btn bg-transparent text-gray" type="button">
+                      <span class="icon icon-search"></span>
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+            </ng-select>
+            <label for="" class="floating-form-label">Room<span class="asterisk">*</span></label>
+            <div ngxErrors="roomId" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                Room is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-12">
+            <ng-select #roomLayout appendTo="body" selectFloatingLabel [items]="roomLayouts" bindLabel="roomLayout"
+              bindValue="roomLayoutId" formControlName="roomLayoutId" class="form-control float-outline p-0"
+              [searchable]="false" [clearable]="false" (change)="onRoomLayoutChange($event)">
+              <ng-template ng-header-tmp>
+                <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+                  <input type="text" autoFocus class="form-control border-0 pr-0"
+                    (input)="roomLayout.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                    aria-describedby="button-addon">
+                  <div class="input-group-append">
+                    <button class="btn bg-transparent text-gray" type="button">
+                      <span class="icon icon-search"></span>
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+            </ng-select>
+            <label for="" class="floating-form-label">
+              Room Layout
+              <span class="asterisk">*</span>
+            </label>
+            <div ngxErrors="roomLayoutId" [isFormSubmitted]="isFormSubmitted">
+              <div ngxError="required" [when]="['touched','dirty']">
+                Room Layout is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="roomLayoutPath">
+        <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+          <div class="d-flex room-layout-img">
+            <img [src]="roomLayoutPath" class="mx-auto" alt="{{roomLayoutName}}">
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <trakit-custom-select-dropdown id="facility" [items]="bookitMasterData?.facilities" bindValue="facilitiesId"
+          bindLabel="facilities" isCheckboxSelection="true" isHideQuantityTextbox="true" formControlName="facility">
+        </trakit-custom-select-dropdown>
+        <label for="facility" class="floating-form-label">
+          Facilities
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="facility" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Facilities is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <trakit-custom-select-dropdown [items]="bookitMasterData?.amenities" bindValue="amenitiesId"
+          bindLabel="amenities" isCheckboxSelection="true" bindQuantity="quantity" formControlName="amenities"
+          id="amenities" [allowDecimal]="false" [maxLength]="8">
+        </trakit-custom-select-dropdown>
+        <label for="amenities" class="floating-form-label">
+          Amenities
+        </label>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+        <trakit-custom-select-dropdown [items]="bookitMasterData?.caterings" bindValue="cateringTypeId"
+          bindLabel="cateringType" isCheckboxSelection="true" isHideQuantityTextbox="true" formControlName="catering"
+          id="catering">
+        </trakit-custom-select-dropdown>
+        <label for="catering" class="floating-form-label">
+          Caterings
+          <span class="asterisk">*</span>
+        </label>
+        <div ngxErrors="catering" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="required" [when]="['touched','dirty']">
+            Caterings is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <ng-container *ngIf="!bookit">
+        <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3">
+          <ng-select [items]="fileUploadList" appendTo="body" bindLabel="label" bindValue="id" [clearable]="false"
+            formControlName="fileOptionId" (change)="onChangeFile($event)" [searchable]="false" selectFloatingLabel
+            class="form-control float-outline p-0">
+          </ng-select>
+          <label for="files" class="floating-form-label">
+            Files
+          </label>
+        </div>
+      </ng-container>
+      <div class="form-group col-md-6 col-12 col-lg-4 col-xxl-3 copy-it-upload-files"
+        *ngIf="formValue.fileOptionId === 1">
+        <lib-file-upload [isDelete]="true" [disabled]="formControls.files.disabled" [fileLabel]="'Upload Files'"
+          accept="*" [multiple]="true" formControlName="files" [fileName]="bookItFormValue.fileName">
+        </lib-file-upload>
+        <div ngxErrors="files" [isFormSubmitted]="isFormSubmitted">
+          <div ngxError="maxFileSize" [when]="['touched','dirty']">
+            File should not be larger than 50MB
+          </div>
+        </div>
+        <div class="d-flex flex-column mt-1" *ngIf="bookit && bookit?.uploadedFiles?.length">
+          <label class="small text-dark my-1 font-weight-semibold" for="uploaded file">Uploaded file:</label>
+          <ol class="pl-4 mb-0 text-gray">
+            <ng-container *ngFor="let file of bookit?.uploadedFiles; trackBy:trackBy.bind(this,'fileName')">
+              <li class="pl-1 text-gray small">
+                <a class="text-gray cursor-pointer" role="button" (click)="download(file)">
+                  {{file?.actualFileName}}
+                </a>
+              </li>
+            </ng-container>
+          </ol>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3" *ngIf="formValue.fileOptionId === 2">
+        <input type="text" class="form-control" formControlName="filePath" id="filePath" floatingLabel trakcitTrim />
+        <label for="filePath" class="floating-form-label">
+          Share File Path
+        </label>
+      </div>
+    </div>
+
+    <div class="row" formGroupName="cateringCompanyInformation">
+      <div class="col-12">
+        <label for="frontAndBackCover" class="small my-2 font-weight-semibold">
+          Catering Companies Contact Information:
+        </label>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3 ">
+        <input type="text" class="form-control" formControlName="companyName" floatingLabel trakcitTrim />
+        <label class="floating-form-label">
+          Company Name
+        </label>
+        <div class="invalid-feedback d-block"
+          *ngIf="bookitFormGroup.get('cateringCompanyInformation').get('companyName').hasError('maxlength')">
+          Company Name can not be more than 30 characters
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3 ">
+        <input type="text" class="form-control" formControlName="contactPersonName" floatingLabel trakcitTrim />
+        <label class="floating-form-label">
+          Contact Person Name
+        </label>
+        <div class="invalid-feedback d-block"
+          *ngIf="bookitFormGroup.get('cateringCompanyInformation').get('contactPersonName').hasError('maxlength')">
+          Contact Person Name can not be more than 30 characters
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3 ">
+        <input type="text" class="form-control" formControlName="phoneNumber" floatingLabel maxlength="28"
+          [textMask]="{mask: mask}" />
+        <label class="floating-form-label">
+          Phone Number
+        </label>
+        <div class="invalid-feedback d-block" *ngIf="(
+          bookitFormGroup.get('cateringCompanyInformation').get('phoneNumber').touched ||
+          bookitFormGroup.get('cateringCompanyInformation').get('phoneNumber').dirty) &&
+          bookitFormGroup.get('cateringCompanyInformation').get('phoneNumber').hasError('pattern')">
+          Phone Number is invalid
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-12 col-xl-4 col-xxl-3 ">
+        <app-time-picker formControlName="arrivalTime" [minuteStep]="minuteStep">
+          <label class="floating-form-label">
+            Arrival Time
+          </label>
+          <label for="arrivalTime" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+        </app-time-picker>
+      </div>
+    </div>
+
+  </div>
+  <div class="d-flex align-items-center justify-content-between flex-shrink-0 border-top p-3">
+    <button type="button" class="btn btn-secondary d-flex align-items-center" (click)="cancel()">
+      <span class="icon icon-times mr-2"></span>
+      <span>Cancel</span>
+    </button>
+    <ng-container *ngIf="!disableForm">
+      <button disableOnAjax *hasPermission="bookItPermissions.add || bookItPermissions.update" type="button"
+        class="btn btn-primary d-flex align-items-center" (click)="saveBookit();">
+        <span class="icon icon-tick mr-2"></span>
+        <span>Submit</span>
+      </button>
+    </ng-container>
+  </div>
+</form>

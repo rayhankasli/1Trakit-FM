@@ -1,0 +1,180 @@
+<button #printBtn hidden type="button" class="btn btn-outline-light" [useExistingCss]="true" printSectionId="printable"
+  ngxPrint printTitle="1TrakIt-FM | Book It" title="Print">
+  <span class="icon icon-print icon-1x text-gray-dark"></span>
+</button>
+<section id="printable">
+  <ng-container *ngIf="bookIt">
+    <div class="p-3 print-area">
+      <div class="border-bottom mb-3 pb-3">
+        <img [src]="host+'/assets/img/1TRAKIT.png'" alt="1Trakit Logo">
+      </div>
+      <h4 class="mb-3 title text-center">Book It</h4>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Booking Information
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Event Name:</label>
+                <span class="small">{{ bookIt.eventName }}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Name:</label>
+                <span class="small">{{ bookIt.name }}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Assign To:</label>
+                <span class="small">{{ bookIt.assignTo }}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Date:</label>
+                <span class="small">{{ bookIt.date | date: dateFormat}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Start Time:</label>
+                <span class="small">{{ bookIt.startTime | ngbTimePicker }}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">End Time:</label>
+                <span class="small">{{ bookIt.endTime | ngbTimePicker}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Buffer Needed [HH:MM]:</label>
+                <span class="small">{{ bookIt.setupBuffer || '00:00'}}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">No. Of People Attending:</label>
+                <span class="small">{{ bookIt.noOfPeople }}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Charge To:</label>
+                <span class="small">{{ bookIt.clientAccount }}</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Description:</label>
+                <span class="small">{{ bookIt.description }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Request For
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Client:</label>
+                <span class="small">{{ bookIt.clientName }}</span>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">User:</label>
+                <span class="small">{{ bookIt.fullName }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Facilities
+        </div>
+        <div class="card-body p-3">
+          <span class="small">{{ facilities || '-' }}</span>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Room Information
+        </div>
+        <div class="card-body p-3">
+          <div class="d-flex align-items-baseline">
+            <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Room:</label>
+            <span class="small">{{ bookIt.roomName }}</span>
+          </div>
+          <div class="d-flex align-items-baseline">
+            <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Room Layout:</label>
+            <span class="small">{{ bookIt.roomLayoutName }}</span>
+          </div>
+          <div class="d-flex mt-2">
+            <img [src]="bookIt.roomLayoutImage" alt="{{bookIt.roomLayoutName}}" class="mx-auto">
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Amenities
+        </div>
+        <div class="card-body p-3">
+          <span class="small">{{ amenities || '-' }}</span>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Caterings
+        </div>
+        <div class="card-body p-3">
+          <span class="small">{{ caterings || '-' }}</span>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header p-3 font-weight-medium">
+          Catering Companies Contact Information:
+        </div>
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-12 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Company Name:</label>
+                <span class="small">{{ cateringsCompanyContactInformation.companyName || '-' }}</span>
+              </div>
+            </div>
+            <div class="col-12 mb-2">
+              <div class="d-flex align-items-baseline">
+                <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Contact Person name:</label>
+                <span class="small">{{ cateringsCompanyContactInformation.contactPersonName || '-' }}</span>
+              </div>
+            </div>
+            <div class="col-12 mb-2">
+              <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Phone Number:</label>
+              <span class="small">{{ cateringsCompanyContactInformation.phoneNumber || '-' }}</span>
+            </div>
+            <div class="col-12">
+              <label class="mb-0 mr-2 font-weight-medium small flex-shrink-0">Arrival Time:</label>
+              <ng-container *ngIf="cateringsCompanyContactInformation.arrivalTime else emptyArrivalTimeRef">
+                <span class="small">{{ cateringsCompanyContactInformation.arrivalTime | ngbTimePicker }}</span>
+              </ng-container>
+              <ng-template #emptyArrivalTimeRef>
+                <span class="small">-</span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>

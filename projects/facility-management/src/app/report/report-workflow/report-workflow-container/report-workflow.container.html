@@ -1,0 +1,12 @@
+<div class="px-3 d-flex flex-column h-100">
+    <app-workflow-report-ui
+        [clients]="clients$ | async" 
+        [workFlowReportGraph]="workFlowReportGraph$ | async"
+        [workflowReportDetail]="workflowReportDetail$ | async"
+        [yearList]="years$ | async"
+        (workflowGraphListByClient)="workFlowGraphListByClient($event)"
+        (workflowReportDetails)="getWorkflowReports($event)"
+        (exportAsExcel)="onExportAsExcel($event)"
+        (loadYears)="loadYears($event)">
+    </app-workflow-report-ui>
+</div>

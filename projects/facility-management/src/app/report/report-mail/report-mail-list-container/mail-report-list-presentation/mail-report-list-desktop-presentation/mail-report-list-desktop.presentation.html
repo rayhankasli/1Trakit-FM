@@ -1,0 +1,102 @@
+<div class="overflow-y-auto overflow-x-hidden border rounded mb-3 report-table-height">
+  <table class="table data-tbl w-100 position-relative mb-0 border-0">
+    <colgroup>
+      <col style="width: 90px">
+      <col style="width: 110px">
+      <col style="width: 120px">
+      <col style="width: 60px">
+      <col style="width: 70px">
+      <col style="width: 100px">
+      <col style="width: 110px">
+      <col style="width: 50px">
+      <col style="width: 30px">
+    </colgroup>
+    <thead class="sticky-table-header">
+      <tr>
+        <th>
+          <span>Scan Id</span>
+        </th>
+        <th appSortingOrder [column]="'recipient'" (orderType)="onSortOrder('recipient',$event)" scope="col"
+          class="column-sort">
+          <span>Recipient</span>
+        </th>
+        <th appSortingOrder [column]="'courierCompany'" (orderType)="onSortOrder('courierCompany',$event)" scope="col"
+          class="column-sort">
+          <span>Courier Company</span>
+        </th>
+        <th appSortingOrder [column]="'scannedBy'" (orderType)="onSortOrder('scannedBy',$event)" scope="col"
+          class="column-sort">
+          <span>Scanned By</span>
+        </th>
+        <th appSortingOrder [column]="'deliveredTo'" (orderType)="onSortOrder('deliveredTo',$event)" scope="col"
+          class="column-sort">
+          <span>Delivered To</span>
+        </th>
+        <th appSortingOrder [column]="'dateTime'" (orderType)="onSortOrder('dateTime',$event)" scope="col"
+          class="column-sort">
+          <span>Date & Time</span>
+        </th>
+        <th>
+          <span>Proof of delivery</span>
+        </th>
+        <th appSortingOrder [column]="'status'" (orderType)="onSortOrder('status',$event)" scope="col"
+          class="column-sort">
+          <span>Status</span>
+        </th>
+        <th>
+          <span>Attempts</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mailReport of mailReports;trackBy: trackBy.bind(this,'packageId');let i= index">
+        <td class="align-center">
+          <span class="text-break">{{mailReport.scanId || '-'}}</span>
+        </td>
+        <td class="align-center">
+          {{mailReport.recipient || '-'}}</td>
+        <td class="align-center">
+          {{mailReport.courierCompany || '-'}}</td>
+        <td class="align-center">
+          {{mailReport.scannedBy || '-'}}</td>
+        <td class="align-center">
+          {{mailReport.deliveredTo? mailReport.deliveredTo: '-'}}</td>
+        <td class="align-center">
+          {{mailReport.dateTime | date:dateFormat || '-'}}</td>
+        <td class="align-center">
+          <div class="d-flex flex-xl-row flex-column align-items-center justify-content-xl-start justify-content-center">
+            <ng-container>
+              <button
+                class="btn btn-link flex-shrink-0 text-decoration-none d-flex align-items-center justify-content-center p-0 btn-camera"
+                *ngIf="mailReport.pictures.length > 0" (click)="openGallery(mailReport.pictures)">
+                <img [src]="mailReport?.pictures[0]?.systemImageName" alt="Task Image"
+                  class="task-image rounded-circle">
+                <span class="ml-1" *ngIf="mailReport.pictures.length > 1">+{{ mailReport.pictures.length - 1 }}</span>
+              </button>
+              <span *ngIf="mailReport.pictures.length === 0"> - </span>
+            </ng-container>
+
+            <ng-container>
+              <div class="divider d-xl-block d-none mx-2 flex-shrink-0"></div>
+            </ng-container>
+
+            <ng-container>
+              <div class="flex-shrink-0">
+                {{mailReport.receivingType || '-'}}
+              </div>
+            </ng-container>
+          </div>
+        </td>
+        <td class="align-center">
+          {{mailReport.status || '-'}}</td>
+        <td class="align-center">
+          {{mailReport.attempts || '-'}}</td>
+      </tr>
+
+      <!-- colspan base on total column -->
+      <tr *ngIf="!mailReports || mailReports.length === 0">
+        <td colspan="8" class="text-muted text-center">No record found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,16 @@
+<ng-select #clientSelect id="clients" [items]="clients" appendTo="body" bindLabel="client" bindValue="clientId"
+    [clearable]="false" class="form-control ng-select-lg float-outline p-0"
+    [searchable]="false">
+    <ng-template ng-header-tmp>
+        <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+                (input)="clientSelect.filter($event.target.value)" placeholder="Search" aria-label="Search"
+                aria-describedby="button-addon">
+            <div class="input-group-append">
+                <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                    <span class="icon icon-search"></span>
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</ng-select>

@@ -1,0 +1,18 @@
+#content-wrapper {
+  flex: 1 1 auto;
+  background-color: $container-bg;
+  position: relative;
+  .content-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    content: "";
+    background: rgba($black, 0.5);
+    opacity: 0;
+    @include transition($transition-base);
+  }
+}

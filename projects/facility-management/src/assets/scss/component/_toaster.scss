@@ -1,0 +1,63 @@
+.toast-container {
+  .ngx-toastr {
+    box-shadow: $box-shadow-sm;
+    position: relative;
+
+    &::after {
+      position: absolute;
+      top: 5px;
+      left: 12px;
+      font-family: "app-icons";
+      font-size: $font-size-base * 1.5;
+    }
+    &.toast-success {
+      &::after {
+        content: "\e925";
+      }
+    }
+    &.toast-error {
+      &::after {
+        content: "\e923";
+      }
+    }
+    &.toast-warning {
+      &::after {
+        content: "\e926";
+      }
+    }
+    &.toast-info {
+      &::after {
+        content: "\e924";
+      }
+    }
+    .toast-msg-list {
+      padding-left: 20px;
+      margin: 0;
+
+      .toast-msg {
+        font-size: $font-size-base * 0.9;
+      }
+    }
+
+    .toast-message {
+      font-size: $font-size-base * 0.9;
+    }
+
+    &:hover {
+      box-shadow: $box-shadow;
+    }
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .toast-#{$color} {
+    color: theme-color-level('#{$color}', 8);
+    background-color: theme-color-level('#{$color}', -8);
+    border: 1px solid theme-color-level('#{$color}', -8);
+    background-image: none;
+
+    .btn-link {
+      color: theme-color-level('#{$color}', 8);
+    }
+  }
+}

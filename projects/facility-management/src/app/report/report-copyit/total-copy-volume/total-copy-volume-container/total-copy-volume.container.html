@@ -1,0 +1,5 @@
+<app-total-copy-volume-ui class="d-flex flex-column w-100 overflow-hidden"
+    [clientMaster]="clientMaster$ | async"  
+    [totalCopyVolume]="totalCopyVolumeList$ | async"
+    (totalCopyCenterVolume)="totalCopyCenterVolume($event)">
+</app-total-copy-volume-ui>

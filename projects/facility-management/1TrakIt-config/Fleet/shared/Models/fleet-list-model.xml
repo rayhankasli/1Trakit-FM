@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<models>
+    <model name="FleetResponseModel" group="FleetResponseModel">
+		    <properties> 
+			<property name="AssetNumber" jsonProperty="assetNumber" type="number"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="AssetNumber">
+				<validations>
+					<validation type="Required" labelKey="AssetNumber.REQUIRED"></validation> 
+				</validations>
+			</property>
+			<property name="AssetNo" jsonProperty="assetNo" type="string"  gridVisibility="true" formVisibility="false" readOnly="false" labelKey="AssetNo">
+				<validations>
+					<validation type="Required" labelKey="AssetNo.REQUIRED"></validation>					
+				</validations>
+			</property>
+			<property name="CompanyName" jsonProperty="companyName" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="CompanyName">
+				<validations>
+					<validation type="Required" labelKey="CompanyName.REQUIRED"></validation> 					
+				</validations>
+			</property>
+			<property name="AssetType" jsonProperty="assetType" type="String"  gridVisibility="true" formVisibility="true" readOnly="false" labelKey="AssetType">
+				<validations>
+					<validation type="Required" labelKey="AssetType.REQUIRED"></validation> 					
+				</validations>			
+			</property>
+			<property name="Manufacturer" jsonProperty="manufacturer" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Manufacturer" >
+				<validations>
+					<validation type="Required" labelKey="Manufacturer.REQUIRED"></validation> 
+				</validations>
+			</property>	
+			<property name="ModelNo" jsonProperty="modelNo" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ModelNo">				
+				<validations>
+					<validation type="Required" labelKey="ModelNo.REQUIRED"></validation> 
+				</validations>
+			</property>		
+            	<property name="SerialNo" jsonProperty="serialNo" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="SerialNo">				
+				<validations>
+					<validation type="Required" labelKey="SerialNo.REQUIRED"></validation> 
+				</validations>
+			</property>	
+            	<property name="ServiceTagNo" jsonProperty="serviceTagNo" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="ServiceTagNo">				
+				<validations>
+					<validation type="Required" labelKey="ServiceTagNo.REQUIRED"></validation> 
+				</validations>
+			</property>	
+            	<property name="Location" jsonProperty="location" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="Location">				
+				<validations>
+					<validation type="Required" labelKey="Location.REQUIRED"></validation> 
+				</validations>
+			</property>	
+            	<property name="OpenTicket" jsonProperty="openTicket" type="string" gridVisibility="true" formVisibility="false" readOnly="false" labelKey="OpenTicket">				
+				<validations>
+					<validation type="Required" labelKey="OpenTicket.REQUIRED"></validation> 
+				</validations>
+			</property>			
+		    </properties>
+    </model>		
+</models>

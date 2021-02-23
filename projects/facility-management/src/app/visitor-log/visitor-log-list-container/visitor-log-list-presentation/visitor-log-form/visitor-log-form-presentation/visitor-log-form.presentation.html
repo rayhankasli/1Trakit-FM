@@ -1,0 +1,204 @@
+<form class="floating-form col-12" [formGroup]="visitorLogFormGroup">
+  <div class="row">
+    <div class="col-12 {{visitorLog ? '' : 'mt-n1'}}">
+      <label class="small mb-2 font-weight-semibold">
+        {{visitorLog ? 'Edit' : 'New'}} Visitor Entry:
+      </label>
+    </div>
+    <div class="form-group col-md-4 col-6 col-lg-4 col-xl-2">
+      <input type="text" class="form-control" formControlName="visitorName" floatingLabel trakcitTrim autoFocus />
+      <label class="floating-form-label">
+        Visitor Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="visitorName" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Visitor Name is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Visitor Name can not be more than 30 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4 col-6 col-lg-4 col-xl-2">
+      <ng-select #idProof [items]="masterData?.identificationProofs" selectFloatingLabel bindLabel="identificationProof"
+        bindValue="identificationProofId" appendTo="body" [clearable]="false" [searchable]="false"
+        formControlName="identificationProofId" class="form-control float-outline p-0">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="idProof.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label class="floating-form-label">
+        ID Type
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="identificationProofId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          ID Type is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4 col-6 col-lg-4 col-xl-2">
+      <ng-select #employee [items]="masterData?.employeeList" bindLabel="employeeName" bindValue="userId"
+        [clearable]="false" [searchable]="false" formControlName="employeeId" selectFloatingLabel
+        class="form-control float-outline p-0" appendTo="body">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0"
+              (input)="employee.filter($event.target.value)" placeholder="Search" aria-label="Search"
+              aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+      <label class="floating-form-label">
+        Employee Name
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="employeeId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Employee Name is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4 col-6 col-lg-4 col-xl-2 combined-date-time-picker">
+      <input type="text" class="form-control text-truncate" #dp="bsDatepicker" preventText
+        bsDatepicker formControlName="checkInDate" autocomplete="off" calendarFlotingLabel [bsConfig]="bsConfig"
+        id="checkInDate" container="body"
+        [title]="visitorLogFormGroup.value.checkInDate ? (visitorLogFormGroup.value.checkInDate | date: dateFormat) : ''"
+        placement="bottom">
+
+      <input type="text" class="form-control time-picker" preventText id="checkInTime" [popover]="popTemplate"
+        popoverFloatingLabel [popoverContext]="{ctrl:visitorLogFormGroup.controls.checkInTime}" [outsideClick]="true"
+        formControlName="checkInTime" [value]="visitorLogFormGroup.value.checkInTime | ngbTimePicker" calendarFlotingLabel  />
+
+      <label class="floating-form-label">
+        Check In At
+        <span class="asterisk">*</span>
+      </label>
+
+      <label class="icon icon-calendar date-picker-label text-gray mb-0" for="checkInDate"></label>
+
+      <label for="checkInTime" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+
+      <div ngxErrors="checkInDate" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Check In At is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4 col-6 col-lg-4 col-xl-2 combined-date-time-picker">
+      <input type="text" class="form-control text-truncate" #dp="bsDatepicker" [minDate]="minDate" preventText
+        bsDatepicker formControlName="checkOutDate" [bsConfig]="bsConfig" id="checkOutDate" calendarFlotingLabel
+        container="body" placement="bottom" autocomplete="off"
+        [title]="visitorLogFormGroup.value.checkOutDate ? (visitorLogFormGroup.value.checkOutDate | date: dateFormat) : ''">
+
+      <input type="text" class="form-control time-picker" id="checkOutTime" preventText [popover]="popTemplate"
+        popoverFloatingLabel [popoverContext]="{ctrl:visitorLogFormGroup.controls.checkOutTime}" [outsideClick]="true"
+        formControlName="checkOutTime" [value]="visitorLogFormGroup.value.checkOutTime | ngbTimePicker" calendarFlotingLabel />
+
+      <label class="floating-form-label">
+        Check Out At
+      </label>
+
+      <label for="checkOutTime" class="icon icon-clock time-picker-label text-gray mb-0"></label>
+
+      <label class="icon icon-calendar date-picker-label text-gray mb-0" for="checkOutDate"></label>
+      <div ngxErrors="checkOutTime" [isFormSubmitted]="isFormSubmitted">
+        <div class="invalid-feedback d-block" *ngIf="isValidTime">
+          Check Out Time can not be less then Check In Time
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4 col-6 col-lg-4 col-xl-2">
+      <input type="text" class="form-control" formControlName="badgeNo" trakcitTrim floatingLabel />
+      <label class="floating-form-label">
+        Badge no
+      </label>
+      <div ngxErrors="badgeNo" [isFormSubmitted]="isFormSubmitted">
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Badge no can not be more than 6 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4 col-6 col-lg-4 col-xl-2 mb-1">
+      <ng-select #status [items]="masterData?.visitorStatus" bindLabel="visitorStatus" bindValue="visitorStatusId"
+        [clearable]="false" [searchable]="false" formControlName="statusId" appendTo="body" selectFloatingLabel
+        class="form-control float-outline p-0">
+        <ng-template ng-header-tmp>
+          <div class="input-group input-group-sm rounded-pill border ng-custom-search">
+            <input type="text" autoFocus class="form-control border-0 pr-0" (input)="status.filter($event.target.value)"
+              placeholder="Search" aria-label="Search" aria-describedby="button-addon">
+            <div class="input-group-append">
+              <button class="btn bg-transparent text-gray" type="button" id="button-addon">
+                <span class="icon icon-search"></span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+
+      <label class="floating-form-label">
+        Status
+        <span class="asterisk">*</span>
+      </label>
+
+      <div ngxErrors="statusId" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Status is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-4 col-6 col-lg-8 col-xl-7 mb-1">
+      <textarea class="form-control resize-none single-line-textarea" formControlName="purposeOfVisit" floatingLabel
+        trakcitTrim rows="1"></textarea>
+      <label class="floating-form-label">
+        Purpose of Visit
+        <span class="asterisk">*</span>
+      </label>
+      <div ngxErrors="purposeOfVisit" [isFormSubmitted]="isFormSubmitted">
+        <div ngxError="required" [when]="['touched','dirty']">
+          Purpose of Visit is required
+        </div>
+        <div [ngxError]="['maxlength']" [when]="['touched','dirty']">
+          Purpose of Visit can not be more than 50 characters
+        </div>
+      </div>
+    </div>
+    <!-- Action Buttons -->
+    <div class="form-group mb-1 col-md-4 col-6 col-lg-4 col-xl-3 ml-auto">
+      <div class="row">
+        <div class="col-6 {{ isArchived ? 'ml-auto' : '' }}">
+          <button type="button" title="Cancel"
+            class="btn d-flex w-100 align-items-center justify-content-center btn-secondary" (click)="onCancel()">
+            <span class="icon icon-times mr-2"></span>
+            <span>Cancel</span>
+          </button>
+        </div>
+        <div class="col-6" *ngIf="!isArchived">
+          <button  type="button" title="Save"
+            class="btn d-flex w-100 align-items-center justify-content-center btn-primary" (click)="saveVisitorLog()">
+            <span class="icon icon-save mr-2"></span>
+            <span>Save</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<ng-template #popTemplate let-ctrl="ctrl">
+  <ngb-timepicker #timePicker [formControl]="ctrl"></ngb-timepicker>
+</ng-template>

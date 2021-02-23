@@ -1,0 +1,8 @@
+<div class="h-100 overflow-hidden">
+  <app-workflow-task-list-ui [baseResponse]="workflowTasks$ | async" [weekDays]="weekDays$ | async"
+    [floors]="floors$ | async" [rooms]="rooms$ | async" (getWorkflowTask)="getWorkflowTasks($event)"
+    (getFormMasterData)="getFormMasterData()" (add)="addWorkflowTask($event)" (update)="updateWorkflowTask($event)"
+     (deleteWorkflowTask)="deleteWorkflowTask($event)"
+    (getRooms)="getRooms($event)" (reArrange)="onReArrange($event)">
+  </app-workflow-task-list-ui>
+</div>

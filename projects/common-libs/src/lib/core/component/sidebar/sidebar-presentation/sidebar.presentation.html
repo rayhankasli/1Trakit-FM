@@ -1,0 +1,78 @@
+<!-- Dashboard Logo -->
+<div class="logo d-flex align-items-center">
+  <a href="#" class="brand-logo">
+    <img src="assets/img/logo.png" alt="Logo-img" class="large-logo pl-3">
+    <img src="assets/img/small-logo.png" alt="small-logo-img" class="small-logo">
+  </a>
+  <label for="toggle-menu" class="toggle-menu-icon mb-0">
+    <span class="icon-arrow-left" (click)=toggleSideBar()></span>
+  </label>
+</div>
+<!-- End: Dashboard Logo [class.active]="menu.isOpen ? true : null"  -->
+<!-- Navigation menu -->
+<nav class="d-flex h-100 overflow-hidden">
+  <ul class="nav flex-column flex-nowrap flex-grow-1">
+    <!-- Client Logo -->
+    <li class="nav-menu">
+      <ng-container *ngIf="isSideBarCollapsed; then collapsed; else expanded"> </ng-container>
+    </li>
+    <li class="nav-item" #menuRef *ngFor="let menu of menuData; let i=index; trackBy: trackBy;"
+      (click)="menu.permisison && menu.subMenus.length > 0 && isSideBarCollapsed && createSubmenuOverLay(menu,i)">
+      <a class="nav-link" routerLinkActive="active" data-toggle="collapse" role="button" aria-controls="visa-toggle"
+        rel="noopener noreferrer" (click)="!isSideBarCollapsed && createAndRemoveSubmenu(i,menu)" [routerLink]="menu.link"
+        *ngIf="menu.permisison && menu.index !== 6">
+        <span class="menu-icon icon {{ menu.icon }}"></span>
+        <div class="menu-label">
+          <span class="text-truncate">{{ menu.name }}</span>
+        </div>
+      </a>
+      <a class="nav-link {{menu.isOpen ? 'open-submenu' : ''}}" [ngClass]="isReportSelected? 'active' : ''" data-toggle="collapse" role="button"
+        aria-controls="report-toggle" rel="noopener noreferrer" (click)="!isSideBarCollapsed && createAndRemoveSubmenu(i,menu)"
+        [routerLink]="menu.link" *ngIf="menu.permisison && menu.index === 6">
+        <span class="menu-icon icon {{ menu.icon }}"></span>
+        <div class="menu-label">
+          <span class="text-truncate">{{ menu.name }}</span>
+        </div>
+        <div class="ml-auto menu-dropdown" *ngIf="!isSideBarCollapsed">
+          <span class="icon icon-arrow-down"></span>
+        </div>
+      </a>
+      <ng-container *ngIf="menu.permisison" #subMenuRef></ng-container>
+    </li>
+  </ul>
+</nav>
+<!-- End: Navigation menu -->
+
+<ng-template #collapsed>
+  <ng-container *ngIf="clientDetail?.logoFileNameSmall; else defaultLogoSmall">
+    <a href="/" class="nav-link">
+      <img class="client-logo-small" *ngIf="isSideBarCollapsed && clientDetail?.logoFileNameSmall"
+        [src]="clientDetail?.logoFileNameSmall" alt="Client-logo-small">
+    </a>
+  </ng-container>
+  <ng-template #defaultLogoSmall>
+    <a href="/" class="nav-link">
+      <span class="menu-icon icon icon-no-photo client-logo"></span>
+      <div class="menu-label">
+        <span class="text-truncate">Client Logo</span>
+      </div>
+    </a>
+  </ng-template>
+</ng-template>
+
+<ng-template #expanded>
+  <ng-container *ngIf="clientDetail?.logoFileNameLarge; else defaultLogoLarge">
+    <a href="/" class="nav-link">
+      <img class="client-logo-large" *ngIf="!isSideBarCollapsed && clientDetail?.logoFileNameLarge"
+        [src]="clientDetail?.logoFileNameLarge" alt="Client-logo-large">
+    </a>
+  </ng-container>
+  <ng-template #defaultLogoLarge>
+    <a href="/" class="nav-link">
+      <span class="menu-icon icon icon-no-photo client-logo"></span>
+      <div class="menu-label">
+        <span class="text-truncate">Client Logo</span>
+      </div>
+    </a>
+  </ng-template>
+</ng-template>

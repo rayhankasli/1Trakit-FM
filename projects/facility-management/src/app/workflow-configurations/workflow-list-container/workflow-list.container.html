@@ -1,0 +1,6 @@
+<div class="px-3 pt-3 h-100 overflow-hidden">
+  <app-workflow-list-ui [isDeleted]="isDeleted" [baseResponse]="workflows$ | async" (getWorkflow)="getWorkflows($event)"
+    (deleteWorkflow)="deleteWorkflow($event)" (filterWorkflow)="filterWorkflow($event)" [offices]="officeList$ | async"
+    [assigner]="assigner$ | async" (addWorkflow)="addWorkflow($event)" (updateWorkflow)="updateWorkflow($event)"
+    (toggleWorkflowStatus)="toggleWorkflowStatus($event)"></app-workflow-list-ui>
+</div>
